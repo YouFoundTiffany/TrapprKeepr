@@ -1,9 +1,13 @@
 namespace TrapprKeepr.Models;
 
-public class Account
+public class Account : Profile
 {
-  public string Id { get; set; }
-  public string Name { get; set; }
   public string Email { get; set; }
-  public string Picture { get; set; }
 }
+
+// TODO ?
+// public class AccountCollaboratorViewModel : Account
+// {
+//   public int CollaboratorId { get; set; }
+//   public int AlbumId { get; set; }
+// }
