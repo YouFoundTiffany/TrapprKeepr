@@ -13,6 +13,3 @@ public class Keep
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
-
-// Do I need a ViewModel?
-// TODO ? OR WHAT VIEW DO I WANT OR NEED ON THE FRONT END?

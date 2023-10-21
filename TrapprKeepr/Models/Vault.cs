@@ -13,10 +13,10 @@ public class Vault
     public Profile Creator { get; set; }
 }
 
-// TODO ? OR WHAT VIEW DO I WANT OR NEED ON THE FRONT END?
-// public class VaultViewModel : Album
-// {
-//     public int CollaboratorId { get; set; }
-//     public string AccountId { get; set; }
 
-// }
+public class VaultKeepsViewModel : Vault
+{
+    public int KeepId { get; set; }
+    public string ProfileId { get; set; }
+
+}

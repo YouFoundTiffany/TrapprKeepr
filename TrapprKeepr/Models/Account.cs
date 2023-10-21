@@ -5,9 +5,14 @@ public class Account : Profile
   public string Email { get; set; }
 }
 
-// TODO ?
-// public class AccountCollaboratorViewModel : Account
-// {
-//   public int CollaboratorId { get; set; }
-//   public int AlbumId { get; set; }
-// }
+
+public class Profile
+{
+  public string Id { get; set; }
+  public string Name { get; set; }
+  public string Picture { get; set; }
+  public string CoverImg { get; set; }
+  public DateTime CreatedAt { get; set; }
+  public DateTime UpdatedAt { get; set; }
+
+}
