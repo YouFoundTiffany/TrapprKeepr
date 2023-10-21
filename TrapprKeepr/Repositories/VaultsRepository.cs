@@ -28,8 +28,8 @@ public class VaultsRepository
         {
 
             vault.Creator = account;
-            return Vault;
+            return vault;
         }, vaultData).FirstOrDefault();
-        return newVault
+        return newVault;
     }
 }
