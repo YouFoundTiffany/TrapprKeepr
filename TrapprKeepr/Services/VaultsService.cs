@@ -1,5 +1,4 @@
 namespace TrapprKeepr.Services;
-
 public class VaultsService
 {
     private readonly VaultsRepository _vrepo;
@@ -13,8 +12,6 @@ public class VaultsService
         Vault newVault = _vrepo.Create(vaultData);
         return newVault;
     }
-
-
     // STUB Get All Vault
     internal List<Vault> GetAllVaults()
     {
@@ -22,7 +19,6 @@ public class VaultsService
         return vaults;
     }
     // STUB Get Vault by Id - and show all the Keeps in that Vault
-
     internal Vault GetVaultById(int vaultId)
     {
         Vault foundVault = _vrepo.GetVaultById(vaultId);

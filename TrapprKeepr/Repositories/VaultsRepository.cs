@@ -2,10 +2,10 @@ namespace TrapprKeepr.Repositories;
 
 public class VaultsRepository
 {
-    private readonly IDbConnection _db;
-    public VaultsRepository(IDbConnection db)
+    private readonly IDbConnection _vdb;
+    public VaultsRepository(IDbConnection vdb)
     {
-        _db = db;
+        _vdb = vdb;
     }
     // STUB Create Vault
     internal Vault Create(Vault vaultData)
@@ -24,7 +24,7 @@ public class VaultsRepository
             WHERE vau.id = LAST_INSERT_ID()
             ;";
 
-        Vault newVault = _db.Query<Account, Vault, Vault>(sql, (account, vault) =>
+        Vault newVault = _vdb.Query<Account, Vault, Vault>(sql, (account, vault) =>
         {
             vault.Creator = account;
             return vault;
@@ -42,7 +42,7 @@ public class VaultsRepository
             JOIN accounts act ON act.id = vau.creatorId
             ;";
 
-        List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
         {
             vault.Creator = account;
             return vault;
@@ -60,7 +60,7 @@ public class VaultsRepository
             JOIN accounts act ON vau.creatorId = act.id
             WHERE vau.id = @vaultId
             ;";
-        Vault foundVault = _db.Query<Vault, Account, Vault>(sql, (vault, creator) =>
+        Vault foundVault = _vdb.Query<Vault, Account, Vault>(sql, (vault, creator) =>
         {
             vault.Creator = creator;
             return vault;
@@ -82,13 +82,13 @@ public class VaultsRepository
             SELECT * FROM vaults WHERE id = @id
             ;";
 
-        Vault updatedVault = _db.QueryFirstOrDefault<Vault>(sql, originalVault);
+        Vault updatedVault = _vdb.QueryFirstOrDefault<Vault>(sql, originalVault);
         return updatedVault;
     }
     // STUB DELETE VAULT
     internal void DeleteVault(int vaultId)
     {
         string sql = "DELETE FROM vaults WHERE id = @vaultId LIMIT 1;";
-        _db.Execute(sql, new { vaultId });
+        _vdb.Execute(sql, new { vaultId });
     }
 }

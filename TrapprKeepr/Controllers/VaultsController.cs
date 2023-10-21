@@ -84,9 +84,9 @@ public class VaultsController : ControllerBase
 
             return Ok($"{vault.Name} was deleted");
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            return BadRequest(e.Message);
+            return BadRequest(error.Message);
         }
     }
 
