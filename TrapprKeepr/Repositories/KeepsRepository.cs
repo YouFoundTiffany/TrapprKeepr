@@ -14,7 +14,7 @@ public class KeepsRepository
             INSERT INTO keeps
             (name, description, img, views, kept creatorId)
             VALUES
-            (@Name, @Description, @Img, @Views, @Kept @CreatorId);
+            (@Name, @Description, @Img, @Views, @Kept, @CreatorId);
 
             SELECT
             act.*,
@@ -49,8 +49,27 @@ public class KeepsRepository
         }).ToList();
         return keeps;
     }
+    // STUB Get Keep by Album Id
+    internal List<Keep> GetKeepsByVaultId(int vaultId)
+    {
+        string sql = @"
+        SELECT
+        pic.*,
+        act.*
+        FROM pictures pic
+        JOIN accounts act ON act.id = pic.creatorId
+        WHERE albumId = @albumId
+        ;";
+        List<Keep> keeps = _kdb.Query<Keep, Account, Keep>(sql, (keep, account) =>
+        {
+            keep.Creator = account;
+            return keep;
+        }, new { vaultId }).ToList();
+        return keeps;
+    }
+
     // STUB Get Keep by Id
-    internal Keep GetKeepById(int keepId)
+    internal Keep GetKeepById(int keepId, string userId)
     {
         string sql = @"
             SELECT
@@ -58,9 +77,9 @@ public class KeepsRepository
             act.*
             FROM keeps kee
             JOIN accounts act ON kee.creatorId = act.id
-            WHERE kee.id = @keepId
+            WHERE id = @Id
             ;";
-        Keep foundKeep = _kdb.Query<Keep, Account, Keep>(sql, (keep, creatorv) =>
+        Keep foundKeep = _kdb.Query<Keep, Account, Keep>(sql, (keep, creator) =>
         {
             keep.Creator = creator;
             return keep;

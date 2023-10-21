@@ -33,11 +33,11 @@ public class KeepsController : ControllerBase
     }
     // STUB Get Keep by Id
     [HttpGet("{keepId}")]
-    public ActionResult<Keep> GetKeepById(int keepId)
+    public ActionResult<Keep> GetKeepById(int keepId, string userId)
     {
         try
         {
-            Keep keep = _keeService.GetKeepById(keepId);
+            Keep keep = _keeService.GetKeepById(keepId, userId);
             return Ok(keep);
         }
         catch (Exception e)
@@ -61,12 +61,13 @@ public class KeepsController : ControllerBase
     }
     // STUB EDIT Keep
     [HttpPut("{keepId}")]
-    public ActionResult<Keep> EditKeep(int keepId, [FromBody] Keep keepData)
+    public async Task<ActionResult<Keep>> EditKeep([FromBody] Keep keepData, int keepId)
     {
         try
         {
-            _keeService.EditKeep(keepId, keepData);
-            return Ok(keepData);
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            Keep edited = _keeService.EditKeep(keepData, keepId, userInfo.Id);
+            return Ok(edited);
         }
         catch (Exception error)
         {
@@ -76,11 +77,13 @@ public class KeepsController : ControllerBase
 
     // STUB DELETE Keep
     [HttpDelete("{keepId}")]
-    public ActionResult<string> DeleteKeep(int keepId)
+    public async Task<ActionResult<Keep>> DeleteKeep(int keepId)
     {
         try
         {
-            Keep keep = _keeService.DeleteKeep(keepId);
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+
+            Keep keep = _keeService.DeleteKeep(keepId, userInfo.Id);
 
             return Ok($"{keep.Name} was deleted");
         }
@@ -89,5 +92,4 @@ public class KeepsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
 }

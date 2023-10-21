@@ -6,11 +6,13 @@ namespace TrapprKeepr.Controllers;
 public class VaultsController : ControllerBase
 {
     private readonly VaultsService _vaultsService;
+    private readonly KeepsService _keeService;
     private readonly Auth0Provider _auth0;
 
-    public VaultsController(VaultsService vaultsService, Auth0Provider auth0)
+    public VaultsController(VaultsService vaultsService, KeepsService keeService, Auth0Provider auth0)
     {
         _vaultsService = vaultsService;
+        _keeService = keeService;
         _auth0 = auth0;
     }
 
@@ -89,5 +91,18 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
+    // STUB Get Keeps by Vault Id
+    [HttpGet("{vaultId}/keeps")]
+    public ActionResult<List<Keep>> GetKeepsByAlbumId(int vaultId)
+    {
+        try
+        {
+            List<Keep> keeps = _keeService.GetKeepsByAlbumId(vaultId);
+            return keeps;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
 }
