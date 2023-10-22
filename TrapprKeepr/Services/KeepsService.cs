@@ -18,10 +18,10 @@ public class KeepsService
         List<Keep> keeps = _krepo.GetAllKeeps();
         return keeps;
     }
-    // STUB Get Keep by Album Id - See in Album Controller
-    internal List<Keep> GetKeepsByAlbumId(int albumId)
+    // STUB Get Keep by Vault Id - See in Vault Controller
+    internal List<Keep> GetKeepsByVaultId(int vaultId)
     {
-        List<Keep> keeps = _krepo.GetKeepsByVaultId(albumId);
+        List<Keep> keeps = _krepo.GetKeepsByVaultId(vaultId);
         return keeps;
     }
     // STUB Get Keep by Id - and show all the Keeps in that Keep
@@ -31,32 +31,27 @@ public class KeepsService
         if (foundKeep == null) throw new Exception($"Unable to find Keep {keepId}");
         return foundKeep;
     }
-
-    //    // STUB EDIT Keep
-    // internal Keep EditKeep(int keepId, Keep keepData)
-    // {
-    //     Keep originalKeep = GetKeepById(keepId);
-    //     originalKeep.Name = keepData.Name ?? originalKeep.Name;
-    //     originalKeep.Description = keepData.Description ?? originalKeep.Description;
-    //     originalKeep.Img = keepData.Img ?? originalKeep.Img;
-    //     Keep keep = _krepo.EditKeep(originalKeep);
-    //     return keep;
-
     // STUB EDIT Keep
     internal Keep EditKeep(Keep updateKeepData, int keepId, string userId)
     {
         Keep originalKeep = this.GetKeepById(keepId, userId);
+        if (originalKeep == null) throw new Exception("Keep Not Found");
         if (originalKeep.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Keep You did not Create");
         originalKeep.Name = updateKeepData.Name ?? originalKeep.Name;
         originalKeep.Description = updateKeepData.Description ?? originalKeep.Description;
         originalKeep.Img = updateKeepData.Img ?? originalKeep.Img;
+        // return originalKeep;
+        _krepo.EditKeep(originalKeep);
         return originalKeep;
     }
     // STUB DELETE Keep
-    internal Keep DeleteKeep(int keepId, string userId)
+    internal (Keep, string) DeleteKeep(int keepId, string userId)
     {
-        Keep keep = GetKeepById(keepId, userId);
+        Keep originalKeep = this.GetKeepById(keepId, userId);
+        if (originalKeep == null) throw new Exception("Keep Not Found");
+        if (originalKeep.CreatorId != userId) throw new Exception("Access Denied: Cannot Delete a Keep You did not Create");
+
         _krepo.DeleteKeep(keepId);
-        return keep;
+        return (originalKeep, "Keep successfully deleted.");
     }
 }

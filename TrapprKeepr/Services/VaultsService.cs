@@ -29,7 +29,8 @@ public class VaultsService
     internal Vault EditVault(int vaultId, Vault vaultData)
     {
         Vault originalVault = GetVaultById(vaultId);
-
+        if (originalVault == null) throw new Exception("Vault Not Found");
+        // if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Keep You did not Create");
         originalVault.Name = vaultData.Name ?? originalVault.Name;
         originalVault.Description = vaultData.Description ?? originalVault.Description;
         originalVault.Img = vaultData.Img ?? originalVault.Img;

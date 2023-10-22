@@ -12,9 +12,9 @@ public class KeepsRepository
     {
         string sql = @"
             INSERT INTO keeps
-            (name, description, img, views, kept creatorId)
+            (name, description, img, creatorId)
             VALUES
-            (@Name, @Description, @Img, @Views, @Kept, @CreatorId);
+            (@Name, @Description, @Img, @CreatorId);
 
             SELECT
             act.*,
@@ -49,16 +49,16 @@ public class KeepsRepository
         }).ToList();
         return keeps;
     }
-    // STUB Get Keep by Album Id
+    // STUB Get Keep by Vault Id
     internal List<Keep> GetKeepsByVaultId(int vaultId)
     {
         string sql = @"
         SELECT
-        pic.*,
+        keep.*,
         act.*
-        FROM pictures pic
-        JOIN accounts act ON act.id = pic.creatorId
-        WHERE albumId = @albumId
+        FROM keeps kee
+        JOIN accounts act ON act.id = kee.creatorId
+        WHERE vaultId = @vaultId
         ;";
         List<Keep> keeps = _kdb.Query<Keep, Account, Keep>(sql, (keep, account) =>
         {
@@ -67,7 +67,7 @@ public class KeepsRepository
         }, new { vaultId }).ToList();
         return keeps;
     }
-
+    // FIXME GetKeepsByProfileId failing postman for no-auth
     // STUB Get Keep by Id
     internal Keep GetKeepById(int keepId, string userId)
     {
@@ -77,7 +77,7 @@ public class KeepsRepository
             act.*
             FROM keeps kee
             JOIN accounts act ON kee.creatorId = act.id
-            WHERE id = @Id
+            WHERE kee.id = @keepId
             ;";
         Keep foundKeep = _kdb.Query<Keep, Account, Keep>(sql, (keep, creator) =>
         {
@@ -87,29 +87,42 @@ public class KeepsRepository
         return foundKeep;
     }
     // STUB EDIT Keep
-    internal Keep EditKeep(Keep originalKeep)
+    public void EditKeep(Keep updateData)
     {
         string sql = @"
             UPDATE keeps
             SET
-            name = @name,
-            description = @description,
-            img = @img,
-            views = @views,
-            kept = @kept,
-            isPrivate = @isPrivate
-            WHERE id = @id
-            LIMIT 1;
-            SELECT * FROM keeps WHERE id = @id
+                name = @Name,
+                description = @Description,
+                img = @Img
+            WHERE id = @Id
             ;";
-
-        Keep updatedKeep = _kdb.QueryFirstOrDefault<Keep>(sql, originalKeep);
-        return updatedKeep;
+        _kdb.Execute(sql, updateData);
     }
+    // STUB EDIT Keep
+    // internal Keep EditKeep(Keep originalKeep)
+    // {
+    //     string sql = @"
+    //         UPDATE keeps
+    //         SET
+    // name = @name,
+    // description = @description,
+    // img = @img,
+    // views = @views,
+    // kept = @kept,
+    //         WHERE id = @id
+    //         LIMIT 1;
+    //         SELECT * FROM keeps WHERE id = @id
+    //         ;";
+
+    //     Keep updatedKeep = _kdb.QueryFirstOrDefault<Keep>(sql, originalKeep);
+    //     return updatedKeep;
+    // }
     // STUB DELETE Keep
     internal void DeleteKeep(int keepId)
     {
         string sql = "DELETE FROM keeps WHERE id = @keepId LIMIT 1;";
         _kdb.Execute(sql, new { keepId });
+
     }
 }

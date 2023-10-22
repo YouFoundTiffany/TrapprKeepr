@@ -62,6 +62,7 @@ public class VaultsController : ControllerBase
         }
     }
     // STUB EDIT VAULT
+    [Authorize]
     [HttpPut("{vaultId}")]
     public ActionResult<Vault> EditVault(int vaultId, [FromBody] Vault vaultData)
     {
@@ -77,6 +78,7 @@ public class VaultsController : ControllerBase
     }
 
     // STUB DELETE VAULT
+    [Authorize]
     [HttpDelete("{vaultId}")]
     public ActionResult<string> DeleteVault(int vaultId)
     {
@@ -93,11 +95,11 @@ public class VaultsController : ControllerBase
     }
     // STUB Get Keeps by Vault Id
     [HttpGet("{vaultId}/keeps")]
-    public ActionResult<List<Keep>> GetKeepsByAlbumId(int vaultId)
+    public ActionResult<List<Keep>> GetKeepsByVaultId(int vaultId)
     {
         try
         {
-            List<Keep> keeps = _keeService.GetKeepsByAlbumId(vaultId);
+            List<Keep> keeps = _keeService.GetKeepsByVaultId(vaultId);
             return keeps;
         }
         catch (Exception error)

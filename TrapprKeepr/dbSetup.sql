@@ -37,10 +37,11 @@ CREATE TABLE
         name VARCHAR(500) NOT NULL,
         description VARCHAR(500) NOT NULL,
         img VARCHAR(1000) NOT NULL,
+        views INT DEFAULT 0,
+        kept INT DEFAULT 0,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
         creatorId VARCHAR(255) NOT NULL,
-        creator VARCHAR(255) NOT NULL,
         FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
@@ -58,16 +59,28 @@ CREATE TABLE
         FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
-INSERT INTO
-    vaults (
-        name,
-        description,
-        img,
-        creatorId
-    )
-VALUES (
-        'TIFFtest',
-        'lets see what happens',
-        'https://thumbs.dreamstime.com/b/colorful-rainbow-unicorn-horse-ancient-mythical-creature-187650428.jpg',
-        '6532bb3d577b39d02c12a556'
-    )
+-- INSERT INTO
+
+--     vaults (
+
+--         name,
+
+--         description,
+
+--         img,
+
+--         creatorId
+
+--     )
+
+-- VALUES (
+
+--         'TIFFtest',
+
+--         'lets see what happens',
+
+--         'https://thumbs.dreamstime.com/b/colorful-rainbow-unicorn-horse-ancient-mythical-creature-187650428.jpg',
+
+--         '6532bb3d577b39d02c12a556'
+
+--     )

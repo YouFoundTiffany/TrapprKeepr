@@ -33,16 +33,18 @@ public class KeepsController : ControllerBase
     }
     // STUB Get Keep by Id
     [HttpGet("{keepId}")]
-    public ActionResult<Keep> GetKeepById(int keepId, string userId)
+    public async Task<ActionResult<Keep>> GetKeepById(int keepId, string userId)
     {
         try
         {
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            // string userId = userInfo.Id; - causes error
             Keep keep = _keeService.GetKeepById(keepId, userId);
             return Ok(keep);
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            return BadRequest(e.Message);
+            return BadRequest(error.Message);
         }
     }
     // STUB Get All Keeps
@@ -60,6 +62,7 @@ public class KeepsController : ControllerBase
         }
     }
     // STUB EDIT Keep
+    [Authorize]
     [HttpPut("{keepId}")]
     public async Task<ActionResult<Keep>> EditKeep([FromBody] Keep keepData, int keepId)
     {
@@ -75,21 +78,23 @@ public class KeepsController : ControllerBase
         }
     }
 
-    // STUB DELETE Keep
+    // STUB DELETE Keep - Cannot implicitly convert type '(TrapprKeepr.Models.Keep, string)' to 'TrapprKeepr.Models.Keep'CS0029
+    [Authorize]
     [HttpDelete("{keepId}")]
-    public async Task<ActionResult<Keep>> DeleteKeep(int keepId)
+    public async Task<ActionResult<string>> DeleteKeep(int keepId)
     {
         try
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-
-            Keep keep = _keeService.DeleteKeep(keepId, userInfo.Id);
-
-            return Ok($"{keep.Name} was deleted");
+            _keeService.DeleteKeep(keepId, userInfo.Id);
+            string message = "successfully deleted";
+            return message;
         }
         catch (Exception error)
         {
             return BadRequest(error.Message);
         }
     }
+
+
 }
