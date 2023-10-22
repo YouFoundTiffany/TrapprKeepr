@@ -88,7 +88,7 @@ public class KeepsController : ControllerBase
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
             _keeService.DeleteKeep(keepId, userInfo.Id);
             string message = "successfully deleted";
-            return message;
+            return Ok(message);
         }
         catch (Exception error)
         {

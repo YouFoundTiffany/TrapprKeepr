@@ -54,7 +54,7 @@ public class KeepsRepository
     {
         string sql = @"
         SELECT
-        keep.*,
+        kee.*,
         act.*
         FROM keeps kee
         JOIN accounts act ON act.id = kee.creatorId

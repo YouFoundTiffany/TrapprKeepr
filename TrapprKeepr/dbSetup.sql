@@ -53,7 +53,6 @@ CREATE TABLE
         vaultId INT NOT NULL,
         keepId INT NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
-        creator VARCHAR(255) NOT NULL,
         FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
         FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
         FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE

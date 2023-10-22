@@ -12,11 +12,3 @@ public class Vault
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
 }
-
-
-public class VaultKeepsViewModel : Vault
-{
-    public int KeepId { get; set; }
-    public string ProfileId { get; set; }
-
-}

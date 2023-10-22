@@ -13,3 +13,8 @@ public class Keep
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
+public class VaultKeepsViewModel : Keep
+{
+    public int VaultId { get; set; }
+
+}

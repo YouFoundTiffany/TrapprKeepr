@@ -7,12 +7,14 @@ public class VaultsController : ControllerBase
 {
     private readonly VaultsService _vaultsService;
     private readonly KeepsService _keeService;
+    private readonly VaultKeepsService _vkeService;
     private readonly Auth0Provider _auth0;
 
-    public VaultsController(VaultsService vaultsService, KeepsService keeService, Auth0Provider auth0)
+    public VaultsController(VaultsService vaultsService, KeepsService keeService, VaultKeepsService vkeService, Auth0Provider auth0)
     {
         _vaultsService = vaultsService;
         _keeService = keeService;
+        _vkeService = vkeService;
         _auth0 = auth0;
     }
 
@@ -93,7 +95,7 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB Get Keeps by Vault Id
+    // STUB Get KEEPS by Vault Id
     [HttpGet("{vaultId}/keeps")]
     public ActionResult<List<Keep>> GetKeepsByVaultId(int vaultId)
     {
@@ -101,6 +103,21 @@ public class VaultsController : ControllerBase
         {
             List<Keep> keeps = _keeService.GetKeepsByVaultId(vaultId);
             return keeps;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+    // STUB Get VAULT KEEPS by Vault Id
+    [HttpGet("{vaultId}/keeps")]
+    public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepsByVaultId(int vaultId)
+    {
+        try
+        {
+            List<VaultKeepsViewModel> vaultKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
+            return _vkeService.GetVaultKeepsByVaultId(vaultId);
+
         }
         catch (Exception error)
         {
