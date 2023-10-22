@@ -37,16 +37,18 @@ public class VaultsController : ControllerBase
     }
     // STUB Get Vault by Id
     [HttpGet("{vaultId}")]
-    public ActionResult<Vault> GetVaultById(int vaultId)
+    public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
     {
         try
         {
-            Vault vault = _vaultsService.GetVaultById(vaultId);
+            Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
+            string userId = userInfo.Id;
+            Vault vault = _vaultsService.GetVaultById(vaultId, userId);
             return Ok(vault);
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            return BadRequest(e.Message);
+            return BadRequest(error.Message);
         }
     }
     // STUB Get All Vaults
@@ -63,15 +65,18 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB EDIT VAULT
+
+
+    // STUB EDIT Vault
     [Authorize]
     [HttpPut("{vaultId}")]
-    public ActionResult<Vault> EditVault(int vaultId, [FromBody] Vault vaultData)
+    public async Task<ActionResult<Vault>> EditVault([FromBody] Vault vaultData, int vaultId)
     {
         try
         {
-            _vaultsService.EditVault(vaultId, vaultData);
-            return Ok(vaultData);
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            Vault edited = _vaultsService.EditVault(vaultData, vaultId, userInfo.Id);
+            return Ok(edited);
         }
         catch (Exception error)
         {
@@ -79,22 +84,24 @@ public class VaultsController : ControllerBase
         }
     }
 
-    // STUB DELETE VAULT
+    // STUB DELETE Vault
     [Authorize]
     [HttpDelete("{vaultId}")]
-    public ActionResult<string> DeleteVault(int vaultId)
+    public async Task<ActionResult<string>> DeleteVault(int vaultId)
     {
         try
         {
-            Vault vault = _vaultsService.DeleteVault(vaultId);
-
-            return Ok($"{vault.Name} was deleted");
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            _vaultsService.DeleteVault(vaultId, userInfo.Id);
+            string message = "successfully deleted";
+            return Ok(message);
         }
         catch (Exception error)
         {
             return BadRequest(error.Message);
         }
     }
+
     // STUB Get KEEPS by Vault Id
     [HttpGet("{vaultId}/keeps")]
     public ActionResult<List<Keep>> GetKeepsByVaultId(int vaultId)
@@ -109,7 +116,7 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB Get VAULT KEEPS by Vault Id
+    // STUB Get VaultKeeps by Vault Id
     [HttpGet("{vaultId}/keeps")]
     public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepsByVaultId(int vaultId)
     {

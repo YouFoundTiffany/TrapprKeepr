@@ -19,32 +19,53 @@ public class VaultsService
         return vaults;
     }
     // STUB Get Vault by Id - and show all the Keeps in that Vault
-    internal Vault GetVaultById(int vaultId)
+    // NOTE make this a public method
+    public Vault GetVaultById(int vaultId, string userId)
     {
-        Vault foundVault = _vrepo.GetVaultById(vaultId);
-        if (foundVault == null) throw new Exception($"Unable to find vault {vaultId}");
+        Vault foundVault = _vrepo.GetVaultById(vaultId, userId);
+        if (foundVault == null) throw new Exception($"Unable to find Vault {vaultId}");
         return foundVault;
     }
-    // STUB EDIT VAULT
-    internal Vault EditVault(int vaultId, Vault vaultData)
+    // STUB EDIT Vault
+    internal Vault EditVault(Vault updateVaultData, int vaultId, string userId)
     {
-        Vault originalVault = GetVaultById(vaultId);
+        Vault originalVault = this.GetVaultById(vaultId, userId);
         if (originalVault == null) throw new Exception("Vault Not Found");
-        // if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Keep You did not Create");
-        originalVault.Name = vaultData.Name ?? originalVault.Name;
-        originalVault.Description = vaultData.Description ?? originalVault.Description;
-        originalVault.Img = vaultData.Img ?? originalVault.Img;
-        originalVault.IsPrivate = vaultData.IsPrivate ?? originalVault.IsPrivate;
-
-        Vault vault = _vrepo.EditVault(originalVault);
-
-        return vault;
+        if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Vault You did not Create");
+        originalVault.Name = updateVaultData.Name ?? originalVault.Name;
+        originalVault.Description = updateVaultData.Description ?? originalVault.Description;
+        originalVault.Img = updateVaultData.Img ?? originalVault.Img;
+        // return originalVault;
+        _vrepo.EditVault(originalVault);
+        return originalVault;
     }
+
+
+    // // STUB EDIT VAULT
+    // internal Vault EditVault(Vault updateVaultData, int vaultId, string userId)
+    // {
+    //     Vault originalVault = this.GetVaultById(vaultId, userId);
+    //     if (originalVault == null) throw new Exception("Vault Not Found");
+    //     if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Vault You did not Create");
+    //     // if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Vault You did not Create");
+    //     originalVault.Name = updateVaultData.Name ?? originalVault.Name;
+    //     originalVault.Description = updateVaultData.Description ?? originalVault.Description;
+    //     originalVault.Img = updateVaultData.Img ?? originalVault.Img;
+    //     originalVault.IsPrivate = updateVaultData.IsPrivate ?? originalVault.IsPrivate;
+
+    //     Vault vault = _vrepo.EditVault(originalVault);
+
+    //     return vault;
+    // }
+
     // STUB DELETE VAULT
-    internal Vault DeleteVault(int vaultId)
+    internal (Vault, string) DeleteVault(int vaultId, string userId)
     {
-        Vault vault = GetVaultById(vaultId);
+        Vault originalVault = this.GetVaultById(vaultId, userId);
+        if (originalVault == null) throw new Exception("Vault Not Found");
+        if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Delete a Vault You did not Create");
+
         _vrepo.DeleteVault(vaultId);
-        return vault;
+        return (originalVault, "Vault successfully deleted.");
     }
 }
