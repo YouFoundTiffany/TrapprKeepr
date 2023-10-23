@@ -78,7 +78,7 @@ public class KeepsController : ControllerBase
         }
     }
 
-    // STUB DELETE Keep - Cannot implicitly convert type '(TrapprKeepr.Models.Keep, string)' to 'TrapprKeepr.Models.Keep'CS0029
+    // STUB DELETE Keep
     [Authorize]
     [HttpDelete("{keepId}")]
     public async Task<ActionResult<string>> DeleteKeep(int keepId)

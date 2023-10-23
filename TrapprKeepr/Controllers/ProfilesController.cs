@@ -5,11 +5,11 @@ namespace TrapprKeepr.Controllers;
 
 public class ProfilesController : ControllerBase
 {
-    private readonly ProfilesService _profilesService;
+    private readonly AccountService _aService;
     private readonly Auth0Provider _auth0Provider;
-    public ProfilesController(ProfilesService profilesService, Auth0Provider auth0Provider)
+    public ProfilesController(AccountService aService, Auth0Provider auth0Provider)
     {
-        _profilesService = profilesService;
+        _aService = aService;
         _auth0Provider = auth0Provider;
     }
 
@@ -19,7 +19,7 @@ public class ProfilesController : ControllerBase
     {
         try
         {
-            Profile profile = _profilesService.GetProfile(profileId);
+            Profile profile = _aService.GetProfile(profileId);
             if (profile == null)
             {
                 return NotFound("Profile not found");
@@ -38,21 +38,21 @@ public class ProfilesController : ControllerBase
     {
         try
         {
-            return Ok(_profilesService.GetUserKeeps(profileId));
+            return Ok(_aService.GetUserKeeps(profileId));
         }
         catch (Exception error)
         {
             return BadRequest(error.Message);
         }
     }
-
+    // TODO
     // STUB Get User Vaults
     [HttpGet("{profileId}/vaults")]
     public ActionResult<List<Vault>> GetUserVaults(string profileId)
     {
         try
         {
-            return Ok(_profilesService.GetUserVaults(profileId));
+            return Ok(_aService.GetUserVaults(profileId));
         }
         catch (Exception error)
         {

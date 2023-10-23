@@ -15,6 +15,7 @@ public class AccountsRepository
     return _db.QueryFirstOrDefault<Account>(sql, new { userEmail });
   }
 
+
   // STUB Get Account By Id
   internal Account GetById(string id)
   {
@@ -22,7 +23,17 @@ public class AccountsRepository
     return _db.QueryFirstOrDefault<Account>(sql, new { id });
   }
 
-  // STUB Create Account :Profile
+  // STUB Get User Profile
+  internal Profile GetProfile(string id)
+  {
+    string sql = @"
+        SELECT *
+        FROM accounts
+        WHERE id = @id";
+    return _db.QueryFirstOrDefault<Profile>(sql, new { id });
+  }
+
+  // STUB Create Account
   internal Account Create(Account newAccount)
   {
     string sql = @"
@@ -34,7 +45,7 @@ public class AccountsRepository
     return newAccount;
   }
 
-  // STUB Edit Account
+  // STUB Edit PROFILE
   internal Account Edit(Account update)
   {
     string sql = @"
@@ -48,24 +59,6 @@ public class AccountsRepository
     return update;
   }
 
-  // // STUB Get User Profile
-  // internal Profile GetProfile(string id)
-  // {
-  //   string sql = @"
-  //       SELECT *
-  //       FROM accounts
-  //       WHERE id = @id";
-  //   return _db.QueryFirstOrDefault<Profile>(sql, new { id });
-  // }
-  // // STUB Get User Keeps
-  // internal List<Keep> GetUserKeeps(string id)
-  // {
-  //   string sql = @"
-  //     SELECT *
-  //     FROM keeps
-  //     WHERE creatorId = @id";
-  //   return _db.Query<Keep>(sql, new { id }).ToList();
-  // }
   // STUB Get User Vaults
   internal List<Vault> GetUserVaults(string id)
   {
@@ -76,5 +69,15 @@ public class AccountsRepository
     return _db.Query<Vault>(sql, new { id }).ToList();
   }
 
+  // STUB Get User Keeps
+  internal List<Keep> GetUserKeeps(string id)
+  {
+    string sql = @"
+      SELECT *
+      FROM keeps
+      WHERE creatorId = @id";
+    return _db.Query<Keep>(sql, new { id }).ToList();
+  }
 }
+
 

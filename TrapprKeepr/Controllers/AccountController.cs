@@ -44,50 +44,7 @@ public class AccountController : ControllerBase
     }
   }
 
-  // // STUB Get User Profile
-  // [HttpGet("profiles/{profileid}")]
-  // public ActionResult<Profile> GetProfile(string id)
-  // {
-  //   try
-  //   {
-  //     return Ok(_accountService.GetProfile(id));
-  //   }
-  // catch (Exception error)
-  // {
-  //     return BadRequest(error.Message);
-  // }
-  // }
-
-  // // STUB Get User Keeps
-  // [HttpGet("{profileid}/keeps")]
-  // public ActionResult<List<Keep>> GetUserKeeps(string id)
-  // {
-  //   try
-  //   {
-  //     return Ok(_accountService.GetUserKeeps(id));
-  //   }
-  // catch (Exception error)
-  // {
-  //     return BadRequest(error.Message);
-  // }
-
-  // }
-
-  // // STUB Get User Vaults
-  // [HttpGet("{profileid}/vaults")]
-  // public ActionResult<List<Vault>> GetUserVaults(string id)
-  // {
-  //   try
-  //   {
-  //     return Ok(_accountService.GetUserVaults(id));
-  //   }
-  //   catch (Exception e)
-  //   {
-  //     return BadRequest(e.Message);
-  //   }
-  // }
-
-  // STUB Get My Account persons Vaults
+  // STUB Get My Account Vaults
   [HttpGet("account/vaults")]
   public ActionResult<List<Vault>> GetUserVaults(string id)
   {

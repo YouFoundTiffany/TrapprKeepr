@@ -15,6 +15,7 @@ public class Keep
 }
 public class VaultKeepsViewModel : Keep
 {
+    public int VaultKeepId { get; set; }
     public int VaultId { get; set; }
 
 }

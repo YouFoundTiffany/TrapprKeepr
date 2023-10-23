@@ -38,7 +38,7 @@ public class VaultKeepsController : ControllerBase
         try
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            // string userId = userInfo.Id; - causes error
+            // string userId = userInfo?.Id;
             VaultKeep vaultKeep = _vkeService.GetVaultKeepById(vaultKeepId, userId);
             return Ok(vaultKeep);
         }

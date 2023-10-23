@@ -54,10 +54,10 @@ public class KeepsRepository
     {
         string sql = @"
         SELECT
-        kee.*,
+        vke.*,
         act.*
-        FROM keeps kee
-        JOIN accounts act ON act.id = kee.creatorId
+        FROM vaultKeeps vke
+        JOIN accounts act ON act.id = vke.creatorId
         WHERE vaultId = @vaultId
         ;";
         List<Keep> keeps = _kdb.Query<Keep, Account, Keep>(sql, (keep, account) =>
@@ -67,7 +67,7 @@ public class KeepsRepository
         }, new { vaultId }).ToList();
         return keeps;
     }
-    // FIXME GetKeepsByProfileId failing postman for no-auth
+
     // STUB Get Keep by Id
     internal Keep GetKeepById(int keepId, string userId)
     {

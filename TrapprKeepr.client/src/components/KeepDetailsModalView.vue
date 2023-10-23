@@ -1,7 +1,6 @@
 <template>
-    <div class="modal fade" :id="'details-modal-' + keep.id" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div v-if="keep" class="modal fade" :id="'details-modal-' + keep.id" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true" ref="myModal">
-        <slot />
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

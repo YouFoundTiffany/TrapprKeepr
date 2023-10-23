@@ -39,10 +39,11 @@ public class VaultsController : ControllerBase
     [HttpGet("{vaultId}")]
     public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
     {
+        // NOTE put ELVIS in the string userInfo?.Id because anyone who isn't logged in can and should still be able to get a vault by Id.
         try
         {
             Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
-            string userId = userInfo.Id;
+            string userId = userInfo?.Id;
             Vault vault = _vaultsService.GetVaultById(vaultId, userId);
             return Ok(vault);
         }
@@ -117,18 +118,18 @@ public class VaultsController : ControllerBase
         }
     }
     // STUB Get VaultKeeps by Vault Id
-    [HttpGet("{vaultId}/keeps")]
-    public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepsByVaultId(int vaultId)
-    {
-        try
-        {
-            List<VaultKeepsViewModel> vaultKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
-            return _vkeService.GetVaultKeepsByVaultId(vaultId);
+    // [HttpGet("{vaultId}/keeps")]
+    // public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepsByVaultId(int vaultId)
+    // {
+    //     try
+    //     {
+    //         List<VaultKeepsViewModel> vaultKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
+    //         return _vkeService.GetVaultKeepsByVaultId(vaultId);
 
-        }
-        catch (Exception error)
-        {
-            return BadRequest(error.Message);
-        }
-    }
+    //     }
+    //     catch (Exception error)
+    //     {
+    //         return BadRequest(error.Message);
+    //     }
+    // }
 }
