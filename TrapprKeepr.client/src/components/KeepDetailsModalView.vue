@@ -70,6 +70,12 @@
 </template>
 <script>
 export default {
+    props: {
+        keep: {
+            type: Object,
+            required: true
+        }
+    },
     setup() {
         return {};
     },

@@ -5,8 +5,12 @@
       <!-- STUB KEEPS VERTICAL CARD TEMPLATE -->
       <!-- STUB COLUMN 1 -->
       <div class="col-12 col-md-3">
-        <KeepDetailsModalView />
-        <!-- test card -->
+        <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" @click.native="handleKeepClick(keep)" />
+        <!-- Modal
+        <KeepDetailsModalView v-if="showModal" :keep="selectedKeep" @close="showModal = false" /> -->
+
+        <!-- <KeepDetailsModalView /> -->
+        <!-- test card vertical cards -->
         <div class="card mb-3 ">
           <img src="https://i.etsystatic.com/40931115/r/il/aa29a7/5040212059/il_1140xN.5040212059_lo5y.jpg"
             class="card-img-top mxht" alt="...">
@@ -18,6 +22,7 @@
             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
           </div>
         </div>
+
         <!-- test card -->
       </div>
       <!-- STUB COLUMN 2 -->
@@ -122,19 +127,47 @@
   <!-- STUB Details Modal  -->
 </template>
 <script>
+import { keepsService } from '../services/KeepsService.js'
 import KeepDetailsModalView from '../components/KeepDetailsModalView.vue';
+import KeepCard from '../components/KeepCard.vue';
+import { computed, onMounted } from 'vue';
+import Pop from '../utils/Pop.js';
+import { AppState } from '../AppState';
+
+
 
 export default {
   setup() {
-    return {};
+    onMounted(() => { getKeeps(); });
+
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps();
+      }
+      catch (error) {
+        Pop.error(error);
+      }
+    }
+
+    return {
+      account: computed(() => AppState.account),
+      keeps: computed(() => AppState.keeps),
+      selectedKeep: null,
+      showDetailsModal: false,
+
+      selectKeep(keep) {
+        this.selectedKeep = keep;
+        this.showDetailsModal = true;
+      },
+
+    }
   },
-  components: { KeepDetailsModalView }
-};
+  components: { KeepCard, KeepDetailsModalView }
+}
 </script>
 
 
 <style>
-/* REVIEW CSS SIZING ON REPORT REVIEWS LECTURE */
 .mxht {
   max-height: 15vh;
   width: auto;
