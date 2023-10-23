@@ -53,37 +53,22 @@ public class VaultsRepository
     internal Vault GetVaultById(int vaultId, string userId)
     {
         string sql = @"
-            SELECT
-            vau.*,
-            act.*
-            FROM vaults nau
-            JOIN accounts act ON vau.creatorId = act.id
-            WHERE vau.id = @vaultId
-            ;";
+        SELECT
+        vau.*,
+        act.*
+        FROM vaults vau
+        JOIN accounts act ON vau.creatorId = act.id
+        WHERE vau.id = @vaultId
+        AND (vau.isPrivate = 0 OR (vau.isPrivate = 1 AND vau.creatorId = @userId))
+        ;";
         Vault foundVault = _vdb.Query<Vault, Account, Vault>(sql, (vault, creator) =>
         {
             vault.Creator = creator;
             return vault;
-        }, new { vaultId }).FirstOrDefault();
+        }, new { vaultId, userId }).FirstOrDefault();
         return foundVault;
     }
-    // internal Vault GetVaultById(int vaultId)
-    // {
-    //     string sql = @"
-    //         SELECT
-    //         vau.*,
-    //         act.*
-    //         FROM vaults vau
-    //         JOIN accounts act ON vau.creatorId = act.id
-    //         WHERE vau.id = @vaultId
-    //         ;";
-    //     Vault foundVault = _vdb.Query<Vault, Account, Vault>(sql, (vault, creator) =>
-    //     {
-    //         vault.Creator = creator;
-    //         return vault;
-    //     }, new { vaultId }).FirstOrDefault();
-    //     return foundVault;
-    // }
+
 
     // STUB EDIT Vault
     public void EditVault(Vault updateData)
@@ -91,37 +76,24 @@ public class VaultsRepository
         string sql = @"
             UPDATE vaults
             SET
-                name = @Name,
-                description = @Description,
-                img = @Img,
-                isPrivate = @isPrivate
+            name = @Name,
+            description = @Description,
+            img = @Img,
+            isPrivate = @isPrivate
             WHERE id = @Id
             ;";
         _vdb.Execute(sql, updateData);
     }
 
-    // STUB EDIT VAULT
-    // internal Vault EditVault(Vault originalVault)
-    // {
-    //     string sql = @"
-    //         UPDATE vaults
-    //         SET
-    //         name = @name,
-    //         description = @description,
-    //         img = @img,
-    //         isPrivate = @isPrivate
-    //         WHERE id = @id
-    //         LIMIT 1;
-    //         SELECT * FROM vaults WHERE id = @id
-    //         ;";
-
-    //     Vault updatedVault = _vdb.QueryFirstOrDefault<Vault>(sql, originalVault);
-    //     return updatedVault;
-    // }
     // STUB DELETE VAULT
     internal void DeleteVault(int vaultId)
     {
-        string sql = "DELETE FROM vaults WHERE id = @vaultId LIMIT 1;";
+        string sql = @"
+        DELETE
+        FROM vaults
+        WHERE id = @vaultId
+        LIMIT 1
+        ;";
         _vdb.Execute(sql, new { vaultId });
     }
 }
