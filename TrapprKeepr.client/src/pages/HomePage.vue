@@ -2,9 +2,11 @@
   <section class="container">
     <div class="row">
       <div class="masonry-container">
+
         <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" @click="openModal(keep)" />
 
-        <KeepDetailsModalView v-if="selectedKeep" :keep="selectedKeep" @close="selectedKeep = null" ref="modalRef" />
+
+        <!-- <KeepDetailsModalView v-if="selectedKeep" :keep="selectedKeep" @close="selectedKeep = null" ref="modalRef" /> -->
       </div>
     </div>
   </section>
@@ -22,7 +24,7 @@ export default {
   setup() {
     onMounted(() => { getKeeps(); });
 
-    const selectedKeep = ref(null); // Make sure you declare this again
+    const selectedKeep = ref(null);
     const modalRef = ref(null);
 
     function openModal(keep) {
@@ -52,19 +54,29 @@ export default {
 
 </script>
 <style>
-.keeps-container {
+/* .keeps-container {
   display: flex;
   flex-wrap: wrap;
-}
+} */
 
 .keep-card {
   max-width: 200px;
 }
 
+
 .masonry-container {
+  $gap: 1.25em;
+  columns: 200px;
+  column-gap: $gap;
+
+}
+
+
+
+/* .masonry-container {
   display: grid;
   grid-gap: 3px;
   display: flex;
   flex-wrap: wrap;
-}
+} */
 </style>
