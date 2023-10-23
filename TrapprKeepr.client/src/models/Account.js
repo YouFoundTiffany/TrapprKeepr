@@ -1,5 +1,3 @@
-import { Profile } from './Profile'
-
 export class Profile {
   constructor(data) {
     this.id = data.id
