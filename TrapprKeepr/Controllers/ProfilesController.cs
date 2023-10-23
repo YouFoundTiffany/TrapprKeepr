@@ -45,7 +45,7 @@ public class ProfilesController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // TODO
+
     // STUB Get User Vaults
     [HttpGet("{profileId}/vaults")]
     public ActionResult<List<Vault>> GetUserVaults(string profileId)

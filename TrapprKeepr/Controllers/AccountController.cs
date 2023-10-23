@@ -45,18 +45,19 @@ public class AccountController : ControllerBase
   }
 
   // STUB Get My Account Vaults
-  [HttpGet("account/vaults")]
-  public ActionResult<List<Vault>> GetUserVaults(string id)
+  [HttpGet("vaults")]
+  public async Task<ActionResult<List<Vault>>> GetUserVaults()
   {
     try
     {
-      return Ok(_accountService.GetUserVaults(id));
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      List<Vault> myVaults = _accountService.GetUserVaults(userInfo.Id);
+      // return Ok(_accountService.GetOrCreateProfile(userInfo));
+      return myVaults;
     }
     catch (Exception error)
     {
       return BadRequest(error.Message);
     }
-
-
   }
 }

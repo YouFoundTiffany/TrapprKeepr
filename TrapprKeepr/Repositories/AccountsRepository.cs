@@ -64,7 +64,7 @@ public class AccountsRepository
   {
     string sql = @"
       SELECT *
-      FROM vault
+      FROM vaults
       WHERE creatorId = @id";
     return _db.Query<Vault>(sql, new { id }).ToList();
   }
