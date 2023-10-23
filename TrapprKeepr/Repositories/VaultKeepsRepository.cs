@@ -77,8 +77,26 @@ public class VaultKeepsRepository
             splitOn: "ProfileId").ToList();
     }
 
+    // STUB Get Keep by Vault Id
+    internal List<Keep> GetKeepsByVaultId(int vaultId)
+    {
+        string sql = @"
+        SELECT
+        vke.*,
+        act.*
+        FROM vaultKeeps vke
+        JOIN accounts act ON act.id = vke.creatorId
+        WHERE vaultId = @vaultId
+        ;";
+        List<Keep> keeps = _vkdb.Query<Keep, Account, Keep>(sql, (keep, account) =>
+        {
+            keep.Creator = account;
+            return keep;
+        }, new { vaultId }).ToList();
+        return keeps;
+    }
 
-    // FIXME GetVaultKeepsByProfileId failing postman for no-auth
+
     // STUB Get VaultKeep by Id
     internal VaultKeep GetVaultKeepById(int vaultKeepId, string userId)
     {
@@ -97,39 +115,6 @@ public class VaultKeepsRepository
         }, new { vaultKeepId }).FirstOrDefault();
         return foundVaultKeep;
     }
-    // STUB EDIT VaultKeep
-    // public void EditVaultKeep(VaultKeep updateData)
-    // {
-    //     string sql = @"
-    //         UPDATE vaultKeeps
-    //         SET
-    //             name = @Name,
-    //             description = @Description,
-    //             img = @Img
-    //         WHERE id = @Id
-    //         ;";
-    //     _vkdb.Execute(sql, updateData);
-    // }
-    // STUB EDIT Keep
-    // internal Keep EditKeep(Keep originalKeep)
-    // {
-    //     string sql = @"
-    //         UPDATE keeps
-    //         SET
-    // name = @name,
-    // description = @description,
-    // img = @img,
-    // views = @views,
-    // kept = @kept,
-    //         WHERE id = @id
-    //         LIMIT 1;
-    //         SELECT * FROM keeps WHERE id = @id
-    //         ;";
-
-    //     Keep updatedKeep = _vkdb.QueryFirstOrDefault<Keep>(sql, originalKeep);
-    //     return updatedKeep;
-    // }
-    // STUB DELETE Keep
     internal void DeleteVaultKeep(int vaultKeepId)
     {
         string sql = "DELETE FROM vaultKeeps WHERE id = @vaultKeepId LIMIT 1;";
@@ -137,3 +122,37 @@ public class VaultKeepsRepository
 
     }
 }
+// STUB EDIT VaultKeep
+// public void EditVaultKeep(VaultKeep updateData)
+// {
+//     string sql = @"
+//         UPDATE vaultKeeps
+//         SET
+//             name = @Name,
+//             description = @Description,
+//             img = @Img
+//         WHERE id = @Id
+//         ;";
+//     _vkdb.Execute(sql, updateData);
+// }
+// STUB EDIT Keep
+// internal Keep EditKeep(Keep originalKeep)
+// {
+//     string sql = @"
+//         UPDATE keeps
+//         SET
+// name = @name,
+// description = @description,
+// img = @img,
+// views = @views,
+// kept = @kept,
+//         WHERE id = @id
+//         LIMIT 1;
+//         SELECT * FROM keeps WHERE id = @id
+//         ;";
+
+//     Keep updatedKeep = _vkdb.QueryFirstOrDefault<Keep>(sql, originalKeep);
+//     return updatedKeep;
+// }
+// STUB DELETE Keep
+

@@ -61,22 +61,6 @@ public class VaultKeepsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB EDIT Keep
-    // [Authorize]
-    // [HttpPut("{vaultKeepId}")]
-    // public async Task<ActionResult<Keep>> EditKeep([FromBody] Keep vaultKeepData, int vaultKeepId)
-    // {
-    //     try
-    //     {
-    //         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-    //         Keep edited = _vkeService.EditKeep(keepData, vaultKeepId, userInfo.Id);
-    //         return Ok(edited);
-    //     }
-    //     catch (Exception error)
-    //     {
-    //         return BadRequest(error.Message);
-    //     }
-    // }
 
     // STUB DELETE Keep - Cannot implicitly convert type '(TrapprKeepr.Models.Keep, string)' to 'TrapprKeepr.Models.Keep'CS0029
     [Authorize]
@@ -95,6 +79,20 @@ public class VaultKeepsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
-
 }
+// STUB EDIT Keep
+// [Authorize]
+// [HttpPut("{vaultKeepId}")]
+// public async Task<ActionResult<Keep>> EditKeep([FromBody] Keep vaultKeepData, int vaultKeepId)
+// {
+//     try
+//     {
+//         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+//         Keep edited = _vkeService.EditKeep(keepData, vaultKeepId, userInfo.Id);
+//         return Ok(edited);
+//     }
+//     catch (Exception error)
+//     {
+//         return BadRequest(error.Message);
+//     }
+// }

@@ -24,32 +24,20 @@ public class VaultKeepsService
         return _vkrepo.GetVaultKeepsByVaultId(vaultId);
     }
 
-
-    // STUB Get Keep by Id - and show all the Keeps in that Keep
+    // STUB Get Keeps by Vault Id - See in Vault Controller
+    internal List<Keep> GetKeepsByVaultId(int vaultId)
+    {
+        List<Keep> keeps = _vkrepo.GetKeepsByVaultId(vaultId);
+        return keeps;
+    }
+    // STUB Get VaultKeep by Id - and show all the Keeps in that Keep
     internal VaultKeep GetVaultKeepById(int vaultKeepId, string userId)
     {
         VaultKeep foundVaultKeep = _vkrepo.GetVaultKeepById(vaultKeepId, userId);
         if (foundVaultKeep == null) throw new Exception($"Unable to find Keep {vaultKeepId}");
         return foundVaultKeep;
     }
-    // STUB EDIT Keep
-    // internal Keep EditKeep(Keep updatevaultKeepData, int keepId, string userId)
-    // {
-    //     Keep originalKeep = this.GetKeepById(keepId, userId);
-    //     if (originalKeep == null) throw new Exception("Keep Not Found");
-    //     if (originalKeep.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Keep You did not Create");
-    //     originalKeep.Name = updatevaultKeepData.Name ?? originalKeep.Name;
-    //     originalKeep.Description = updatevaultKeepData.Description ?? originalKeep.Description;
-    //     originalKeep.Img = updatevaultKeepData.Img ?? originalKeep.Img;
-    //     // return originalKeep;
-    //     _vkrepo.EditKeep(originalKeep);
-    //     return originalKeep;
-    // }
 
-
-
-
-    // In the DeleteVaultKeep method, you're returning a tuple of VaultKeep and a string, but the repository method just deletes without returning the deleted object. You should modify the repository method if you want to return the deleted object or change the return type to just string or void.
     // STUB DELETE VaultKeep
     internal (VaultKeep, string) DeleteVaultKeep(int vaultKeepId, string userId)
     {
@@ -61,3 +49,30 @@ public class VaultKeepsService
         return (originalVaultKeep, "Keep successfully deleted.");
     }
 }
+
+// // STUB Get Keep by Id - and show all the Vaults that Keep is in?
+// internal Keep GetKeepById(int keepId, string userId)
+// {
+//     Keep foundKeep = _vkrepo.GetKeepById(keepId, userId);
+//     if (foundKeep == null) throw new Exception($"Unable to find Keep {keepId}");
+//     return foundKeep;
+// }
+// STUB EDIT Keep
+// internal Keep EditKeep(Keep updatevaultKeepData, int keepId, string userId)
+// {
+//     Keep originalKeep = this.GetKeepById(keepId, userId);
+//     if (originalKeep == null) throw new Exception("Keep Not Found");
+//     if (originalKeep.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Keep You did not Create");
+//     originalKeep.Name = updatevaultKeepData.Name ?? originalKeep.Name;
+//     originalKeep.Description = updatevaultKeepData.Description ?? originalKeep.Description;
+//     originalKeep.Img = updatevaultKeepData.Img ?? originalKeep.Img;
+//     // return originalKeep;
+//     _vkrepo.EditKeep(originalKeep);
+//     return originalKeep;
+// }
+
+
+
+
+// In the DeleteVaultKeep method, you're returning a tuple of VaultKeep and a string, but the repository method just deletes without returning the deleted object. You should modify the repository method if you want to return the deleted object or change the return type to just string or void.
+

@@ -6,14 +6,14 @@ namespace TrapprKeepr.Controllers;
 public class VaultsController : ControllerBase
 {
     private readonly VaultsService _vaultsService;
-    private readonly KeepsService _keeService;
+    // private readonly KeepsService _keeService;
     private readonly VaultKeepsService _vkeService;
     private readonly Auth0Provider _auth0;
 
     public VaultsController(VaultsService vaultsService, KeepsService keeService, VaultKeepsService vkeService, Auth0Provider auth0)
     {
         _vaultsService = vaultsService;
-        _keeService = keeService;
+        // _keeService = keeService;
         _vkeService = vkeService;
         _auth0 = auth0;
     }
@@ -109,7 +109,7 @@ public class VaultsController : ControllerBase
     {
         try
         {
-            List<Keep> keeps = _keeService.GetKeepsByVaultId(vaultId);
+            List<Keep> keeps = _vkeService.GetKeepsByVaultId(vaultId);
             return keeps;
         }
         catch (Exception error)

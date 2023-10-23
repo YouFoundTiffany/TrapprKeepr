@@ -49,24 +49,6 @@ public class KeepsRepository
         }).ToList();
         return keeps;
     }
-    // STUB Get Keep by Vault Id
-    internal List<Keep> GetKeepsByVaultId(int vaultId)
-    {
-        string sql = @"
-        SELECT
-        vke.*,
-        act.*
-        FROM vaultKeeps vke
-        JOIN accounts act ON act.id = vke.creatorId
-        WHERE vaultId = @vaultId
-        ;";
-        List<Keep> keeps = _kdb.Query<Keep, Account, Keep>(sql, (keep, account) =>
-        {
-            keep.Creator = account;
-            return keep;
-        }, new { vaultId }).ToList();
-        return keeps;
-    }
 
     // STUB Get Keep by Id
     internal Keep GetKeepById(int keepId, string userId)

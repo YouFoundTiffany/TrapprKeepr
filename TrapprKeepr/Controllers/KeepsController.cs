@@ -31,22 +31,7 @@ public class KeepsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB Get Keep by Id
-    [HttpGet("{keepId}")]
-    public async Task<ActionResult<Keep>> GetKeepById(int keepId, string userId)
-    {
-        try
-        {
-            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            // string userId = userInfo.Id; - causes error
-            Keep keep = _keeService.GetKeepById(keepId, userId);
-            return Ok(keep);
-        }
-        catch (Exception error)
-        {
-            return BadRequest(error.Message);
-        }
-    }
+
     // STUB Get All Keeps
     [HttpGet]
     public ActionResult<List<Keep>> GetAllKeeps()
@@ -95,6 +80,20 @@ public class KeepsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
-
 }
+// STUB Get Keep by Id
+// [HttpGet("{keepId}")]
+// public async Task<ActionResult<Keep>> GetKeepById(int keepId, string userId)
+// {
+//     try
+//     {
+//         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+//         // string userId = userInfo.Id; - causes error
+//         Keep keep = _keeService.GetKeepById(keepId, userId);
+//         return Ok(keep);
+//     }
+//     catch (Exception error)
+//     {
+//         return BadRequest(error.Message);
+//     }
+// }
