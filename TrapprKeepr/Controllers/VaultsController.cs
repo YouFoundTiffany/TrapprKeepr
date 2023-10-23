@@ -6,7 +6,6 @@ namespace TrapprKeepr.Controllers;
 public class VaultsController : ControllerBase
 {
     private readonly VaultsService _vaultsService;
-    // private readonly KeepsService _keeService;
     private readonly VaultKeepsService _vkeService;
     private readonly Auth0Provider _auth0;
 
@@ -35,13 +34,18 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB Get Vault by Id
+    // STUB Get Vault by Id - Only Showing open to public and hiding privates.
     [HttpGet("{vaultId}")]
     public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
     {
         // NOTE put ELVIS in the string userInfo?.Id because anyone who isn't logged in can and should still be able to get a vault by Id.
         try
         {
+            // Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
+            // List<Vault> vaults = _vaultsService.GetVaultById(vaultId, userInfo?.Id);
+            // return Ok(vaults);
+
+
             Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
             string userId = userInfo?.Id;
             Vault vault = _vaultsService.GetVaultById(vaultId, userId);
@@ -103,20 +107,6 @@ public class VaultsController : ControllerBase
         }
     }
 
-    // STUB Get KEEPS by Vault Id
-    // [HttpGet("{vaultId}/keeps")]
-    // public ActionResult<List<Keep>> GetKeepsByVaultId(int vaultId)
-    // {
-    //     try
-    //     {
-    //         List<Keep> keeps = _vkeService.GetKeepsByVaultId(vaultId);
-    //         return keeps;
-    //     }
-    //     catch (Exception error)
-    //     {
-    //         return BadRequest(error.Message);
-    //     }
-    // }
     // STUB Get VaultKeeps by Vault Id VIEW Model, many to many join continued
     [Authorize]
     [HttpGet("{vaultId}/keeps")]
@@ -126,7 +116,6 @@ public class VaultsController : ControllerBase
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
             List<VaultKeepsViewModel> myKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
-
             return myKeeps;
         }
         catch (Exception error)

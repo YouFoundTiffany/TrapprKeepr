@@ -18,15 +18,11 @@ public class KeepsService
         List<Keep> keeps = _krepo.GetAllKeeps();
         return keeps;
     }
-    // // STUB Get Keeps by Vault Id - See in Vault Controller
-    // internal List<Keep> GetKeepsByVaultId(int vaultId)
-    // {
-    //     List<Keep> keeps = _krepo.GetKeepsByVaultId(vaultId);
-    //     return keeps;
-    // }
+
     // STUB Get Keep by Id - and show all the Vaults that Keep is in?
     internal Keep GetKeepById(int keepId, string userId)
     {
+        // Safety Check
         Keep foundKeep = _krepo.GetKeepById(keepId, userId);
         if (foundKeep == null) throw new Exception($"Unable to find Keep {keepId}");
         return foundKeep;

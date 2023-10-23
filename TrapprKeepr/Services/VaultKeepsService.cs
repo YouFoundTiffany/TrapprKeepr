@@ -51,26 +51,7 @@ public class VaultKeepsService
     }
 }
 
-// // STUB Get Keep by Id - and show all the Vaults that Keep is in?
-// internal Keep GetKeepById(int keepId, string userId)
-// {
-//     Keep foundKeep = _vkrepo.GetKeepById(keepId, userId);
-//     if (foundKeep == null) throw new Exception($"Unable to find Keep {keepId}");
-//     return foundKeep;
-// }
-// STUB EDIT Keep
-// internal Keep EditKeep(Keep updatevaultKeepData, int keepId, string userId)
-// {
-//     Keep originalKeep = this.GetKeepById(keepId, userId);
-//     if (originalKeep == null) throw new Exception("Keep Not Found");
-//     if (originalKeep.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Keep You did not Create");
-//     originalKeep.Name = updatevaultKeepData.Name ?? originalKeep.Name;
-//     originalKeep.Description = updatevaultKeepData.Description ?? originalKeep.Description;
-//     originalKeep.Img = updatevaultKeepData.Img ?? originalKeep.Img;
-//     // return originalKeep;
-//     _vkrepo.EditKeep(originalKeep);
-//     return originalKeep;
-// }
+
 
 
 
