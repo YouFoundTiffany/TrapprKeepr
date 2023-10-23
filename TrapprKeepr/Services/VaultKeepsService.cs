@@ -18,10 +18,11 @@ public class VaultKeepsService
         List<VaultKeep> vaultKeeps = _vkrepo.GetAllVaultKeeps();
         return vaultKeeps;
     }
-    // STUB Get VaultKeep by Vault Id - See in Vault Controller
+    // STUB Get VaultKeep by Vault Id - See in Vault Controller - View Model Continued
     internal List<VaultKeepsViewModel> GetVaultKeepsByVaultId(int vaultId)
     {
-        return _vkrepo.GetVaultKeepsByVaultId(vaultId);
+        List<VaultKeepsViewModel> myKeeps = _vkrepo.GetVaultKeepsByVaultId(vaultId);
+        return myKeeps;
     }
 
     // STUB Get Keeps by Vault Id - See in Vault Controller

@@ -51,30 +51,29 @@ public class VaultKeepsRepository
         return vaultKeeps;
     }
     // STUB Get VaultKeeps by Vault Id VaultKeepsViewModel
+    // see CollabRepo on week10 C# PostIt
+    // Collaborators = M2M table = VaultKeeps
+    // Albums is what we are joining = Keeps
     internal List<VaultKeepsViewModel> GetVaultKeepsByVaultId(int vaultId)
     {
         string sql = @"
-    SELECT
-    kee.*,
-    vke.VaultId,
-    kee.Id as KeepId,
-    kee.CreatorId as ProfileId,
-    prof.* -- This selects all columns from Profile
-    FROM Keeps kee
-    JOIN VaultKeeps vke ON kee.Id = vke.KeepId
-    JOIN Profiles prof ON kee.CreatorId = prof.Id
-    WHERE vke.VaultId = @VaultId;
-    ";
-
-        return _vkdb.Query<VaultKeepsViewModel, Profile, VaultKeepsViewModel>(
-            sql,
-            (keepModel, profile) =>
-            {
-                keepModel.Creator = profile;
-                return keepModel;
-            },
-            new { VaultId = vaultId },
-            splitOn: "ProfileId").ToList();
+        SELECT
+        vake.*,
+        kee.*,
+        act.*
+        FROM vaultKeeps vake
+        JOIN keeps kee ON kee.id = vake.keepId
+        JOIN accounts act ON kee.creatorId = act.id
+        WHERE vake.vaultId = @vaultId
+        ;";
+        List<VaultKeepsViewModel> myKeeps = _vkdb.Query<VaultKeep, VaultKeepsViewModel, Account, VaultKeepsViewModel>(sql, (vake, keep, account) =>
+               {
+                   keep.VaultKeepId = vake.Id;
+                   keep.VaultId = vake.VaultId;
+                   keep.Creator = account;
+                   return keep;
+               }, new { vaultId }).ToList();
+        return myKeeps;
     }
 
     // STUB Get Keep by Vault Id

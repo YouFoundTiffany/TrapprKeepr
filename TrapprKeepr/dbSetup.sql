@@ -83,3 +83,9 @@ CREATE TABLE
 --         '6532bb3d577b39d02c12a556'
 
 --     )
+
+SELECT vake.*, vau.*
+FROM vaultKeeps vake
+    JOIN vaults vau ON vau.id = vake.vaultId
+WHERE
+    vake.creatorId = @creatorId;

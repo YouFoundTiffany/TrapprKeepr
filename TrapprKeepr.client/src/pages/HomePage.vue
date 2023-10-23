@@ -19,6 +19,7 @@ import { computed, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState';
 import { Modal } from 'bootstrap';
+import { vaultsService } from '../services/VaultsService';
 
 export default {
   setup() {
@@ -36,6 +37,14 @@ export default {
     async function getKeeps() {
       try {
         await keepsService.getKeeps();
+      }
+      catch (error) {
+        Pop.error(error);
+      }
+    }
+    async function getVaults() {
+      try {
+        await vaultsService.getVaults();
       }
       catch (error) {
         Pop.error(error);

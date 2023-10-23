@@ -1,5 +1,5 @@
 <template>
-    <div class="keep-card" :keep="keep" :id="'details-' + keep.id">
+    <div v-if="keep" class="keep-card" :keep="keep" :id="'details-' + keep.id">
         <div @click="openKeepModal" class="card mb-3">
             <img :src="keep.img" class="card-img-top mxht" alt="...">
             <div class="card-body">

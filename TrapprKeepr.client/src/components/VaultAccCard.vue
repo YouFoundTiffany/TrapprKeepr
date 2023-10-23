@@ -10,9 +10,21 @@
     </div>
 </template>
 <script>
+import { computed } from 'vue';
+import { AppState } from '../AppState.js';
+
 export default {
+    props: {
+        vault: { type: Object, required: true }
+    },
     setup() {
-        return {};
+        return {
+            AppState: computed(() => AppState),
+            profile: computed(() => AppState.profile),
+            keeps: computed(() => AppState.keeps),
+            vaults: computed(() => AppState.vaults),
+            account: computed(() => AppState.account),
+        };
     },
 };
 </script>

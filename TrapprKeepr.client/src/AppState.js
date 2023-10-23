@@ -12,16 +12,20 @@ export const AppState = reactive({
   /** @type {import('./models/Vault.js').Vault[]} */
   vaults: [],
 
+  // Logged in User/Account holder's Keeps
+  /** @type {import('./models/Vault.js').Vault | null} */
+  myVaults: null,
+
+  // Profile or User's Keeps not necessarily the logged in user.
+  /** @type {import('./models/Vault.js').Vault | null} */
+  profileVaults: null,
+
   /** @type {import('./models/Vault.js').Vault | null} */
   activeVault: null,
 
-  // REVIEW
+  // REVIEW keeps on a single Vault ID
   /** @type  {import('./models/Keep.js').Keep | null} */
   activeVaultKeeps: [],
-
-  // REVIEW
-  /** @type {import('./models/VaultKeep.js').vaultsVKeeps | null}*/
-  activeKeepVKeeps: [],
 
   /** @type {import('./models/Keep.js').Keep[]} */
   keeps: [],
@@ -29,13 +33,14 @@ export const AppState = reactive({
   /** @type {import('./models/Keep.js').Keep | null} */
   activeKeep: null,
 
+  // Logged in User/Account holder's Keeps
   /** @type {import('./models/Keep.js').Keep | null} */
   myKeeps: null,
 
-  /** @type {import('./models/VaultKeep.js').VaultKeep[]} */
-  vaultsVKeeps: [],
+  // Profile or User's Keeps not necessarily the logged in user.
+  /** @type {import('./models/Keep.js').Keep | null} */
+  profileKeeps: null,
 
-  /** @type {import('./models/VaultKeep.js').VaultKeep[]} */
-  myVKeekps: []
+
 
 })

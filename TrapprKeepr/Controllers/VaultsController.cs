@@ -104,32 +104,34 @@ public class VaultsController : ControllerBase
     }
 
     // STUB Get KEEPS by Vault Id
-    [HttpGet("{vaultId}/keeps")]
-    public ActionResult<List<Keep>> GetKeepsByVaultId(int vaultId)
-    {
-        try
-        {
-            List<Keep> keeps = _vkeService.GetKeepsByVaultId(vaultId);
-            return keeps;
-        }
-        catch (Exception error)
-        {
-            return BadRequest(error.Message);
-        }
-    }
-    // STUB Get VaultKeeps by Vault Id
     // [HttpGet("{vaultId}/keeps")]
-    // public ActionResult<List<VaultKeepsViewModel>> GetVaultKeepsByVaultId(int vaultId)
+    // public ActionResult<List<Keep>> GetKeepsByVaultId(int vaultId)
     // {
     //     try
     //     {
-    //         List<VaultKeepsViewModel> vaultKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
-    //         return _vkeService.GetVaultKeepsByVaultId(vaultId);
-
+    //         List<Keep> keeps = _vkeService.GetKeepsByVaultId(vaultId);
+    //         return keeps;
     //     }
     //     catch (Exception error)
     //     {
     //         return BadRequest(error.Message);
     //     }
     // }
+    // STUB Get VaultKeeps by Vault Id VIEW Model, many to many join continued
+    [Authorize]
+    [HttpGet("{vaultId}/keeps")]
+    public async Task<ActionResult<List<VaultKeepsViewModel>>> GetVaultKeepsByVaultId(int vaultId)
+    {
+        try
+        {
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            List<VaultKeepsViewModel> myKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
+
+            return myKeeps;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
 }

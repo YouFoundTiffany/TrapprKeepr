@@ -1,5 +1,6 @@
 import { AppState } from "../AppState.js"
 import { Keep } from "../models/Keep.js"
+import { VaultKeep } from "../models/VaultKeep.js"
 // import { VaultKeep } from "../models/VaultKeep.js"
 // import { Vault } from "../models/Vault.js"
 import { logger } from "../utils/Logger.js"
@@ -21,9 +22,8 @@ class KeepsService {
     }
     // STUB GetKeep
     async getKeeps() {
-        // debugger
         const res = await api.get('api/keeps')
-        logger.log('📷 got keeps', res.data)
+        logger.log('[got keeps]', res.data)
         const keeps = AppState.keeps = res.data.map(keep => new Keep(keep))
         AppState.keeps = keeps
     }
@@ -36,11 +36,21 @@ class KeepsService {
     // }
 
     // STUB GetKeepByProfileId
-    // async getPicturesByAlbumId(albumId) {
-    //     const res = await api.get(`api/albums/${albumId}/pictures`)
-    //     logger.log('🖼️ album pictures', res.data)
-    //     AppState.activeAlbumPictures = res.data.map(pic => new Picture(pic))
-    // }
+    async getKeepsByProfile() {
+        logger.log(AppState.account.id)
+        // let res = await api.get(`/profile/keeps`) ?????
+        let res = await api.get(`/account/keeps`)
+        logger.log(res.data)
+        AppState.myKeeps = res.data.map(keep => new Keep(keep))
+        logger.log(AppState.profileKeeps)
+    }
+
+    // STUB get all keeps on a single Vault ID
+    async getKeepsbyVaultId(vaultId) {
+        const res = await api.get(`api/vaults/${vaultId}/keeps`)
+        logger.log('[keeps on this specific album]', res.data)
+        AppState.activeVaultKeeps = res.data.map(vk => new VaultKeep(vk))
+    }
 
     // STUB CreateKeep
     // async getCollaboratorsByAlbumId(albumId) {
