@@ -1,5 +1,7 @@
+<!-- NAVBAR COMPONENT -->
 <template>
-  <nav class="container-flex navbar navbar-expand-lg mt-5 px-3  navbar-text justify-content-around">
+  <nav v-if="keepData || vaultData"
+    class="container-flex navbar navbar-expand-lg mt-5 px-3  navbar-text justify-content-around">
     <!-- LEFT -->
     <div class="col-12 col-md-4">
       <!-- DROPDOWN -->
@@ -8,34 +10,38 @@
           aria-expanded="false">
           Create
         </button>
+        <!-- v-if="account.id == profile.id && detailspage" -->
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal1">New Keep</a></li>
-          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal2">New Vault</a></li>
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#create-keep">New Keep</a></li>
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#create-vault">New Vault</a></li>
         </ul>
       </div>
     </div>
 
     <!-- Modal 1 for Keep-->
-    <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
+    <div class="modal fade" id="create-keep" tabindex="-1" aria-labelledby="create-keepLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal1Label">Create Keep</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="create-keepLabel">Create Keep</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="create-keep" aria-label="Close"></button>
           </div>
+          <!-- Create Keep Form -->
           <div class="modal-body">
             <form @submit.prevent="createKeep">
               <div class="mb-3">
-                <label for="keepName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="keepName" v-model="keep.name">
+                <label for="name" class="form-label">Name</label>
+                <input v-model="keepData.name" type="text" class="form-control" id="name" minlength="1" maxlength="20">
               </div>
               <div class="mb-3">
                 <label for="keepDescription" class="form-label">Description</label>
-                <input type="text" class="form-control" id="keepDescription" v-model="keep.description">
+                <input v-model="keepData.description" type="text" class="form-control" id="keepDescription" minlength="1"
+                  maxlength="100">
               </div>
               <div class="mb-3">
                 <label for="keepImg" class="form-label">Image URL</label>
-                <input type="url" class="form-control" id="keepImg" v-model="keep.img">
+                <input v-model="keepData.img" type="url" class="form-control" id="keepImg" minlength="150"
+                  maxlength="700">
               </div>
               <button type="submit" class="btn btn-primary">Create Keep</button>
             </form>
@@ -46,30 +52,36 @@
 
 
     <!-- Modal 2 for Vault-->
-    <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal fade" id="create-vault" tabindex="-1" aria-labelledby="create-vaultLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal2Label">Create Vault</h5>
+            <h5 class="modal-title" id="create-vaultLabel">Create Vault</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <!-- Create Vault Form -->
           <div class="modal-body">
+
             <form @submit.prevent="createVault">
+
               <div class="mb-3">
-                <label for="vaultName" class="form-label">Name</label>
-                <input type="text" class="form-control" id="vaultName" v-model="vault.name">
+                <label for="vault-name" class="form-label">Name</label>
+                <input v-model="vaultData.name" id="vault-name" class="form-control" type="text" minlength="5"
+                  maxlength="20">
               </div>
               <div class="mb-3">
-                <label for="vaultDescription" class="form-label">Description</label>
-                <input type="text" class="form-control" id="vaultDescription" v-model="vault.description">
+                <label for="vault-description" class="form-label">Description</label>
+                <input v-model="vaultData.description" id="vault-description" class="form-control" type="text"
+                  minlength="1" maxlength="100">
               </div>
               <div class="mb-3">
-                <label for="vaultImg" class="form-label">Image URL</label>
-                <input type="url" class="form-control" id="vaultImg" v-model="vault.img">
+                <label for="vault-img" class="form-label">Image URL</label>
+                <input v-model="vaultData.img" id="vault-img" class="form-control" type="text" minlength="150"
+                  maxlength="700">
               </div>
               <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="vaultPrivate" v-model="vault.isPrivate">
-                <label class="form-check-label" for="vaultPrivate">Is Private?</label>
+                <label class="vault-isPrivate" for="vault-isPrivate">Is Private?</label>
+                <input v-model="vaultData.isPrivate" id="vault-isPrivate" class="form-checkbox" type="checkbox">
               </div>
               <button type="submit" class="btn btn-primary">Create Vault</button>
             </form>
@@ -99,33 +111,76 @@
 </template>
 
 <script>
-import { logger } from '../utils/Logger';
+import { computed, ref } from 'vue';
+import { logger } from '../utils/Logger.js';
 import Login from './Login.vue';
-logger
+import { AppState } from '../AppState.js';
+import { keepsService } from '../services/KeepsService';
+import { vaultsService } from '../services/VaultsService';
+import Pop from '../utils/Pop.js';
+import { router } from '../router';
+import { useRoute } from 'vue-router';
+import { Modal } from 'bootstrap';
+
+
+
 export default {
-  data() {
+  setup() {
+    const keepData = ref({})
+    const vaultData = ref({})
+    const keep = ref({ name: '', description: '', img: '' })
+    const vault = ref({ name: '', description: '', img: '', isPrivate: false })
+    const route = useRoute()
+
     return {
-      vault: {
-        name: '',
-        description: '',
-        img: '',
-        isPrivate: false,
+      keepData,
+      vaultData,
+      keep,
+      vault,
+      vaults: computed(() => AppState.vaults),
+      keeps: computed(() => AppState.keeps),
+      user: computed(() => AppState.user),
+
+      async createKeep() {
+
+        try {
+          logger.log('[Creat Keep]', keepData.value)
+          const newKeep = await keepsService.createKeep(keepData.value)
+          keepData.value = {}
+          Pop.toast('Keep Created', 'success')
+
+          // router.push({ name: 'Keep Details', params: { keepId: newKeep.id } })
+          Modal.getOrCreateInstance('#create-keep').hide()
+        } catch (error) {
+          Pop.error(error)
+        }
       },
-      keep: {
-        name: '',
-        description: '',
-        img: ''
+
+      // async createVault() {
+      //   try {
+      //     logger.log(vaultData.value, AppState.activeVault.id, route.params.vaultId)
+      //     vaultData.value.vaultId = route.params.vaultId
+      //     await vaultsService.createVault(vaultData.value)
+      //     Pop.toast('Added Vault', 'success', 'center-end')
+      //     vaultData.value = {}
+      //     // Modal.getOrCreateInstance('#create-vault').hide()
+      //   } catch (error) {
+      //     Pop.error(error)
+      //   }
+      // }
+      async createVault() {
+        try {
+          logger.log('[Create Vault]', vaultData.value)
+          const newVault = await vaultsService.createVault(vaultData.value)
+          vaultData.value = {}
+          Pop.toast('Vault Created', 'success')
+          // router.push({ name: 'Vault Details', params: { vaultId: newVault.id } })
+          Modal.getOrCreateInstance('#create-vault').hide()
+        } catch (error) {
+          Pop.error(error)
+        }
       }
-    };
-  },
-  methods: {
-    createVault() {
-      // Call the API or service to create the vault
-      logger.log("Vault to be created:", this.vault);
-    },
-    createKeep() {
-      // Call the API or service to create the keep
-      logger.log("Keep to be created:", this.keep);
+
     }
   },
   components: { Login }

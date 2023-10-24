@@ -1,11 +1,9 @@
+<!-- KEEP ACCOUNT CARD COMPONENT -->
 <template>
-    <div class="card text-bg-dark">
-        <img src="..." class="card-img" alt="...">
+    <div class="card acc-kcard text-bg-dark">
+        <img :src="keep.img" class="acc-kcard-img" alt="keep image">
         <div class="card-img-overlay">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.
-                This content is a little bit longer.</p>
-            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+            <h5 class="card-title">{{ keep.name }}</h5>
         </div>
     </div>
 </template>
@@ -31,4 +29,19 @@ export default {
 </script>
 
 
-<style></style>
+
+<style scoped>
+.acc-kcard {
+    width: calc(100% / 6);
+    height: auto;
+    aspect-ratio: 1;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0.5%;
+}
+
+.acc-kcard-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>

@@ -1,8 +1,9 @@
+<!-- KEEP CARD COMPONENT -->
 <template>
     <div v-if="keep" @click="openKeepModal" :keep="keep" :id="'details-' + keep.id"
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
-        <img :src="keep.img" class="card-image rounded-top" alt="...">
-        <h5 class="keep-name ps-2">{{ keep.name }}</h5>
+        <img :src="keep.img" class="card-image rounded-top" alt="keep image">
+        <h5 class="d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
         <img :src="keep.creator.picture" alt="" class="profile-pic">
 
     </div>
@@ -51,7 +52,7 @@ export default {
     /* object-fit: cover; */
     /* overflow: hidden; */
     /* height: auto; */
-    z-index: 1;
+    z-index: 1.5;
     /* position: relative; */
 }
 

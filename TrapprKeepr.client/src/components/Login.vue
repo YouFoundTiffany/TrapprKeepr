@@ -1,3 +1,4 @@
+<!-- LOGIN COMPONENT -->
 <template>
   <span class="navbar-text">
     <button class="btn selectable lighten-30 text-uppercase my-2 my-lg-0" @click="login" v-if="!user.isAuthenticated">

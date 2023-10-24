@@ -1,3 +1,4 @@
+<!-- PROFILE PAGE -->
 <template>
     <div class='container'>
         <section class='row'>

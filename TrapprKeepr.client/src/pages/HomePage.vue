@@ -1,12 +1,9 @@
+<!-- HOME PAGE  -->
 <template>
   <section class="container">
     <div class="row">
-      <div class="masonry-container">
-
+      <div class="hmasonry-container">
         <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" @click="openModal(keep)" />
-
-
-        <!-- <KeepDetailsModalView v-if="selectedKeep" :keep="selectedKeep" @close="selectedKeep = null" ref="modalRef" /> -->
       </div>
     </div>
   </section>
@@ -23,7 +20,7 @@ import { vaultsService } from '../services/VaultsService';
 
 export default {
   setup() {
-    onMounted(() => { getKeeps(); });
+    onMounted(() => { getKeeps(); getVaults(); });
 
     const selectedKeep = ref(null);
     const modalRef = ref(null);
@@ -54,6 +51,7 @@ export default {
     return {
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
+      vaults: computed(() => AppState.vaults),
       selectedKeep,
       openModal
     }
@@ -64,7 +62,7 @@ export default {
 </script>
 <style>
 /* Best version so far */
-.masonry-container {
+.hmasonry-container {
   top: 45px;
   columns: 200px;
   /* column-gap: 1.25em; */

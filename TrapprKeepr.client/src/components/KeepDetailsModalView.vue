@@ -1,3 +1,4 @@
+<!-- KEEP DETAILS MODAL VIEW COMPONENT -->
 <template>
     <div v-if="keep" class="modal fade" :id="'details-modal-' + keep.id" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true" ref="myModal">

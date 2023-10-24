@@ -1,16 +1,10 @@
 <template>
-    <template>
-        <div v-if="vault" class="card text-bg-dark">
-            <img src="..." class="card-img" alt="...">
-            <div class="card-img-overlay">
-                <h5 class="card-title">{{ vault.name }}</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                    content.
-                    This content is a little bit longer.</p>
-                <p class="card-text"><small>Last updated 3 mins ago</small></p>
-            </div>
+    <div class="card acc-vcard text-bg-dark">
+        <img :src="vault.img" class="acc-vcard-img" alt="vault image">
+        <div class="card-img-overlay">
+            <h5 class="card-title">{{ vault.name }}</h5>
         </div>
-    </template>
+    </div>
 </template>
 <script>
 import { computed } from 'vue';
@@ -33,4 +27,18 @@ export default {
 </script>
 
 
-<style></style>
+<style>
+.acc-vcard {
+    width: calc(100% / 6);
+    height: auto;
+    aspect-ratio: 1;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 0.5%;
+}
+
+.acc-vcard-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>

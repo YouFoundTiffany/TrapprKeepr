@@ -1,3 +1,4 @@
+<!-- MODAL WRAPPER COMPONENT -->
 <template>
     <!-- Modal trigger button -->
     <button v-if="showButton" type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
