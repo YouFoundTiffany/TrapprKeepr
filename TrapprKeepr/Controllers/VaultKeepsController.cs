@@ -62,7 +62,7 @@ public class VaultKeepsController : ControllerBase
         }
     }
 
-    // STUB DELETE Keep - Cannot implicitly convert type '(TrapprKeepr.Models.Keep, string)' to 'TrapprKeepr.Models.Keep'CS0029
+    // STUB DELETE Keep
     [Authorize]
     [HttpDelete("{vaultkeepid}")]
     public async Task<ActionResult<string>> DeleteVaultKeep(int vaultKeepId)

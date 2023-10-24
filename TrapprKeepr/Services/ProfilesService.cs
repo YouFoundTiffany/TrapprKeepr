@@ -2,19 +2,22 @@ namespace TrapprKeepr.Services;
 
 public class ProfilesService
 {
-    private readonly ProfilesRepository _repo;
+    private readonly ProfilesRepository _prepo;
 
-    public ProfilesService(ProfilesRepository repo)
+    public VaultsRepository _vrepo { get; }
+
+    public ProfilesService(ProfilesRepository prepo, VaultsRepository vrepo)
     {
-        _repo = repo;
+        _prepo = prepo;
+        _vrepo = vrepo;
     }
     // STUB GetOrCreateProfile
     internal Account GetOrCreateProfile(Account userInfo)
     {
-        Account profile = _repo.GetById(userInfo.Id);
+        Account profile = _prepo.GetById(userInfo.Id);
         if (profile == null)
         {
-            return _repo.Create(userInfo);
+            return _prepo.Create(userInfo);
         }
         return profile;
     }
@@ -22,7 +25,7 @@ public class ProfilesService
 
     internal Profile GetProfileByEmail(string email)
     {
-        return _repo.GetByEmail(email);
+        return _prepo.GetByEmail(email);
     }
 
     // STUB Edit Profile
@@ -32,24 +35,28 @@ public class ProfilesService
         original.Name = editprofileData.Name?.Length > 0 ? editprofileData.Name : original.Name;
         original.Picture = editprofileData.Picture?.Length > 0 ? editprofileData.Picture : original.Picture;
         original.CoverImg = editprofileData.CoverImg?.Length > 0 ? editprofileData.CoverImg : original.CoverImg;
-        return _repo.Edit(original);
+        return _prepo.Edit(original);
     }
 
     // STUB Get User Profile
     public Profile GetProfile(string id)
     {
-        return _repo.GetProfile(id);
+        return _prepo.GetProfile(id);
     }
 
     // STUB Get User Keeps
     public List<Keep> GetUserKeeps(string id)
     {
-        return _repo.GetUserKeeps(id);
+        return _prepo.GetUserKeeps(id);
     }
 
+    // FIXME
     // STUB Get User Vaults
-    public List<Vault> GetUserVaults(string id)
-    {
-        return _repo.GetUserVaults(id);
-    }
+    // tifftag filter out private vaults
+    // public List<Vault> GetUserVaults(string id)
+    // {
+    //     List<Vault> restaurants = _vrepo.Get;
+    //     vaults = vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userId);
+    //     return _prepo.GetUserVaults(id);
+    // }
 }

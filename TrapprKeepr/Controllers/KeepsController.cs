@@ -82,12 +82,13 @@ public class KeepsController : ControllerBase
     }
     // STUB Get Keep by its Id
     [HttpGet("{keepId}")]
-    public async Task<ActionResult<Keep>> GetKeepById(int keepId, string userId)
+    public async Task<ActionResult<Keep>> GetKeepById(int keepId)
+    //  string userId
     {
         try
         {
-            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            // string userId = userInfo.Id; - causes error
+            Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
+            string userId = userInfo?.Id;
             Keep keep = _keeService.GetKeepById(keepId, userId);
             return Ok(keep);
         }

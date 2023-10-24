@@ -20,13 +20,25 @@ public class KeepsService
     }
 
     // STUB Get Keep by Id - and show all the Vaults that Keep is in?
-    internal Keep GetKeepById(int keepId, string userId)
+    internal Keep GetKeepById(int keepId, string userId, bool increaseViews = false)
     {
         // Safety Check
-        Keep foundKeep = _krepo.GetKeepById(keepId, userId);
-        if (foundKeep == null) throw new Exception($"Unable to find Keep {keepId}");
-        return foundKeep;
+        Keep keep = _krepo.GetKeepById(keepId, userId);
+        if (keep == null) throw new Exception($"Unable to find Keep {keepId}");
+        if (increaseViews && keep.CreatorId != userId)
+        {
+            // INCREMENT VIEWS
+            this.IncreaseViews(keep);
+        }
+        return keep;
     }
+
+    internal void IncreaseViews(Keep keep)
+    {
+        keep.Views++;
+        _krepo.EditKeep(keep);
+    }
+
     // STUB EDIT Keep
     internal Keep EditKeep(Keep updateKeepData, int keepId, string userId)
     {

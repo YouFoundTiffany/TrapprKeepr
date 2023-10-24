@@ -1,13 +1,15 @@
+// CLIENT KEEPS SERVICE
 import { AppState } from "../AppState.js"
 import { Keep } from "../models/Keep.js"
 import { VaultKeep } from "../models/VaultKeep.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
+
 class KeepsService {
     // STUB createKeep
     async createKeep(keepData) {
         const res = await api.post('api/keeps', keepData)
-        logger.log('📷 created keep', res.data)
+        logger.log('[CREATED KEEP]', res.data)
         const newKeep = new Keep(res.data)
         AppState.keeps.push(new Keep(res.data))
         return newKeep
@@ -16,7 +18,7 @@ class KeepsService {
     // STUB GetKeep
     async getKeeps() {
         const res = await api.get('api/keeps')
-        logger.log('[got keeps]', res.data)
+        logger.log('[GOT ALL KEEPS]', res.data)
         // const keeps = AppState.keeps = res.data.map(keep => new Keep(keep))
         // AppState.keeps = keeps
         const keeps = res.data.map(keep => new Keep(keep))
@@ -24,13 +26,12 @@ class KeepsService {
     }
 
     // STUB GetKeepByProfileId
-    async getKeepsByProfile() {
-        logger.log(AppState.account.id)
-        // let res = await api.get(`/profile/keeps`) ?????
-        let res = await api.get(`/account/keeps`)
-        logger.log(res.data)
-        AppState.myKeeps = res.data.map(keep => new Keep(keep))
-        logger.log(AppState.profileKeeps)
+    async getKeepsByProfile(profileId) {
+        const response = await api.get(`api/profiles/${profileId}/keeps`)
+        logger.log('[MY KEEPS]', response.data)
+        const myKeeps = AppState.keeps = response.data.map(k => new Keep(k))
+        return myKeeps;
+
     }
 
     // STUB get all keeps on a single Vault ID

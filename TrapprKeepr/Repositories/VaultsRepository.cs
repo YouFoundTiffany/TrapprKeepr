@@ -8,13 +8,14 @@ public class VaultsRepository
         _vdb = vdb;
     }
     // STUB Create Vault
+    // NOTE model of bool should have default, and you must also include in your sql so that in case of an unauthorized user is trying to make a vault.
     internal Vault Create(Vault vaultData)
     {
         string sql = @"
             INSERT INTO vaults
-            (name, description, img, creatorId)
+            (name, description, img, creatorId, isPrivate)
             VALUES
-            (@Name, @Description, @Img, @CreatorId);
+            (@Name, @Description, @Img, @CreatorId, @isPrivate);
 
             SELECT
             act.*,

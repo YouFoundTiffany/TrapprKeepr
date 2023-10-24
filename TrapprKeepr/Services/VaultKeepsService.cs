@@ -2,9 +2,12 @@ namespace TrapprKeepr.Services;
 public class VaultKeepsService
 {
     private readonly VaultKeepsRepository _vkrepo;
-    public VaultKeepsService(VaultKeepsRepository vkrepo)
+    private readonly VaultsService _vservice;
+    public VaultKeepsService(VaultKeepsRepository vkrepo, VaultsService vservice)
+
     {
         _vkrepo = vkrepo;
+        _vservice = vservice;
     }
     // STUB Create VaultKeep
     internal VaultKeep Create(VaultKeep vaultKeepData)
@@ -19,18 +22,14 @@ public class VaultKeepsService
         return vaultKeeps;
     }
     // STUB Get VaultKeep by Vault Id - See in Vault Controller - View Model Continued
-    internal List<VaultKeepsViewModel> GetVaultKeepsByVaultId(int vaultId)
+    internal List<VaultKeepsViewModel> GetVaultKeepsByVaultId(int vaultId, string userId)
     {
         List<VaultKeepsViewModel> myKeeps = _vkrepo.GetVaultKeepsByVaultId(vaultId);
+        _vservice.GetVaultById(vaultId, userId);
         return myKeeps;
     }
 
-    // STUB Get Keeps by Vault Id - See in Vault Controller
-    internal List<Keep> GetKeepsByVaultId(int vaultId)
-    {
-        List<Keep> keeps = _vkrepo.GetKeepsByVaultId(vaultId);
-        return keeps;
-    }
+
     // STUB Get VaultKeep by Id - and show all the Keeps in that Keep
     internal VaultKeep GetVaultKeepById(int vaultKeepId, string userId)
     {

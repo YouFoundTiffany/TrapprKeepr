@@ -18,13 +18,15 @@ public class VaultsService
         List<Vault> vaults = _vrepo.GetAllVaults();
         return vaults;
     }
-    // STUB Get Vault by Id - and show all the Keeps in that Vault
-    // NOTE make this a public method
+    // STUB Get Vault by Id
     public Vault GetVaultById(int vaultId, string userId)
     {
-        Vault foundVault = _vrepo.GetVaultById(vaultId, userId);
-        if (foundVault == null) throw new Exception($"Unable to find Vault {vaultId}");
-        return foundVault;
+        Vault vault = _vrepo.GetVaultById(vaultId, userId);
+        if (vault == null) throw new Exception($"Unable to find Vault {vaultId}");
+        if (vault.IsPrivate == true && vault.CreatorId != userId) throw new Exception($"{vault.Name} is Private");
+
+        return vault;
+
     }
     // STUB EDIT Vault
     internal Vault EditVault(Vault updateVaultData, int vaultId, string userId)
@@ -39,25 +41,6 @@ public class VaultsService
         _vrepo.EditVault(originalVault);
         return originalVault;
     }
-
-
-    // // STUB EDIT VAULT
-    // internal Vault EditVault(Vault updateVaultData, int vaultId, string userId)
-    // {
-    //     Vault originalVault = this.GetVaultById(vaultId, userId);
-    //     if (originalVault == null) throw new Exception("Vault Not Found");
-    //     if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Vault You did not Create");
-    //     // if (originalVault.CreatorId != userId) throw new Exception("Access Denied: Cannot Edit a Vault You did not Create");
-    //     originalVault.Name = updateVaultData.Name ?? originalVault.Name;
-    //     originalVault.Description = updateVaultData.Description ?? originalVault.Description;
-    //     originalVault.Img = updateVaultData.Img ?? originalVault.Img;
-    //     originalVault.IsPrivate = updateVaultData.IsPrivate ?? originalVault.IsPrivate;
-
-    //     Vault vault = _vrepo.EditVault(originalVault);
-
-    //     return vault;
-    // }
-
     // STUB DELETE VAULT
     internal (Vault, string) DeleteVault(int vaultId, string userId)
     {

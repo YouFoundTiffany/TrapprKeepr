@@ -5,11 +5,17 @@
         <div class="card-img-overlay">
             <h5 class="card-title">{{ keep.name }}</h5>
         </div>
+        <!-- TODO PUT THIS IN MODAL WITH DETAILS -->
+
+        <button @click="deleteKeep(keep.id)">Delete?</button>
     </div>
 </template>
 <script>
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
+import Pop from '../utils/Pop';
+import { keepsService } from '../services/KeepsService.js';
+
 
 export default {
     props: {
@@ -18,11 +24,22 @@ export default {
     setup() {
         return {
             AppState: computed(() => AppState),
+            activeKeep: computed(() => AppState.activeKeep),
             profile: computed(() => AppState.profile),
             keeps: computed(() => AppState.keeps),
             vaults: computed(() => AppState.vaults),
             account: computed(() => AppState.account),
 
+            async deleteKeep(activeKeep) {
+                try {
+                    if (await Pop.confirm(`Are you sure you want to delete this keep?`)) {
+                        await keepsService.deleteKeep(activeKeep)
+                    }
+                    Pop.toast(`You deleted the keep!`)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
         };
     },
 };

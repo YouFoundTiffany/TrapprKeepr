@@ -108,14 +108,17 @@ public class VaultsController : ControllerBase
     }
 
     // STUB Get VaultKeeps by Vault Id VIEW Model, many to many join continued
-    [Authorize]
+    // this should only works if the vault is not private
+    // [Authorize]
     [HttpGet("{vaultId}/keeps")]
     public async Task<ActionResult<List<VaultKeepsViewModel>>> GetVaultKeepsByVaultId(int vaultId)
     {
         try
         {
-            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            List<VaultKeepsViewModel> myKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId);
+            // I'm getting the userInfo but I'm not using it. look in to that.
+            Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
+            string userId = userInfo?.Id;
+            List<VaultKeepsViewModel> myKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId, userInfo?.Id);
             return myKeeps;
         }
         catch (Exception error)
