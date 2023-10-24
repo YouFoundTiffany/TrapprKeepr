@@ -15,7 +15,6 @@ export const AppState = reactive({
   profile: {},
 
   // STUB ACTIVE PROFILE?
-  // FIXME
   /** @type {import('./models/Account.js').Account| null} */
   activeProfile: null,
 
@@ -24,7 +23,7 @@ export const AppState = reactive({
   vaults: [],
   // STUB VAULTS
   /** @type {import('./models/Vault.js').Vault[]} */
-  vaults: [],
+  myVaults: [],
 
   // STUB ACTIVE VAULT?
   /** @type {import('./models/Vault.js').Vault | null} */
@@ -40,7 +39,7 @@ export const AppState = reactive({
   keeps: [],
   // STUB KEEPS
   /** @type {import('./models/Keep.js').Keep[]} */
-  keeps: [],
+  myKeeps: [],
 
   // STUB ACTIVE KEEP
   /** @type {import('./models/Keep.js').Keep | null} */

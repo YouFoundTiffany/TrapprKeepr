@@ -3,6 +3,7 @@
         <img :src="vault.img" class="acc-vcard-img" alt="vault image">
         <div class="card-img-overlay">
             <h5 class="card-title">{{ vault.name }}</h5>
+            <i class="mdi mdi-lock text-light iconshaddisplay"></i>
         </div>
         <!-- TODO PUT THIS IN MODAL WITH DETAILS -->
         <button @click="deleteVault(vault.id)">Delete?</button>
@@ -43,6 +44,18 @@ export default {
 
 
 <style>
+.iconshaddisplay {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50em;
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+}
+
 .acc-vcard {
     width: calc(100% / 6);
     height: auto;

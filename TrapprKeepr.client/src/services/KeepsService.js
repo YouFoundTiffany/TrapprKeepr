@@ -34,6 +34,12 @@ class KeepsService {
 
     }
 
+    async getKeepDetails(keepId) {
+        const res = await api.get('api' + '/' + 'keeps' + '/' + `${keepId}`)
+        logger.log('[GOT KEEP BY ID ]', res.data)
+
+        AppState.activeKeep = new Keep(res.data)
+    }
     // STUB get all keeps on a single Vault ID
     async getKeepsbyVaultId(vaultId) {
         const res = await api.get(`api/vaults/${vaultId}/keeps`)

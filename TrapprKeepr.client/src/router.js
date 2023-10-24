@@ -9,8 +9,8 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: loadPage('HomePage')
-    // beforeEnter: authSettled // Waits for the automatic login to process before entering, DOES NOT prompt them to login
+    component: loadPage('HomePage'),
+    beforeEnter: authSettled
   },
   {
     path: '/account',
@@ -22,6 +22,12 @@ const routes = [
     path: '/profiles/:profileId',
     name: 'Profile',
     component: loadPage('ProfilePage')
+  },
+  {
+    path: '/vault/:vaultId',
+    name: 'Vault Details',
+    component: loadPage('VaultDetailsPage'),
+    beforeEnter: authSettled
   }
 ]
 

@@ -11,6 +11,7 @@
     <h1>{{ account.name }}</h1>
     <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
   </div>
+  <!-- TODO router link to profile page -->
   <!-- <router-link :to="{ name: 'Profile', params: profile.id }"> -->
   <button>Edit Profile</button>
   <!-- </router-link> -->
@@ -35,12 +36,22 @@ import VaultAccCard from '../components/VaultAccCard.vue';
 import { keepsService } from '../services/KeepsService';
 import { vaultsService } from '../services/VaultsService';
 import Pop from '../utils/Pop';
-import { useRoute } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
+import { logger } from '../utils/Logger';
+
+
+
+
 export default {
   setup() {
     const route = useRoute();
-    //
-    onMounted(() => { getKeepsByProfile(); getVaultsByProfile(); })
+    // TODO ADD isOwner to items in template for private vaults template above buttons
+    // v -if= "!restaurant.isShutdown && isOwner" - Make Private
+    // v-if="restaurant.isShutdown && isOwner" - Make Public
+    // v-if="isOwner" - Delete
+    // const isOwner = computed(() => AppState.account.id == AppState.activeVault?.creatorId)
+
+    onMounted(() => { getKeepsByProfile(); getVaultsByProfile(); getKeepDetails(); getVaultDetails(); })
 
     async function getKeepsByProfile() {
       try {
@@ -57,6 +68,24 @@ export default {
       }
     }
 
+    async function getKeepDetails() {
+      try {
+        await keepsService.getKeepDetails(route.params.keepId)
+      } catch (error) {
+        route.push({ name: 'Home' })
+        logger.error(error)
+        Pop.toast('Not Accessible')
+      }
+    }
+    async function getVaultDetails() {
+      try {
+        await vaultsService.getVaultDetails(route.params.vaultId)
+      } catch (error) {
+        route.push({ name: 'Home' })
+        logger.error(error)
+        Pop.toast('Not Accessible')
+      }
+    }
 
     return {
       getKeepsByProfile,
