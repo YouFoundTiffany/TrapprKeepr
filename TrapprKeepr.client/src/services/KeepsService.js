@@ -35,18 +35,28 @@ class KeepsService {
     }
 
     async getKeepDetails(keepId) {
-        const res = await api.get('api' + '/' + 'keeps' + '/' + `${keepId}`)
+        logger.log('api/keeps/undefined????')
+        const res = await api.get(`api/keeps/${keepId}`)
         logger.log('[GOT KEEP BY ID ]', res.data)
 
         AppState.activeKeep = new Keep(res.data)
     }
-    // STUB get all keeps on a single Vault ID
+
+
+
+    // STUB GET KEEPS IN A VAULT get all keeps on a single Vault ID
+    // {{endpoint}}/api/vaults/{{vaultId}}/keeps
     async getKeepsbyVaultId(vaultId) {
         const res = await api.get(`api/vaults/${vaultId}/keeps`)
         logger.log('[keeps on this specific album]', res.data)
         AppState.activeVaultKeeps = res.data.map(vk => new VaultKeep(vk))
     }
-
+    async getKeepsByProfileId(profileId) {
+        AppState.keeps = []
+        const res = await api.get(`api/keeps?creatorId=${profileId}`)
+        logger.log('🙆🖼️', res.data)
+        AppState.keeps = res.data.map(k => new Keep(k))
+    }
 }
 
 export const keepsService = new KeepsService()

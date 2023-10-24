@@ -1,7 +1,7 @@
 <!-- ACCOUNT PAGE -->
 <!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
-  <div class="about text-center">
+  <div v-if="keeps || vaults" class="about text-center">
     <div class="justify-content-center row d-flex">
       <img class="m-0 banner-image rounded" :src="account.coverImg" alt="Cover Image" />
     </div>
@@ -16,12 +16,12 @@
   <button>Edit Profile</button>
   <!-- </router-link> -->
 
-  <h2 class="card-title masonry-container">Vaults</h2>
+  <h2 v-if="vault" class="card-title masonry-container">Vaults</h2>
   <section class="" v-for="vault in vaults" :key="vault.id">
     <VaultAccCard :vault="vault" />
   </section>
 
-  <h2 class="card-title masonry-container">Keeps</h2>
+  <h2 v-if="keep" class="card-title masonry-container">Keeps</h2>
   <section class="" v-for="keep in keeps" :key="keep.id">
     <KeepAccCard :keep="keep" />
   </section>
@@ -39,7 +39,7 @@ import Pop from '../utils/Pop';
 import { RouterView, useRoute } from 'vue-router';
 import { logger } from '../utils/Logger';
 
-
+// TODO v-if="activeCar" FOR MODALS WHEN VAULTS OR KEEPS SELECTED
 
 
 export default {
@@ -51,7 +51,7 @@ export default {
     // v-if="isOwner" - Delete
     // const isOwner = computed(() => AppState.account.id == AppState.activeVault?.creatorId)
 
-    onMounted(() => { getKeepsByProfile(); getVaultsByProfile(); getKeepDetails(); getVaultDetails(); })
+    onMounted(() => { getKeepsByProfile(); getVaultsByProfile(); })
 
     async function getKeepsByProfile() {
       try {
@@ -68,20 +68,23 @@ export default {
       }
     }
 
+    // DO NOT PUT THESE ONMOUNTED AS YOU ONLY ACTIVATE THIS FUNCTION WHEN USER CLICKS TO GET MORE DETAILS ON A KEEP
+    // STUB Get Keep Details  // 'api/keeps/undefined????'
     async function getKeepDetails() {
       try {
         await keepsService.getKeepDetails(route.params.keepId)
       } catch (error) {
-        route.push({ name: 'Home' })
+        // route.push({ name: 'Home' })
         logger.error(error)
         Pop.toast('Not Accessible')
       }
     }
+    // STUB Get Vault Details
     async function getVaultDetails() {
       try {
         await vaultsService.getVaultDetails(route.params.vaultId)
       } catch (error) {
-        route.push({ name: 'Home' })
+        // route.push({ name: 'Home' })
         logger.error(error)
         Pop.toast('Not Accessible')
       }

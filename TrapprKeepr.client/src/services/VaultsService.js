@@ -33,10 +33,16 @@ class VaultsService {
         AppState.vaults = myVaults;
     }
     async getVaultDetails(vaultId) {
-        const res = await api.get('api' + '/' + 'vaults' + '/' + `${vaultId}`)
+        const res = await api.get(`api/vaults/${vaultId}`)
         logger.log('[GOT VAULT BY ID ]', res.data)
 
         AppState.activeVault = new Vault(res.data)
+    }
+    async getVaultsByProfileId(profileId) {
+        AppState.vaults = []
+        const res = await api.get(`api/vaults?creatorId=${profileId}`)
+        logger.log('🙆🖼️', res.data)
+        AppState.vaults = res.data.map(v => new Vault(v))
     }
 }
 export const vaultsService = new VaultsService()

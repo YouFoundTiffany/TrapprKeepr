@@ -15,7 +15,7 @@ export const AppState = reactive({
   profile: {},
 
   // STUB ACTIVE PROFILE?
-  /** @type {import('./models/Account.js').Account| null} */
+  /**@type {Profile} */
   activeProfile: null,
 
   // STUB VAULTS

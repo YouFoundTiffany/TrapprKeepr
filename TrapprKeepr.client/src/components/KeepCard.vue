@@ -4,16 +4,20 @@
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
         <img :src="keep.img" class="card-image rounded-top" alt="keep image">
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
-        <img :src="keep.creator.picture" alt="" class="profile-pic">
+        <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
+            <img :src="keep.creator.picture" alt="" class="profile-pic">
+        </router-link>
 
     </div>
 </template>
 <script>
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
+import { Account, Profile } from '../models/Account.js';
+
 export default {
     props: {
-        keep: { type: Object, required: true }
+        keep: { type: Object, required: true }, profile: { type: Profile, required: true }
     },
     openKeepModal() {
         this.$emit('open-modal', this.keep)
