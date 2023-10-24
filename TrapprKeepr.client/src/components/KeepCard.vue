@@ -1,13 +1,10 @@
 <template>
-    <div v-if="keep" class="keep-card" :keep="keep" :id="'details-' + keep.id">
-        <div @click="openKeepModal" class="card mb-3">
-            <img :src="keep.img" class="card-img-top mxht" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">{{ keep.description }}</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-        </div>
+    <div v-if="keep" @click="openKeepModal" :keep="keep" :id="'details-' + keep.id"
+        class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
+        <img :src="keep.img" class="card-image rounded-top" alt="...">
+        <h5 class="keep-name ps-2">{{ keep.name }}</h5>
+        <img :src="keep.creator.picture" alt="" class="profile-pic">
+
     </div>
 </template>
 <script>
@@ -24,6 +21,7 @@ export default {
 
         return {
             keeps: computed(() => AppState.keeps),
+            account: computed(() => AppState.account),
             resetModal() {
                 this.showModal = false
             },
@@ -36,7 +34,34 @@ export default {
 };
 </script>
 <style>
-.keep-card {
-    max-width: 200px;
+.profile-pic {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50em;
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+
+}
+
+.card-image {
+    object-fit: cover;
+    /* object-fit: cover; */
+    /* overflow: hidden; */
+    /* height: auto; */
+    z-index: 1;
+    /* position: relative; */
+}
+
+.keep-name {
+    z-index: 10;
+    position: relative;
+}
+
+.card-flow {
+    /* background-size: cover; */
+    overflow: hidden;
 }
 </style>

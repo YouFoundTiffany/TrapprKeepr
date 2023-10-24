@@ -63,29 +63,12 @@ export default {
 
 </script>
 <style>
-/* .keeps-container {
-  display: flex;
-  flex-wrap: wrap;
-} */
-
-.keep-card {
-  max-width: 200px;
-}
-
-
+/* Best version so far */
 .masonry-container {
-  $gap: 1.25em;
+  top: 45px;
   columns: 200px;
-  column-gap: $gap;
-
+  /* column-gap: 1.25em; */
+  overflow: hidden;
+  min-height: 100vh;
 }
-
-
-
-/* .masonry-container {
-  display: grid;
-  grid-gap: 3px;
-  display: flex;
-  flex-wrap: wrap;
-} */
 </style>
