@@ -4,11 +4,10 @@
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
         <img :src="keep.img" class="card-image rounded-top" keep.img>
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
-        <!-- FIXME -->
-        <!-- TODO move this into the modal -->
-        <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-            <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
-        </router-link>
+
+
+        <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
+
 
     </div>
 </template>
@@ -26,18 +25,7 @@ export default {
         this.$emit('open-modal', this.keep)
     },
     setup() {
-        onMounted(() => {
-            getProfileById();
-        })
 
-        async function getProfileById(profileId) {
-            try {
-                logger.log('profileId', route.params.profileId)
-                // await profilesService.getProfileById(route.params.profileId)
-            } catch (error) {
-                Pop.error(error)
-            }
-        }
 
         return {
             activeProfile: computed(() => AppState.activeProfile),
