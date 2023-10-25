@@ -1,7 +1,11 @@
-import { AppState } from '../AppState'
+import { AppState } from '../AppState.js'
 import { Account, Profile } from '../models/Account.js'
-import { logger } from '../utils/Logger'
-import { api } from './AxiosService'
+import { Keep } from '../models/Keep.js'
+import { Vault } from '../models/Vault.js'
+import { logger } from '../utils/Logger.js'
+import Pop from '../utils/Pop.js'
+import { api } from './AxiosService.js'
+
 
 class AccountService {
   async getAccount() {
@@ -14,7 +18,7 @@ class AccountService {
     }
   }
   async getProfile(profileId) {
-    debugger
+    // debugger
     const res = await api.get(`api/profiles/${profileId}`)
     logger.log('[GETTING PROFILE]', res.data)
     const profile = new Profile(res.data)
@@ -30,10 +34,15 @@ class AccountService {
     AppState.activeProfile = new Profile(res.data)
   }
 
+
+
   async editProfile(updateData) {
     const res = await api.put('/account', updateData)
     logger.log('🙆🪄', res.data)
   }
+
+
+
 }
 
 

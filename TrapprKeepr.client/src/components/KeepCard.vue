@@ -4,18 +4,20 @@
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
         <img :src="keep.img" class="card-image rounded-top" keep.img>
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
-        <!-- FIXME -->
-        <!-- TODO move this into the modal -->
-        <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-            <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
-        </router-link>
 
+        <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#details-modal">
+            Launch demo modal
+        </button>
     </div>
 </template>
 <script>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
-import { Account, Profile } from '../models/Account.js';
+// import { Account, Profile } from '../models/Account.js';
+import { logger } from '../utils/Logger';
+import { useRoute } from 'vue-router';
 
 export default {
     props: {
@@ -25,8 +27,11 @@ export default {
         this.$emit('open-modal', this.keep)
     },
     setup() {
+        const route = useRoute();
+
 
         return {
+            activeProfile: computed(() => AppState.activeProfile),
             keeps: computed(() => AppState.keeps),
             account: computed(() => AppState.account),
             resetModal() {

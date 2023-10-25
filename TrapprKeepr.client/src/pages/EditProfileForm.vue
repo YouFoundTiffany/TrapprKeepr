@@ -43,6 +43,7 @@ import { keepsService } from '../services/KeepsService';
 import { vaultsKeepsService } from '../services/VaultKeepsService';
 import { vaultsService } from '../services/VaultsService';
 import { logger } from '../utils/Logger';
+import { profilesService } from '../services/ProfilesService';
 
 // <!-- tifftag get profile  -->
 
@@ -51,8 +52,8 @@ export default {
     setup() {
         const editable = ref({})
         onMounted(() => {
-            getKeepsByProfileId();
-            getVaultsByProfileId();
+            // getKeepsByProfileId();
+            // getVaultsByProfileId();
             getProfileById()
         });
         watchEffect(() => {
@@ -60,22 +61,24 @@ export default {
         })
 
         const route = useRoute();
-        async function getKeepsByProfileId() {
-            try {
-                await keepsService.getKeepsByProfileId(route.params.profileId);
-            }
-            catch (error) {
-                Pop.error(error);
-            }
-        }
-        async function getVaultsByProfileId() {
-            try {
-                await vaultsService.getVaultsByProfileId(route.params.profileId);
-            }
-            catch (error) {
-                Pop.error(error);
-            }
-        }
+
+
+        // async function getKeepsByProfileId() {
+        //     try {
+        //         await keepsService.getKeepsByProfileId(route.params.profileId);
+        //     }
+        //     catch (error) {
+        //         Pop.error(error);
+        //     }
+        // }
+        // async function getVaultsByProfileId() {
+        //     try {
+        //         await vaultsService.getVaultsByProfileId(route.params.profileId);
+        //     }
+        //     catch (error) {
+        //         Pop.error(error);
+        //     }
+        // }
         async function getProfileById() {
             try {
                 await accountService.getProfileById(route.params.profileId)
@@ -92,8 +95,10 @@ export default {
 
             async editProfile() {
                 try {
+                    const profileId = AppState.account.id
                     logger.log('[EDITING PROFILE]', editable.value)
-                    // NOTE finish the method to create a project
+                    await profilesService.editProfile(editable.value)
+                    Pop.toast('Profile Updated')
                 } catch (error) {
                     Pop.error(error)
                 }

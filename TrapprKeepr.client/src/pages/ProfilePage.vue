@@ -1,50 +1,156 @@
+<!-- eslint-disable space-before-function-paren -->
 <!-- PROFILE PAGE -->
 <!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
-    <div v-if="keeps || vaults" class="about text-center">
-        <div class="justify-content-center row d-flex">
-            <img class="m-0 banner-image rounded" :src="account.coverImg" :alt="account.coverImg" />
+    <section class="container">
+        <div class="row">
+            PROFILE PAGE
+
+
+
+            <!-- v-if="keeps || vaults" -->
+            <div class="about text-center">
+                <div class="justify-content-center row d-flex">
+                    <!-- <img class="m-0 banner-image rounded" :src="activeProfile.coverImg" :alt="activeProfile.coverImg" /> -->
+                </div>
+                <div class="justify-content-center d-flex">
+                    <!-- <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture" /> -->
+                </div>
+                <!-- <h1>{{ activeProfile.name }}</h1> -->
+                <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
+            </div>
+
+            <!-- TODO router link to profile page -->
+            <!-- ... -->
+            <!-- <router-link :to="{ name: 'Edit Profile', params: { profileId: account.id } }">
+                <button v-if="!profileId || profileId == accountId">Edit Profile</button>
+            </router-link> -->
+
+            <!-- {{ myVaults }} -->
+            <h2 class="">Vaults</h2>
+            <section class="container-fluid m-0 p-0">
+                <div class="row m-0 p-0">
+                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                        v-for="vault in profileVaults" :key="vault.id">
+                        <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
+                    </div>
+                </div>
+            </section>
+            <h2 class="">Keeps</h2>
+            <section class="container-fluid m-0 p-0">
+                <div class="row m-0 p-0">
+                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                        v-for="keep in profileKeeps" :key="keep.id">
+                        <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
+                    </div>
+                </div>
+            </section>
+            <!-- {{ myKeeps }} -->
+
         </div>
-        <div class="justify-content-center d-flex">
-            <img class="rounded elevation-2 avatar" :src="account.picture" :alt="account.picture" />
-        </div>
-        <h1>{{ account.name }}</h1>
-        <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
-    </div>
-
-
-    <h2 v-if="vault" class="card-title masonry-container">Vaults</h2>
-    <section class="" v-for="vault in vaults" :key="vault.id">
-        <VaultAccCard :vault="vault" />
-    </section>
-
-    <h2 v-if="keep" class="card-title masonry-container">Keeps</h2>
-    <section class="" v-for="keep in keeps" :key="keep.id">
-        <KeepAccCard :keep="keep" />
     </section>
 </template>
+
+  <!-- // TODO ADD isOwner to items in template for private vaults template above buttons
+  // v -if= "!restaurant.isShutdown && isOwner" - Make Private
+  // v-if="restaurant.isShutdown && isOwner" - Make Public
+  // v-if="isOwner" - Delete
+  // const isOwner = computed(() => AppState.account.id == AppState.activeVault?.creatorId)
+  // let userIdToShow = profileId ? profileId : accountId; -->
 <script>
-import { computed, onMounted } from 'vue';
-import { AppState } from '../AppState';
+import { computed, onMounted, ref } from 'vue';
+import { AppState } from '../AppState.js';
+import KeepAccCard from '../components/KeepAccCard.vue';
+import VaultAccCard from '../components/VaultAccCard.vue';
+import { profilesService } from '../services/ProfilesService.js';
+import { useRoute } from 'vue-router';
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop.js';
+
 
 export default {
-    setup() {
-        //     const route = useRoute()
-        //     const profileId = route.params.profileId
 
-        //     onMounted(() => {
-        //         getProfileById();
-        //     });
+    setup() {
+        // NOTE The Order of the variables below Matters!
+        const route = useRoute();
+        // const activeProfile = computed(() => route.params.profileId)
+
+        // eslint-disable-next-line space-before-function-paren
+        onMounted(async () => {
+            getProfilesKeeps(); getProfilesVaults();
+
+        })
+
+
+        // STUB Get all Keeps with this Profile Id
+        async function getProfilesKeeps() {
+            try {
+                // logger.log('profileId', route.params.profileId)
+                await profilesService.getProfilesKeeps(route.params.profileId)
+                // logger.log(AppState.keeps, 'helloooo')
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+        // STUB Get all Vaults with this Profile Id
+        async function getProfilesVaults() {
+            try {
+                // logger.log('profileId', route.params.profileId)
+                await profilesService.getProfilesVaults(route.params.profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+
+
+
+
+        // const isOwner = computed(() => {
+        // return !route.params.profileId || route.params.profileId === AppState.account.id;
+        // });
+
         return {
-            // getProfileById(),
-            // account: computed(() => AppState.account),
-            // keeps: computed(() => AppState.keeps),
-            // vaults: computed(() => AppState.vaults),
-            // profile: computed(() => AppState.profiles),
+            profileKeeps: computed(() => AppState.profileKeeps),
+            profileVaults: computed(() => AppState.profileVaults),
+            profile: computed(() => AppState.activeProfile),
+            account: computed(() => AppState.account),
+            // activeProfile: computed(() => route.params.profileId),
+            keeps: computed(() => AppState.keeps),
+            vaults: computed(() => AppState.vaults),
+
         };
     },
-};
+    components: { KeepAccCard, VaultAccCard }
+}
 </script>
 
+<style scoped>
+.acard {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
 
-<style></style>
+.avatar {
+    margin-top: -2%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    height: 50px;
+    width: 50px;
+    object-fit: scale-down;
+    object-position: center;
+    border-radius: 50em;
+}
+
+.banner-image {
+    overflow: hidden;
+    justify-content: center;
+    max-width: 100vh;
+    max-height: 30vh;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !Important;
+
+}
+</style>

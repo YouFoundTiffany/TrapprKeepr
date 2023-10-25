@@ -61,16 +61,6 @@ import { AppState } from '../AppState.js';
 import KeepAccCard from '../components/KeepAccCard.vue';
 import VaultAccCard from '../components/VaultAccCard.vue';
 import { keepsService } from '../services/KeepsService.js';
-// import { vaultsService } from '../services/VaultsService.js';
-// import Pop from '../utils/Pop.js';
-// import { useRoute } from 'vue-router';
-// import { logger } from '../utils/Logger.js';
-// import { accountService } from '../services/AccountService.js';
-// import { profilesService } from '../services/ProfilesService.js';
-// import { Account, Profile } from '../models/Account.js';
-
-
-
 
 export default {
 
@@ -96,9 +86,8 @@ export default {
     return {
       myKeeps,
       myVaults,
-      profile: computed(() => AppState.activeProfile),
       account: computed(() => AppState.account),
-      activeProfile: computed(() => AppState.account),
+      // activeProfile: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
       vaults: computed(() => AppState.vaults),
 

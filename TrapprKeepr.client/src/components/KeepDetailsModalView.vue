@@ -1,11 +1,11 @@
 <!-- KEEP DETAILS MODAL VIEW COMPONENT -->
 <template>
-    <div v-if="keep" class="modal fade" :id="'details-modal-' + keep.id" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div v-if="keep" class="modal fade" :id="'details-modal' + keep.id" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true" ref="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ keep.name }}</h5>
+                    <h5 class="modal-title" id="details-modal">{{ keep.name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -13,7 +13,9 @@
                         <div class="card mb-3" style="max-width: 540px;">
                             <div class="row g-0">
                                 <div class="col-md-4 keep-image-div">
+                                    <!-- <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }"> -- -->
                                     <img :src="keep.img" class="img-fluid rounded-start" :alt="keep.img">
+                                    <!-- </router-link> -->
                                 </div>
                                 <div class="col-md-8 keep-name-desc-div">
                                     <div class="card-body">
@@ -24,6 +26,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button @click="closeModal" type=" button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Close</button>
@@ -53,6 +56,7 @@ export default {
 
         onMounted(() => {
             modalInstance = new Modal(myModalRef.value);
+            getProfileById();
         });
 
         watchEffect(() => {
@@ -66,6 +70,15 @@ export default {
         const closeModal = () => {
             emit('close');
         };
+        // MUST RUN WHEN THEY OPEN THE MODAL, SO MAYBE THIS GET iD WILL BE IN THERE.
+        async function getProfileById(profileId) {
+            try {
+                // logger.log('profileId what?', route.params.profileId)
+                // await profilesService.getProfileById(route.params.profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
 
         return {
             myModalRef,
