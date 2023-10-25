@@ -1,13 +1,9 @@
 <!-- HOME PAGE  -->
 <template>
-  <!-- <section class="container">
-    <div class="row"> -->
   <div class="hmasonry-container">
     <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" style="min-height: 5em;" />
-    <!-- @click="openModal(keep)" -->
+
   </div>
-  <!-- </div>
-  </section> -->
 </template>
 
 <script>
@@ -26,13 +22,7 @@ export default {
     onMounted(() => { getKeeps(); getVaults(); });
 
     const selectedKeep = ref(null);
-    // const modalRef = ref(null);
 
-    // function openModal(keep) {
-    //   selectedKeep.value = keep;
-    //   const modal = new Modal(modalRef.value);
-    //   modal.show();
-    // }
 
     async function getKeeps() {
       try {
@@ -56,8 +46,12 @@ export default {
       keeps: computed(() => AppState.keeps),
       vaults: computed(() => AppState.vaults),
       profile: computed(() => AppState.profiles),
-      selectedKeep,
-      // openModal
+      profileKeeps
+        : computed(() => AppState.profileKeeps
+        ),
+      profileVaults
+        : computed(() => AppState.profileVaults
+        ),
     }
   },
   components: { KeepCard }

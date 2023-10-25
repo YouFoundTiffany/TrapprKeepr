@@ -17,7 +17,7 @@ class VaultsService {
     async getVaults() {
 
         const res = await api.get('api/vaults')
-        logger.log('[GOT ALL VAULTS]', res.data)
+        // logger.log('[GOT ALL VAULTS]', res.data)
         // const vaults = AppState.vaults = res.data.map(vault => new Vault(vaults))
         // AppState.vaults = vaults
         const vaults = res.data.map(vault => new Vault(vault))
@@ -41,11 +41,6 @@ class VaultsService {
 
         AppState.activeVault = new Vault(res.data)
     }
-    //     async getVaultsByProfileId(profileId) {
-    //         AppState.vaults = []
-    //         const res = await api.get(`api/vaults?creatorId=${profileId}`)
-    //         logger.log('🙆🖼️', res.data)
-    //         AppState.vaults = res.data.map(v => new Vault(v))
-    //     }
+
 }
 export const vaultsService = new VaultsService()

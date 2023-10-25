@@ -16,6 +16,8 @@
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import ModalWrapper from './components/ModalWrapper.vue'
+
 
 export default {
   setup() {
@@ -23,7 +25,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, ModalWrapper }
 }
 </script>
 <style lang="scss">

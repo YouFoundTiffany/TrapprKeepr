@@ -53,10 +53,11 @@ public class ProfilesService
     // FIXME
     // STUB Get User Vaults
     // tifftag filter out private vaults
-    // public List<Vault> GetUserVaults(string id)
+    // public List<Vault> GetUserVaults(string userId)
     // {
-    //     List<Vault> restaurants = _vrepo.Get;
-    //     vaults = vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userId);
-    //     return _prepo.GetUserVaults(id);
+    //     // go get the list of all the vaults that have the same creator id as the profile that is logged in right now
+    //     List<Vault> vaults = _prepo.GetUserVaults(userId);
+    //     vaults = vaults.FindAll(vault => vault.IsPrivate == false);
+    //     return vaults;
     // }
 }

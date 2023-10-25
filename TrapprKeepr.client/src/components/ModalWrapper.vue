@@ -1,11 +1,5 @@
 <!-- MODAL WRAPPER COMPONENT -->
 <template>
-    <!-- Modal trigger button -->
-    <button v-if="showButton" type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal"
-        :data-bs-target="'#' + id">
-        Launch
-    </button>
-
     <!-- Modal Body -->
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <!-- NOTE the id for this modal is passed using props, so the id can be specified by any component using it -->
@@ -19,7 +13,7 @@
                     <!-- NOTE slots here create spaces that can later be filled in depending on the use case -->
                     <!-- NOTE any content in between a the slot will be used as a default if one is not provided in when the wrapper is used -->
                     <slot name="header">
-                        <div class="d-flex justify-content-end w-100"><i class="mdi mdi-close fs-3 selectable"
+                        <div class="d-flex justify-content-end w-100"><i class="mdi mdi-close fs-3 selectable text-dark"
                                 data-bs-dismiss="modal"></i></div>
                     </slot>
                 </div>
@@ -44,9 +38,12 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 export default {
     // NOTE modal takes in a bool so the button can be used, and an id, so we can make each instance of the modal unique
-    props: { showButton: { type: Boolean, default: false }, id: { type: String, required: true }, size: { type: String, default: 'xl' } },
+    props: { id: { type: String, required: true }, size: { type: String, default: 'xl' } },
     setup() {
-        return {}
+        return {
+            keeps: computed(() => AppState.keeps),
+            acccount: computed(() => AppState.account.id),
+        }
     }
 };
 </script>

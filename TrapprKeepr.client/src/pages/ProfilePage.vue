@@ -73,7 +73,7 @@ export default {
     setup() {
         // NOTE The Order of the variables below Matters!
         const route = useRoute();
-        // const activeProfile = computed(() => route.params.profileId)
+
 
         // eslint-disable-next-line space-before-function-paren
         onMounted(async () => {
@@ -114,7 +114,6 @@ export default {
             profileVaults: computed(() => AppState.profileVaults),
             profile: computed(() => AppState.activeProfile),
             account: computed(() => AppState.account),
-            // activeProfile: computed(() => route.params.profileId),
             keeps: computed(() => AppState.keeps),
             vaults: computed(() => AppState.vaults),
 

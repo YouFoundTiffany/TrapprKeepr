@@ -2,6 +2,8 @@
     <div class='container text-dark'>
         <div>
             Its a Modal!!! Yay!
+            {{ activeProfile }}
+            {{ activeKeep }}
             <!-- <img :src="keep.img" class="card-image rounded-top" keep.img> -->
             <!-- <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5> -->
             <!-- FIXME POINTER ON PROF PIC -->
@@ -49,31 +51,45 @@
     </div>
 </template>
 <script>
-import { computed } from 'vue';
-import VaultDropDown from './VaultDropDown.vue';
-import { AppState } from '../AppState';
+import { computed, onMounted } from 'vue';
+import { AppState } from '../AppState.js';
+import { logger } from '../utils/Logger.js';
+import { useRoute } from 'vue-router';
+import Pop from '../utils/Pop';
+
 
 export default {
+
     setup() {
+        const route = useRoute()
+        const activeProfile = computed(() => route.params.profileId)
+
+        onMounted(() => {
+            getProfileById();
+        })
+
+
+
         // NOTE may not need this.
-        // onMounted(() => {
-        //     getProfileById();
-        // })
-        // async function getProfileById(profileId) {
-        //     try {
-        //         logger.log('profileId', route.params.profileId)
-        //         // await profilesService.getProfileById(route.params.profileId)
-        //     } catch (error) {
-        //         Pop.error(error)
-        //     }
-        // }
+        async function getProfileById(profileId) {
+            try {
+                profileId = (route.params)
+                // await profilesService.getProfileById(route.params.profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
         return {
-            acccount: computed(() => AppState.account.id),
-            profileVaults: computed(() => AppState.profileVaults),
+            // AppState: computed(() => AppState),
+            activeProfile: computed(() => AppState.activeProfile),
+            acccount: computed(() => AppState.account),
+            keeps: computed(() => AppState.keeps),
+            activeKeep: computed(() => AppState.activeKeep)
+
         };
     },
-    components: { VaultDropDown }
-};
+}
+
 </script>
 
 

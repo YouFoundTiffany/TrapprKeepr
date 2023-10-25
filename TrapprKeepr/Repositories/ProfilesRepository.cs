@@ -61,15 +61,25 @@ public class ProfilesRepository
       WHERE creatorId = @id";
         return _db.Query<Keep>(sql, new { id }).ToList();
     }
+
+
+    // FIXME
+
+
     // STUB Get User Vaults
-    internal List<Vault> GetUserVaults(string id)
+    internal List<Vault> GetUserVaults(int vaultId, string userId)
     {
         string sql = @"
-      SELECT *
-      FROM vault
-      WHERE creatorId = @id";
-        return _db.Query<Vault>(sql, new { id }).ToList();
+            SELECT
+
+            FROM vault
+            WHERE creatorId = @id";
+        return _db.Query<Vault>(sql, new { userId }).ToList();
     }
+
+
+
+
     // STUB GetById
     internal Account GetById(string id)
     {
