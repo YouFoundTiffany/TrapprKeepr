@@ -1,27 +1,22 @@
 <template>
-    <div class='container'>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </div>
-        <section class='row'>
-        </section>
-    </div>
+    <!-- <a class="dropdown-item" href="#">Action{{ vault.name }}</a> -->
+    <!-- {{ vault.name }} -->
+    Hello From the dropdown
 </template>
 <script>
+import { Account } from '../models/Account';
+import { Vault } from '../models/Vault.js';
 export default {
+
+    props: { vault: { type: Vault, required: true }, account: { type: Account, required: true }, profileVaults: { type: Vault, required: true } },
     setup() {
+
+
+
+
+
         return {};
     },
 };
 </script>
-
-
 <style></style>

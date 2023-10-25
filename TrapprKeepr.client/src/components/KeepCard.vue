@@ -29,7 +29,8 @@ export default {
     setup() {
         return {
             keeps: computed(() => AppState.keeps),
-            account: computed(() => AppState.account),
+            acccount: computed(() => AppState.account.id),
+            profileVaults: computed(() => AppState.profileVaults),
         };
     },
     components: { ModalWrapper, KeepDetailsCard }

@@ -3,7 +3,7 @@
   <!-- <section class="container">
     <div class="row"> -->
   <div class="hmasonry-container">
-    <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" :profile="profile" style="min-height: 5em;" />
+    <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" style="min-height: 5em;" />
     <!-- @click="openModal(keep)" -->
   </div>
   <!-- </div>
