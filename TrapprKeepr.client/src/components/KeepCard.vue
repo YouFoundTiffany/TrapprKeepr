@@ -4,10 +4,14 @@
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
         <img :src="keep.img" class="card-image rounded-top" keep.img>
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
-
-
+        <!-- FIXME POINTER ON PROF PIC -->
         <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
-
+        <ModalWrapper :showButton="true" id="keep-details" style="height: margin:-10px;">
+            <template #body>
+                <!-- v-for="keep in keeps" :key="keep.id ???? -->
+                <KeepDetailsCard />
+            </template>
+        </ModalWrapper>
 
     </div>
 </template>
@@ -16,34 +20,31 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { Account, Profile } from '../models/Account.js';
 import { logger } from '../utils/Logger';
-
+import ModalWrapper from './ModalWrapper.vue';
+import KeepDetailsCard from '../components/KeepDetailsCard.vue';
 export default {
     props: {
         keep: { type: Object, required: true },
     },
-
     setup() {
-
-
         return {
             keeps: computed(() => AppState.keeps),
             account: computed(() => AppState.account),
-
-
-        }
+        };
     },
+    components: { ModalWrapper, KeepDetailsCard }
 };
 </script>
 <style>
 .profile-pic {
     height: 30px;
     width: 30px;
-    object-fit: cover;
-    object-position: center;
+    object-fit: contain;
+    object-position: none;
     border-radius: 50em;
     position: absolute;
-    bottom: 8px;
-    right: 10px;
+    bottom: 10vh;
+    right: 4vw;
 
 }
 
