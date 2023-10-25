@@ -19,9 +19,16 @@ const routes = [
     beforeEnter: authGuard
   },
   {
-    path: '/profiles/:profileId',
+    path: '/profile/:profileId',
     name: 'Profile',
-    component: loadPage('ProfilePage')
+    component: loadPage('ProfilePage'),
+  },
+  {
+
+    path: '/edit-profile/:profileId',
+    name: 'Edit Profile',
+    component: loadPage('EditProfileForm'),
+    // FIXME Do I need an AuthGuard or Settled?
   },
   {
     path: '/vault/:vaultId',

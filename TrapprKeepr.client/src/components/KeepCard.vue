@@ -2,10 +2,12 @@
 <template>
     <div v-if="keep" @click="openKeepModal" :keep="keep" :id="'details-' + keep.id"
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
-        <img :src="keep.img" class="card-image rounded-top" alt="keep image">
+        <img :src="keep.img" class="card-image rounded-top" keep.img>
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
+        <!-- FIXME -->
+        <!-- TODO move this into the modal -->
         <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-            <img :src="keep.creator.picture" alt="" class="profile-pic">
+            <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
         </router-link>
 
     </div>
@@ -17,7 +19,7 @@ import { Account, Profile } from '../models/Account.js';
 
 export default {
     props: {
-        keep: { type: Object, required: true }, profile: { type: Profile, required: true }
+        keep: { type: Object, required: true },
     },
     openKeepModal() {
         this.$emit('open-modal', this.keep)

@@ -12,10 +12,10 @@
                     <div class='container'>
                         <div class="card mb-3" style="max-width: 540px;">
                             <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img :src="keep.img" class="img-fluid rounded-start" alt="...">
+                                <div class="col-md-4 keep-image-div">
+                                    <img :src="keep.img" class="img-fluid rounded-start" :alt="keep.img">
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-8 keep-name-desc-div">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ keep.name }}</h5>
                                         <p class="card-text">{{ keep.description }}.</p>
@@ -75,4 +75,31 @@ export default {
     }
 };
 </script>
-<style></style>
+
+<style scoped>
+/* Base Styles for Larger Screens */
+/* .keep-image-div {
+    flex-basis: 33.33333%;
+    max-width: 33.33333%;
+}
+
+.keep-name-desc-div {
+    flex-basis: 66.66667%;
+    max-width: 66.66667%;
+} */
+
+/* mobile  */
+@media (max-width: 576px) {
+
+    .keep-image-div,
+    .keep-name-desc-div {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    /* test bottom margin as needed :D */
+    .keep-image-div {
+        margin-bottom: 15px;
+    }
+}
+</style>

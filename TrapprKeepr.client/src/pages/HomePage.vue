@@ -3,7 +3,8 @@
   <section class="container">
     <div class="row">
       <div class="hmasonry-container">
-        <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" @click="openModal(keep)" />
+        <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" :profile="profile" />
+        <!-- @click="openModal(keep)" -->
       </div>
     </div>
   </section>
@@ -14,22 +15,24 @@ import { keepsService } from '../services/KeepsService.js'
 import KeepCard from '../components/KeepCard.vue';
 import { computed, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
-import { AppState } from '../AppState';
-import { Modal } from 'bootstrap';
+import { AppState } from '../AppState.js';
+// import { Modal } from 'bootstrap';
 import { vaultsService } from '../services/VaultsService';
+// import { router } from '../router';
 
 export default {
+  // const: router = useRouter(),
   setup() {
     onMounted(() => { getKeeps(); getVaults(); });
 
     const selectedKeep = ref(null);
-    const modalRef = ref(null);
+    // const modalRef = ref(null);
 
-    function openModal(keep) {
-      selectedKeep.value = keep;
-      const modal = new Modal(modalRef.value);
-      modal.show();
-    }
+    // function openModal(keep) {
+    //   selectedKeep.value = keep;
+    //   const modal = new Modal(modalRef.value);
+    //   modal.show();
+    // }
 
     async function getKeeps() {
       try {
@@ -52,8 +55,9 @@ export default {
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
       vaults: computed(() => AppState.vaults),
+      profile: computed(() => AppState.profiles),
       selectedKeep,
-      openModal
+      // openModal
     }
   },
   components: { KeepCard }

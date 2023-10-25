@@ -1,105 +1,110 @@
 <!-- ACCOUNT PAGE -->
 <!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
-  <div v-if="keeps || vaults" class="about text-center">
+  <!-- v-if="keeps || vaults" -->
+  <div class="about text-center">
     <div class="justify-content-center row d-flex">
-      <img class="m-0 banner-image rounded" :src="account.coverImg" alt="Cover Image" />
+      <img class="m-0 banner-image rounded" :src="account.coverImg" :alt="account.coverImg" />
     </div>
     <div class="justify-content-center d-flex">
-      <img class="rounded elevation-2 avatar" :src="account.picture" alt="Avatar" />
+      <img class="rounded elevation-2 avatar" :src="account.picture" :alt="account.picture" />
     </div>
     <h1>{{ account.name }}</h1>
     <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
   </div>
-  <!-- TODO router link to profile page -->
-  <!-- <router-link :to="{ name: 'Profile', params: profile.id }"> -->
-  <button>Edit Profile</button>
-  <!-- </router-link> -->
 
-  <h2 v-if="vault" class="card-title masonry-container">Vaults</h2>
-  <section class="" v-for="vault in vaults" :key="vault.id">
+  <!-- TODO router link to profile page -->
+  <!-- ... -->
+  <!-- <router-link :to="{ name: 'Edit Profile', params: { profileId: account.id } }">
+    <button v-if="!profileId || profileId == accountId">Edit Profile</button>
+  </router-link> -->
+
+
+  <section class="" v-for="vault in myVaults" :key="vault.id">
+    <h2 class="card-title masonry-container">Vaults</h2>
     <VaultAccCard :vault="vault" />
   </section>
 
-  <h2 v-if="keep" class="card-title masonry-container">Keeps</h2>
-  <section class="" v-for="keep in keeps" :key="keep.id">
+  <section class="" v-for="keep in myKeeps" :key="keep.id">
     <KeepAccCard :keep="keep" />
+    <h2 class="card-title masonry-container">Keeps</h2>
   </section>
 </template>
 
+<!-- // TODO ADD isOwner to items in template for private vaults template above buttons
+// v -if= "!restaurant.isShutdown && isOwner" - Make Private
+// v-if="restaurant.isShutdown && isOwner" - Make Public
+// v-if="isOwner" - Delete
+// const isOwner = computed(() => AppState.account.id == AppState.activeVault?.creatorId)
+// let userIdToShow = profileId ? profileId : accountId; -->
 <script>
-// onMounted
-import { computed, onMounted } from 'vue';
-import { AppState } from '../AppState';
+import { computed, onMounted, ref } from 'vue';
+import { AppState } from '../AppState.js';
 import KeepAccCard from '../components/KeepAccCard.vue';
 import VaultAccCard from '../components/VaultAccCard.vue';
-import { keepsService } from '../services/KeepsService';
-import { vaultsService } from '../services/VaultsService';
-import Pop from '../utils/Pop';
-import { RouterView, useRoute } from 'vue-router';
-import { logger } from '../utils/Logger';
+import { keepsService } from '../services/KeepsService.js';
+import { vaultsService } from '../services/VaultsService.js';
+import Pop from '../utils/Pop.js';
+import { useRoute } from 'vue-router';
+import { logger } from '../utils/Logger.js';
+import { accountService } from '../services/AccountService.js';
+import { profilesService } from '../services/ProfilesService.js';
+import { Account, Profile } from '../models/Account.js';
 
-// TODO v-if="activeCar" FOR MODALS WHEN VAULTS OR KEEPS SELECTED
+
 
 
 export default {
   setup() {
-    const route = useRoute();
-    // TODO ADD isOwner to items in template for private vaults template above buttons
-    // v -if= "!restaurant.isShutdown && isOwner" - Make Private
-    // v-if="restaurant.isShutdown && isOwner" - Make Public
-    // v-if="isOwner" - Delete
-    // const isOwner = computed(() => AppState.account.id == AppState.activeVault?.creatorId)
+    // NOTE The Order of the variables below Matters!
+    // const route = useRoute();
+    const profileId = computed(() => AppState.account.id)
+    // const profileId = route.params.profileId;
 
-    onMounted(() => { getKeepsByProfile(); getVaultsByProfile(); })
-
-    async function getKeepsByProfile() {
+    async function getProfile(profileId) {
       try {
-        await keepsService.getKeepsByProfile(route.params.profileId)
+        // logger.log('route', route)
+        await profilesService.getProfile(profileId)
       } catch (error) {
-        Pop.error(error)
-      }
-    }
-    async function getVaultsByProfile() {
-      try {
-        await vaultsService.getVaultsByProfile(route.params.profileId)
-      } catch (error) {
-        Pop.error(error)
+        Pop.error(error.message)
       }
     }
 
-    // DO NOT PUT THESE ONMOUNTED AS YOU ONLY ACTIVATE THIS FUNCTION WHEN USER CLICKS TO GET MORE DETAILS ON A KEEP
-    // STUB Get Keep Details  // 'api/keeps/undefined????'
-    async function getKeepDetails() {
-      try {
-        await keepsService.getKeepDetails(route.params.keepId)
-      } catch (error) {
-        // route.push({ name: 'Home' })
-        logger.error(error)
-        Pop.toast('Not Accessible')
-      }
-    }
-    // STUB Get Vault Details
-    async function getVaultDetails() {
-      try {
-        await vaultsService.getVaultDetails(route.params.vaultId)
-      } catch (error) {
-        // route.push({ name: 'Home' })
-        logger.error(error)
-        Pop.toast('Not Accessible')
-      }
-    }
+
+
+    // const isOwner = computed(() => {
+    // return !route.params.profileId || route.params.profileId === AppState.account.id;
+    // });
+
+    // getKeepsByProfile(); getVaultsByProfile();
+    onMounted(() => { getProfile() })
+
+    // async function getKeepsByProfile() {
+    //   try {
+    //     await keepsService.getKeepsByProfile(route.params.profileId)
+    //   } catch (error) {
+    //     Pop.error(error)
+    //   }
+    // }
+    // async function getVaultsByProfile() {
+    //   try {
+    //     await vaultsService.getVaultsByProfile(route.params.profileId)
+    //   } catch (error) {
+    //     Pop.error(error)
+    //   }
+    // }
+
 
     return {
-      getKeepsByProfile,
-      getVaultsByProfile,
-      // AppState: computed(() => AppState),
-      profile: computed(() => AppState.profile),
+      profileId,
+      // getKeepsByProfile,
+      // getVaultsByProfile,
+      profile: computed(() => AppState.activeProfile),
       account: computed(() => AppState.account),
-      keeps: computed(() => AppState.keeps),
-      vaults: computed(() => AppState.vaults),
-      myKeeps: computed(() => AppState.keeps),
-      mVaults: computed(() => AppState.vaults),
+      // keeps: computed(() => AppState.keeps),
+      // vaults: computed(() => AppState.vaults),
+      myKeeps: computed(() => AppState.myKeeps),
+      myVaults: computed(() => AppState.myVaults),
 
     };
   },

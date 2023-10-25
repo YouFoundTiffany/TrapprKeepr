@@ -1,7 +1,7 @@
 <!-- KEEP ACCOUNT CARD COMPONENT -->
 <template>
     <div class="card acc-kcard text-bg-dark">
-        <img :src="keep.img" class="acc-kcard-img" alt="keep image">
+        <img :src="keep.img" class="acc-kcard-img" :alt="keep.name">
         <div class="card-img-overlay">
             <h5 class="card-title">{{ keep.name }}</h5>
         </div>
@@ -21,7 +21,21 @@ export default {
     props: {
         keep: { type: Object, required: true }
     },
+
     setup() {
+
+        // // STUB Get Keep Details
+        // async function getKeepDetails() {
+        //   try {
+        //     await keepsService.getKeepDetails(route.params.keepId)
+        //   } catch (error) {
+        //     // route.push({ name: 'Home' })
+        //     logger.error(error)
+        //     Pop.toast('Not Accessible')
+        //   }
+        // }
+
+
         return {
             AppState: computed(() => AppState),
             activeKeep: computed(() => AppState.activeKeep),

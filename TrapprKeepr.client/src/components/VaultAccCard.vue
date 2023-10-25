@@ -1,6 +1,6 @@
 <template>
     <div class="card acc-vcard text-bg-dark">
-        <img :src="vault.img" class="acc-vcard-img" alt="vault image">
+        <img :src="vault.img" class="acc-vcard-img" :alt="vault.img">
         <div class="card-img-overlay">
             <h5 class="card-title">{{ vault.name }}</h5>
             <i class="mdi mdi-lock text-light iconshaddisplay"></i>
@@ -20,6 +20,20 @@ export default {
         vault: { type: Object, required: true }
     },
     setup() {
+
+
+
+
+        // STUB Get Vault Details
+        // async function getVaultDetails() {
+        //   try {
+        //     await vaultsService.getVaultDetails(route.params.vaultId)
+        //   } catch (error) {
+        //     // route.push({ name: 'Home' })
+        //     logger.error(error)
+        //     Pop.toast('Not Accessible')
+        //   }
+        // }
         return {
             AppState: computed(() => AppState),
             profile: computed(() => AppState.profile),
