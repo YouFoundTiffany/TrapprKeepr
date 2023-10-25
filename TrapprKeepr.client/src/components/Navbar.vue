@@ -107,7 +107,6 @@
       <Login class="collapse navbar-collapse avatar" id="navbarText" />
     </div>
   </nav>
-  <hr class="shadow justify--center ">
 </template>
 
 <script>
@@ -190,7 +189,6 @@ export default {
 
 <style scoped>
 .shadow {
-  width: 70vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !Important;
 }
 

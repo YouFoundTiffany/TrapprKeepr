@@ -29,7 +29,7 @@ class KeepsService {
     async getKeepsByProfile(profileId) {
         const response = await api.get(`api/profiles/${profileId}/keeps`)
         logger.log('[MY KEEPS]', response.data)
-        const myKeeps = AppState.myKeeps = response.data.map(k => new Keep(k))
+        const myKeeps = AppState.keeps = response.data.map(k => new Keep(k))
         return myKeeps;
     }
     // async getKeepsByProfileId(profileId) {

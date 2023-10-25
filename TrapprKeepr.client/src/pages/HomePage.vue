@@ -1,13 +1,13 @@
 <!-- HOME PAGE  -->
 <template>
-  <section class="container">
-    <div class="row">
-      <div class="hmasonry-container">
-        <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" :profile="profile" />
-        <!-- @click="openModal(keep)" -->
-      </div>
-    </div>
-  </section>
+  <!-- <section class="container">
+    <div class="row"> -->
+  <div class="hmasonry-container">
+    <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" :profile="profile" style="min-height: 5em;" />
+    <!-- @click="openModal(keep)" -->
+  </div>
+  <!-- </div>
+  </section> -->
 </template>
 
 <script>
@@ -72,5 +72,12 @@ export default {
   /* column-gap: 1.25em; */
   overflow: hidden;
   min-height: 100vh;
+}
+
+/* Media query for mobile view */
+@media (max-width: 767px) {
+  .hmasonry-container {
+    columns: 2;
+  }
 }
 </style>

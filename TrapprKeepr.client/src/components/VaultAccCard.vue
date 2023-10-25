@@ -1,5 +1,7 @@
 <template>
-    <div class="card acc-vcard text-bg-dark">
+    <!-- <section class="container-fluid"> -->
+
+    <div class="card acc-vcard text-bg-dark m-0 p-0 justify-content-center">
         <img :src="vault.img" class="acc-vcard-img" :alt="vault.img">
         <div class="card-img-overlay">
             <h5 class="card-title">{{ vault.name }}</h5>
@@ -8,6 +10,7 @@
         <!-- TODO PUT THIS IN MODAL WITH DETAILS -->
         <button @click="deleteVault(vault.id)">Delete?</button>
     </div>
+    <!-- </section> -->
 </template>
 <script>
 import { computed } from 'vue';

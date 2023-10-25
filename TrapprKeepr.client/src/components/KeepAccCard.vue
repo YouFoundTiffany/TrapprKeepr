@@ -1,6 +1,6 @@
 <!-- KEEP ACCOUNT CARD COMPONENT -->
 <template>
-    <div class="card acc-kcard text-bg-dark">
+    <div class="card acc-kcard text-bg-dark ard text-bg-dark ">
         <img :src="keep.img" class="acc-kcard-img" :alt="keep.name">
         <div class="card-img-overlay">
             <h5 class="card-title">{{ keep.name }}</h5>

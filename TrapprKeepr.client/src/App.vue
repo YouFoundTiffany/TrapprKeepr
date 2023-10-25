@@ -1,8 +1,10 @@
 <template>
   <header>
     <Navbar />
+
   </header>
   <main>
+    <div class="border border-bottom border-secondary mb-4 light-shadow" style="height: 1px;"></div>
     <router-view />
   </main>
   <footer class="bg-secondary lighten-10 text-dark">
@@ -31,6 +33,9 @@ export default {
   --main-height: calc(100vh - 32px - 64px);
 }
 
+// .shadow {
+//   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.546) !Important;
+// }
 
 footer {
   display: grid;
