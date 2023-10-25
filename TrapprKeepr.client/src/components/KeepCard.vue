@@ -1,6 +1,6 @@
 <!-- KEEP CARD COMPONENT -->
 <template>
-    <div v-if="keep" @click="openKeepModal" :keep="keep" :id="'details-' + keep.id"
+    <div v-if="keep" :keep="keep" :id="'details-' + keep.id"
         class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
         <img :src="keep.img" class="card-image rounded-top" keep.img>
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
@@ -21,23 +21,15 @@ export default {
     props: {
         keep: { type: Object, required: true },
     },
-    openKeepModal() {
-        this.$emit('open-modal', this.keep)
-    },
+
     setup() {
 
 
         return {
-            activeProfile: computed(() => AppState.activeProfile),
             keeps: computed(() => AppState.keeps),
             account: computed(() => AppState.account),
-            resetModal() {
-                this.showModal = false
-            },
-            showModal() {
-                this.$emit('open-modal', this.keep)
-                this.showModal = true
-            }
+
+
         }
     },
 };
