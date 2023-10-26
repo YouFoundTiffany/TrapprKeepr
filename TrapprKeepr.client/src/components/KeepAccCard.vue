@@ -3,18 +3,18 @@
     <!-- add @click -->
     <div class="card acc-kcard text-bg-dark ard text-bg-dark ">
         <img :src="keep.img" class="acc-kcard-img" :alt="keep.name">
-        <div class="card-img-overlay">
+        <div class="card-img-overlay" :title="keep.name">
             <h5 class="card-title">{{ keep.name }}</h5>
         </div>
         <!-- TODO PUT THIS IN MODAL WITH DETAILS -->
+        <form @submit.prevent="handleSubmit">
+            <label>
+                <input type="checkbox" v-model="isChecked" />
+            </label>
+            <button type="submit">Submit</button>
+        </form>
 
-        <button @click="deleteKeep(keep.id)">Delete?</button>
     </div>
-    <!-- <ModalWrapper :id="'keep-details'">
-        <template #body>
-            <KeepDetailsCard />
-        </template>
-    </ModalWrapper> -->
 </template>
 <script>
 import { computed } from 'vue';

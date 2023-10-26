@@ -77,6 +77,7 @@ public class KeepsRepository
                 name = @Name,
                 description = @Description,
                 img = @Img
+                visits = @Visits
             WHERE id = @Id
             ;";
         _kdb.Execute(sql, updateData);

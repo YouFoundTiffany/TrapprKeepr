@@ -62,8 +62,7 @@ public class ProfilesRepository
         return _db.Query<Keep>(sql, new { id }).ToList();
     }
 
-
-    // FIXME
+ // FIXME
 
 
     // STUB Get User Vaults
@@ -80,12 +79,25 @@ public class ProfilesRepository
 
 
 
+
+
+
+
     // STUB GetById
-    internal Account GetById(string id)
+    internal Account GetById(int keepId, string userId)
     {
-        string sql = @"SELECT *
-        FROM accounts
-        WHERE id = @id";
-        return _db.QueryFirstOrDefault<Account>(sql, new { id });
+        string sql = @"
+        SELECT *
+        kee.*,
+        act.*
+        FROM accounts act ON kee.creatorId = act.id
+        WHERE kee.id = @keepId
+         ;";
+         Keep foundKeep = _db.Query<Keep, Account, Keep>(sql, (keep, creator)=>
+         {
+            keep.Creator = creator;
+            return keep;
+         }, new {keepId, userId}).FirstOrDefault();
+       return foundKeep;
     }
 }

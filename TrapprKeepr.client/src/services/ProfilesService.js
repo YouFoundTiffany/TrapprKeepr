@@ -23,11 +23,12 @@ class ProfilesService {
         AppState.profile = new Profile(res.data)
     }
 
+
     async getProfileById(profileId) {
-        // logger.log('profile', res.data)
-        // AppState.activeProfile = null
-        // const res = await api.get(`api/profiles/${profileId}`)
-        // AppState.activeProfile = new Profile(res.data)
+        AppState.activeProfile = null
+        const res = await api.get(`api/profiles/${profileId}`)
+        logger.log('its the profile', res.data)
+        AppState.activeProfile = new Profile(res.data)
     }
 
 
@@ -48,17 +49,15 @@ class ProfilesService {
 
         const res = await api.get(`api/profiles/${profileId}/vaults`)
 
-        // logger.log("🔐 This Profile's Vaults", res.data)
+        logger.log("🔐 This Profile's Vaults", res.data)
 
         const profileVaults = res.data
         AppState.profileVaults = res.data.map(v => new Vault(v))
 
-        // logger.log(['[ProfileVaults]!', AppState.profileVaults])
+        logger.log(['[ProfileVaults]!', AppState.profileVaults])
         return profileVaults;
-
     }
 }
-
 
 
 export const profilesService = new ProfilesService()

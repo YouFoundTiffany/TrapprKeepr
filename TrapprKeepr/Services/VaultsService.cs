@@ -13,11 +13,20 @@ public class VaultsService
         return newVault;
     }
     // STUB Get All Vault
-    internal List<Vault> GetAllVaults()
+    internal List<Vault> GetAllVaults(string userId)
     {
-        List<Vault> vaults = _vrepo.GetAllVaults();
-        return vaults;
+        return _vrepo.GetAllVaults(userId);
     }
+    // internal List<Vault> GetAllVaults()
+    // {
+    //     List<Vault> vaults = _vrepo.GetAllVaults();
+    //     return vaults;
+    // }
+
+
+
+
+
     // STUB Get Vault by Id
     public Vault GetVaultById(int vaultId, string userId)
     {

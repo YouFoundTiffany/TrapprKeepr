@@ -2,50 +2,95 @@
 <!-- PROFILE PAGE -->
 <!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
-    <section class="container">
+    <section v-if="profile" class="container">
         <div class="row">
-            PROFILE PAGE
+            PROFILE PAGE {{ profile.name }}
 
-
-
-            <!-- v-if="keeps || vaults" -->
             <div class="about text-center">
                 <div class="justify-content-center row d-flex">
-                    <!-- <img class="m-0 banner-image rounded" :src="activeProfile.coverImg" :alt="activeProfile.coverImg" /> -->
+                    <img class="m-0 banner-image rounded" :src="profile.coverImg" :alt="profile.coverImg"
+                        title="profile.coverImg" />
                 </div>
                 <div class="justify-content-center d-flex">
-                    <!-- <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture" /> -->
+                    <!-- <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture"  title="activeProfile.picture"  /> -->
                 </div>
                 <!-- <h1>{{ activeProfile.name }}</h1> -->
                 <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
             </div>
 
-            <!-- TODO router link to profile page -->
-            <!-- ... -->
-            <!-- <router-link :to="{ name: 'Edit Profile', params: { profileId: account.id } }">
-                <button v-if="!profileId || profileId == accountId">Edit Profile</button>
-            </router-link> -->
+            <!-- MODAL -->
+            <div class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- MODAL BODY HERE -->
+                            <p>Modal body text goes here.</p>
+                            <!-- MODAL -->
+                            <!-- {{ myVaults }} -->
+                            <h2 class="">Vaults</h2>
+                            <section class="container-fluid m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                                        v-for="vault in profileVaults" :key="vault.id">
+                                        <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- MODAL -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL -->
 
-            <!-- {{ myVaults }} -->
-            <h2 class="">Vaults</h2>
-            <section class="container-fluid m-0 p-0">
-                <div class="row m-0 p-0">
-                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                        v-for="vault in profileVaults" :key="vault.id">
-                        <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
+
+
+
+
+            <!-- MODAL -->
+            <div class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- MODAL BODY HERE -->
+                            <!-- MODAL -->
+                            <!-- {{ myKeeps }} -->
+                            <h2 class="">Keeps</h2>
+                            <section class="container-fluid m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                                        v-for="keep in profileKeeps" :key="keep.id">
+                                        <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- MODAL -->
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
-            </section>
-            <h2 class="">Keeps</h2>
-            <section class="container-fluid m-0 p-0">
-                <div class="row m-0 p-0">
-                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                        v-for="keep in profileKeeps" :key="keep.id">
-                        <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
-                    </div>
-                </div>
-            </section>
-            <!-- {{ myKeeps }} -->
+            </div>
+            <!-- MODAL -->
 
         </div>
     </section>
@@ -69,19 +114,14 @@ import Pop from '../utils/Pop.js';
 
 
 export default {
-
     setup() {
+
         // NOTE The Order of the variables below Matters!
-        const route = useRoute();
-
-
-        // eslint-disable-next-line space-before-function-paren
-        onMounted(async () => {
-            getProfilesKeeps(); getProfilesVaults();
-
+        onMounted(() => {
+            getProfilesKeeps();
+            getProfilesVaults();
         })
-
-
+        const route = useRoute();
         // STUB Get all Keeps with this Profile Id
         async function getProfilesKeeps() {
             try {
@@ -102,7 +142,13 @@ export default {
             }
         }
 
-
+        async function getProfileById() {
+            try {
+                await profilesService.getProfileById(route.params.profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
 
 
         // const isOwner = computed(() => {

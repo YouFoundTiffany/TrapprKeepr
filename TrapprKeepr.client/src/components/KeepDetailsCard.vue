@@ -3,15 +3,18 @@
     <div v-if="activeKeep" class='container-fluid text-dark'>
         <div class="row no-gutters">
             <div class="col-md-6">
-                <RouterLink :to="{ name: 'Profile', params: { profileId: activeKeep.creatorId } }">
-                    <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img"
-                        class="keep-image w-100">
-                </RouterLink>
+
+                <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img" class="keep-image w-100">
+
             </div>
             <!-- RIGHT SIDE -->
             <div class="col-6 d-flex flex-column justify-content-between">
                 <h5 class="text-dark bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
-                <img :src="activeKeep.creator.picture" class="modprofile-pic" alt="activeKeep.creator.picture">
+                <RouterLink @click="closeModal" :to="{ name: 'Profile', params: { profileId: activeKeep.creatorId } }">
+
+                    <img :src="activeKeep.creator.picture" class="modprofile-pic" alt="activeKeep.creator.picture"
+                        :title="activeKeep.creator.name">
+                </RouterLink>
                 <!-- KEEP NAME AND KEEP DESCRIPTION - CENTERED HORIZONTALLY AND VERTICALLY -->
                 <div class="d-flex flex-column justify-content-center align-items-center h-50">
                     <h4>{{ activeKeep.name }}</h4>
@@ -41,32 +44,69 @@
         </div>
     </div>
 </template>
-
+    <!-- tifftag -->
+              <!-- TODO disable or HIDE button if not album creator OR collaborator -->
 <script>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
+import { Modal } from 'bootstrap';
+import { logger } from '../utils/Logger';
+import { profilesService } from '../services/ProfilesService';
+import { useRoute } from 'vue-router';
+import Pop from '../utils/Pop.js';
+
+
 
 export default {
-    setup() {
-        // const userVaults = computed(() => {
-        //     return AppState.vaults.filter(vault => vault.userId === user.id);
+    props: { activeKeep: { type: Object, required: true } },
+
+    setup(props) {
+        const route = useRoute();
+        const selectedVault = ref(null);
+        // onMounted(async () => {
+        //     getProfilesVaults();
         // });
 
-        const selectedVault = ref(null);
 
-        function saveKeepToVault() {
-            // Logic to save the keep to the selected vault goes here.
-            // You'll likely make an API call or Vuex action here to save the relationship
-            console.log(`Saving keep to vault with ID ${selectedVault.value}`);
-        }
-
+        // STUB GET USER VAULTS
+        // STUB Get all Vaults with this Profile Id
+        // async function getProfilesVaults() {
+        //     try {
+        //         logger.log('profileId', route.params.profileId)
+        //         // await profilesService.getProfilesVaults(route.params.profileId)
+        //     } catch (error) {
+        //         Pop.error(error)
+        //     }
+        // }
         return {
-            // user,
-            // userVaults,
+            // saveKeepToVault,
+            userVaults: [],
             selectedVault,
-            saveKeepToVault,
-            activeKeep: computed(() => AppState.activeKeep)
-        };
+            // activeKeep: computed(() => AppState.activeKeep),
+            profileVaults: computed(() => AppState.profileVaults),
+            account: computed(() => AppState.account),
+
+            closeModal() {
+                Modal.getOrCreateInstance('#keep-details').hide();
+            },
+
+
+
+
+
+            // STUB SAVING TO VAULT
+            // async createVaultKeep() {
+            //     try {
+            // isAllowed.value = true THIS IS FOR HIDING THE BUTTON IF NOT ALBUM CREATOR OR COLLABORATOR OR AUTHENTICATED
+            // logger.log('did it click?', selectedVault)
+            //   let collabData = { albumId: route.params.albumId } // just creating a body with albumId on it equal to the route params
+            //   await collaboratorsService.createCollab(collabData)
+            //   inProgress.value = false
+            //     } catch (error) {
+            //         Pop.error(error)
+            //     }
+            // },
+        }
     }
 }
 

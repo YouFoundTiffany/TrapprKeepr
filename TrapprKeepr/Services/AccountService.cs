@@ -43,11 +43,7 @@ public class AccountService
     return _arepo.GetProfile(id);
   }
 
-  // STUB Get User Vaults
-  public List<Vault> GetUserVaults(string id)
-  {
-    return _arepo.GetUserVaults(id);
-  }
+
 
 
   // STUB Get User Keeps

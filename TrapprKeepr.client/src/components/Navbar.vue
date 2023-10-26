@@ -94,7 +94,7 @@
     <div class="col-12 col-md-4 text-center">
       <router-link class="navbar-brand " :to="{ name: 'Home' }">
         <div class="flex-column align-items-center">TrapprKeepr
-          <img alt="logo" src="src/assets/img/trapprkeeprcolor.png" height="85" />
+          <img alt="logo" title="logo" src="src/assets/img/trapprkeeprcolor.png" height="85" />
         </div>
       </router-link>
     </div>

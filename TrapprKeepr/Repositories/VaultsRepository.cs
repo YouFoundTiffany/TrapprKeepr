@@ -33,22 +33,39 @@ public class VaultsRepository
         return newVault;
     }
     // STUB Get All Vaults
-    internal List<Vault> GetAllVaults()
+    // internal List<Vault> GetAllVaults()
+    // {
+    //     string sql = @"
+    //         SELECT
+    //         vau.*,
+    //         act.*
+    //         FROM vaults vau
+    //         JOIN accounts act ON act.id = vau.creatorId
+    //         ;";
+
+    //     List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
+    //     {
+    //         vault.Creator = account;
+    //         return vault;
+    //     }).ToList();
+    //     return vaults;
+    // }
+
+    internal List<Vault> GetAllVaults(string userId)
     {
         string sql = @"
-            SELECT
-            vau.*,
-            act.*
-            FROM vaults vau
-            JOIN accounts act ON act.id = vau.creatorId
-            ;";
-
-        List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        SELECT
+        vau.*,
+        act.*
+        FROM vaults vau
+        JOIN accounts act ON act.id = vau.creatorId
+        WHERE vau.isPrivate = 0 OR (vau.isPrivate = 1 AND vau.creatorId = @userId)
+        ;";
+        return _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
         {
             vault.Creator = account;
             return vault;
-        }).ToList();
-        return vaults;
+        }, new { userId }).ToList();
     }
 
 
@@ -63,7 +80,6 @@ public class VaultsRepository
         FROM vaults vau
         JOIN accounts act ON vau.creatorId = act.id
         WHERE vau.id = @vaultId
-        AND (vau.isPrivate = 0 OR (vau.isPrivate = 1 AND vau.creatorId = @userId))
         ;";
         Vault foundVault = _vdb.Query<Vault, Account, Vault>(sql, (vault, creator) =>
         {

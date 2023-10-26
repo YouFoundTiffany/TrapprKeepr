@@ -1,42 +1,65 @@
 <!-- HOME PAGE  -->
 <template>
   <div class="hmasonry-container">
-    <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" style="min-height: 5em;" />
+    <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" :profile="profile" style="min-height: 5em;" />
 
   </div>
 </template>
 
 <script>
+import { accountService } from '../services/AccountService.js'
 import { keepsService } from '../services/KeepsService.js'
+import { profilesService } from '../services/ProfilesService.js'
 import KeepCard from '../components/KeepCard.vue';
 import { computed, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 // import { Modal } from 'bootstrap';
-import { vaultsService } from '../services/VaultsService';
+import { vaultsService } from '../services/VaultsService.js';
+import { logger } from '../utils/Logger.js';
+import { useRoute } from 'vue-router';
 // import { router } from '../router';
+
 
 export default {
   // const: router = useRouter(),
   setup() {
-    onMounted(() => { getKeeps(); getVaults(); });
+    onMounted(async () => { getTheAccount(); getKeeps(); getVaults(); getProfilesVaults() });
+    const route = useRoute();
 
     const selectedKeep = ref(null);
 
-
-    async function getKeeps() {
+    async function getTheAccount() {
       try {
-        await keepsService.getKeeps();
-      }
-      catch (error) {
+        await accountService.getTheAccount();
+      } catch (error) {
         Pop.error(error);
       }
     }
+
+    // STUB Get all Keeps with this Profile Id
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps();
+      } catch (error) {
+        Pop.error(error);
+      }
+    }
+
+    // STUB Get all Vaults with this Profile Id
     async function getVaults() {
       try {
         await vaultsService.getVaults();
+      } catch (error) {
+        Pop.error(error);
       }
-      catch (error) {
+    }
+
+    // STUB Get all Vaults with this Profile Id
+    async function getProfilesVaults() {
+      try {
+        await profilesService.getProfilesVaults(route.params.profileId);
+      } catch (error) {
         Pop.error(error);
       }
     }
@@ -46,15 +69,13 @@ export default {
       keeps: computed(() => AppState.keeps),
       vaults: computed(() => AppState.vaults),
       profile: computed(() => AppState.profiles),
-      profileKeeps
-        : computed(() => AppState.profileKeeps
-        ),
-      profileVaults
-        : computed(() => AppState.profileVaults
-        ),
-    }
+      profileKeeps: computed(() => AppState.profileKeeps),
+      profileVaults: computed(() => AppState.profileVaults),
+      activeProfile: computed(() => AppState.activeProfile),
+      userVaults: computed(() => AppState.userVaults),
+    };
   },
-  components: { KeepCard }
+  components: { KeepCard },
 };
 
 </script>

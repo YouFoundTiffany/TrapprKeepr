@@ -58,11 +58,12 @@ public class VaultsController : ControllerBase
     }
     // STUB Get All Vaults
     [HttpGet]
-    public ActionResult<List<Vault>> GetAllVaults()
+    public async Task<ActionResult<List<Vault>>> GetAllVaults()
     {
         try
         {
-            List<Vault> vaults = _vaultsService.GetAllVaults();
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            List<Vault> vaults = _vaultsService.GetAllVaults(userInfo?.Id);
             return Ok(vaults);
         }
         catch (Exception error)
@@ -70,6 +71,20 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
+
+    // [HttpGet]
+    // public ActionResult<List<Vault>> GetAllVaults()
+    // {
+    //     try
+    //     {
+    //         List<Vault> vaults = _vaultsService.GetAllVaults();
+    //         return Ok(vaults);
+    //     }
+    //     catch (Exception error)
+    //     {
+    //         return BadRequest(error.Message);
+    //     }
+    // }
 
 
     // STUB EDIT Vault

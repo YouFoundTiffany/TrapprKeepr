@@ -5,11 +5,13 @@ public class ProfilesService
     private readonly ProfilesRepository _prepo;
 
     public VaultsRepository _vrepo { get; }
+    public KeepsRepository _krepo { get; }
 
-    public ProfilesService(ProfilesRepository prepo, VaultsRepository vrepo)
+    public ProfilesService(ProfilesRepository prepo, VaultsRepository vrepo, KeepsRepository krepo)
     {
         _prepo = prepo;
         _vrepo = vrepo;
+        _krepo = krepo;
     }
     // STUB GetOrCreateProfile
     internal Account GetOrCreateProfile(Account userInfo)
@@ -50,7 +52,20 @@ public class ProfilesService
         return _prepo.GetUserKeeps(id);
     }
 
-    // FIXME
+    // STUB Get User Vaults GetVaultsByProfileId
+    public List<Vault> GetVaultsByProfileId(string userId, string requesterId = null)
+    {
+        List<Vault> vaults = _prepo.GetVaultsByProfileId(userId);
+
+        if (requesterId != null && requesterId != userId)
+        {
+            vaults = vaults.FindAll(vault => vault.IsPrivate == false);
+        }
+        return vaults;
+    }
+
+
+     // FIXME
     // STUB Get User Vaults
     // tifftag filter out private vaults
     // public List<Vault> GetUserVaults(string userId)

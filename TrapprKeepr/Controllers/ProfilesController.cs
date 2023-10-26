@@ -13,7 +13,7 @@ public class ProfilesController : ControllerBase
         _auth0Provider = auth0Provider;
     }
 
-    // STUB Get User Profile
+    // STUB Get THIS User Profile
     [HttpGet("{profileId}")]
     public ActionResult<Profile> GetProfileById(string profileId)
     {
@@ -32,7 +32,7 @@ public class ProfilesController : ControllerBase
         }
     }
 
-    // STUB Get User Keeps
+    // STUB Get THIS User Keeps
     [HttpGet("{profileId}/keeps")]
     public ActionResult<List<Keep>> GetUserKeeps(string profileId)
     {
@@ -46,17 +46,27 @@ public class ProfilesController : ControllerBase
         }
     }
 
-    // STUB Get User Vaults
+
+// GetVaultsByProfileId
     [HttpGet("{profileId}/vaults")]
-    public ActionResult<List<Vault>> GetUserVaults(string profileId)
+    public async Task<ActionResult<List<Vault>>> GetVaultsByProfileId(string profileId)
     {
         try
         {
-            return Ok(_aService.GetUserVaults(profileId));
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+
+            // Fetching vaults for the provided profileId, using the logged-in user's Id as requesterId
+            List<Vault> vaults = _aService.GetVaultsByProfileId(profileId, userInfo?.Id);
+
+            return Ok(vaults);
         }
-        catch (Exception error)
+        catch (Exception e)
         {
-            return BadRequest(error.Message);
+            return BadRequest(e.Message);
         }
     }
+
+
+
+
 }

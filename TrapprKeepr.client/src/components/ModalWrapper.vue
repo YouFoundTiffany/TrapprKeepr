@@ -24,7 +24,7 @@
 <script>
 // REVIEW this modal component is created using slots in the template and props in the script to allow re-use across the app. This keeps this component flexible for a variety of situations
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed } from 'vue';
 export default {
     // NOTE modal takes in a bool so the button can be used, and an id, so we can make each instance of the modal unique
     props: { id: { type: String, required: true }, size: { type: String, default: 'xl' } },
@@ -32,6 +32,7 @@ export default {
         return {
             keeps: computed(() => AppState.keeps),
             acccount: computed(() => AppState.account.id),
+            userVaults: computed(() => AppState.userVaults),
         }
     }
 };
