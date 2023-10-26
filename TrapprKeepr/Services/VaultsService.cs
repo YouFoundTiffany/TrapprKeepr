@@ -1,3 +1,4 @@
+// VAULTS SERVICE
 namespace TrapprKeepr.Services;
 public class VaultsService
 {
@@ -12,31 +13,8 @@ public class VaultsService
         Vault newVault = _vrepo.Create(vaultData);
         return newVault;
     }
-    // STUB Get All Vault
-    internal List<Vault> GetAllVaults(string userId)
-    {
-        return _vrepo.GetAllVaults(userId);
-    }
-    // internal List<Vault> GetAllVaults()
-    // {
-    //     List<Vault> vaults = _vrepo.GetAllVaults();
-    //     return vaults;
-    // }
 
 
-
-
-
-    // STUB Get Vault by Id
-    public Vault GetVaultById(int vaultId, string userId)
-    {
-        Vault vault = _vrepo.GetVaultById(vaultId, userId);
-        if (vault == null) throw new Exception($"Unable to find Vault {vaultId}");
-        if (vault.IsPrivate == true && vault.CreatorId != userId) throw new Exception($"{vault.Name} is Private");
-
-        return vault;
-
-    }
     // STUB EDIT Vault
     internal Vault EditVault(Vault updateVaultData, int vaultId, string userId)
     {
@@ -60,4 +38,46 @@ public class VaultsService
         _vrepo.DeleteVault(vaultId);
         return (originalVault, "Vault successfully deleted.");
     }
+
+
+    //STUB GetVaultById GET A SINGLE VAULT BUT IT'S ID
+    internal Vault GetVaultById(int vaultId, string userId)
+    {
+        Vault vault = _vrepo.GetVaultById(vaultId);
+        if (vault == null) throw new Exception("Unable to find Vault ${vaultId}");
+
+        if (vault.IsPrivate == true && vault.CreatorId != userId) throw new Exception("${vault.Name} is not yours!");
+        return vault;
+    }
+
+
+
+    // WE WANT VAULTS   ✨ FOR PROFILES!!!!!!!!
+    //STUB Get LIST OF ALL A user's vaults using their profile/account ID :D working w SD
+    // SO LONG AS THEY ARE NOT PRIVATED
+    internal List<Vault> GetVaultsByProfileId(string profileId, string userId)
+    {
+        List<Vault> vaults = _vrepo.GetVaultsByProfileId(profileId);
+        vaults = vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userId);
+
+        return vaults;
+
+    }
+
+    // WE WANT VAULTS   ✨   FOR ACCOUNTSSSS!! MY VAULTS
+    //STUB Get LIST OF ALL A user's vaults using their profile/account ID :D working w SD
+    // SO LONG AS THEY ARE NOT PRIVATED
+    internal List<Vault> GetVaultsByAccountId(string accountId)
+    {
+        List<Vault> myVaults = _vrepo.GetVaultsByAccountId(accountId);
+
+        //    DO NOT need this as we are interacting at the ACcount Level :D
+        // myVaults = myVaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == accountId);
+
+        return myVaults;
+
+    }
 }
+// commented out lines are for a singluar vault, not a LIST!!!!!!!
+// if (vault == null) throw new Exception($"Unable to find Vault {vaultId}");
+// if (vault.IsPrivate == true && vault.CreatorId != userId) throw new Exception($"{vault.Name} is Private");

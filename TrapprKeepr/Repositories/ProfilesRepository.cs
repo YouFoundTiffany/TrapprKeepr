@@ -83,21 +83,22 @@ public class ProfilesRepository
 
 
 
-    // STUB GetById
-    internal Account GetById(int keepId, string userId)
-    {
-        string sql = @"
-        SELECT *
-        kee.*,
-        act.*
-        FROM accounts act ON kee.creatorId = act.id
-        WHERE kee.id = @keepId
-         ;";
-         Keep foundKeep = _db.Query<Keep, Account, Keep>(sql, (keep, creator)=>
-         {
-            keep.Creator = creator;
-            return keep;
-         }, new {keepId, userId}).FirstOrDefault();
-       return foundKeep;
-    }
+    // // STUB GetById Get the Account info by the Logged in Account Holder Id
+    // // FIXME But right now I am joining the Keeps table!?
+    //  internal Account GetById(int keepId, string userId)
+    // {
+    //     string sql = @"
+    //     SELECT *
+    //     kee.*,
+    //     act.*
+    //     FROM accounts act ON kee.creatorId = act.id
+    //     WHERE kee.id = @keepId
+    //      ;";
+    //      Keep foundKeep = _db.Query<Keep, Account, Keep>(sql, (keep, creator)=>
+    //      {
+    //         keep.Creator = creator;
+    //         return keep;
+    //      }, new {keepId, userId}).FirstOrDefault();
+    //    return foundKeep;
+    // }
 }

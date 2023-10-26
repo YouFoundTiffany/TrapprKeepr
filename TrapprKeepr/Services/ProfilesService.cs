@@ -13,16 +13,19 @@ public class ProfilesService
         _vrepo = vrepo;
         _krepo = krepo;
     }
-    // STUB GetOrCreateProfile
-    internal Account GetOrCreateProfile(Account userInfo)
-    {
-        Account profile = _prepo.GetById(userInfo.Id);
-        if (profile == null)
-        {
-            return _prepo.Create(userInfo);
-        }
-        return profile;
-    }
+
+
+    // // STUB GetOrCreateProfile
+    // ALREADY HAVE THIS IN THE ACCOUNT SERVICE PER TEMPLATE CREATION
+    // internal Account GetOrCreateProfile(Account userInfo)
+    // {
+    //     Account profile = _prepo.GetById(userInfo.Id);
+    //     if (profile == null)
+    //     {
+    //         return _prepo.Create(userInfo);
+    //     }
+    //     return profile;
+    // }
 
 
     internal Profile GetProfileByEmail(string email)
@@ -53,16 +56,17 @@ public class ProfilesService
     }
 
     // STUB Get User Vaults GetVaultsByProfileId
-    public List<Vault> GetVaultsByProfileId(string userId, string requesterId = null)
-    {
-        List<Vault> vaults = _prepo.GetVaultsByProfileId(userId);
+    // MAYBE REMOVE? THIS DOESN'T FLOW THROUGH THE PROFILES SERVICE ANYMORE, IT IS IN VAULTS SERV AND REPO
+    // public List<Vault> GetVaultsByProfileId(string userId, string requesterId = null)
+    // {
+    //     List<Vault> vaults = _prepo.GetVaultsByProfileId(userId);
 
-        if (requesterId != null && requesterId != userId)
-        {
-            vaults = vaults.FindAll(vault => vault.IsPrivate == false);
-        }
-        return vaults;
-    }
+    //     if (requesterId != null && requesterId != userId)
+    //     {
+    //         vaults = vaults.FindAll(vault => vault.IsPrivate == false);
+    //     }
+    //     return vaults;
+    // }
 
 
      // FIXME

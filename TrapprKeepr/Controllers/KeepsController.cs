@@ -54,6 +54,7 @@ public class KeepsController : ControllerBase
         try
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+
             Keep edited = _keeService.EditKeep(keepData, keepId, userInfo.Id);
             return Ok(edited);
         }
@@ -88,6 +89,7 @@ public class KeepsController : ControllerBase
         try
         {
             Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
+
             string userId = userInfo?.Id;
             Keep keep = _keeService.GetKeepById(keepId, userId);
             return Ok(keep);

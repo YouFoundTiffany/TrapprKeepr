@@ -1,3 +1,4 @@
+// VAULTS REPOSITORY
 namespace TrapprKeepr.Repositories;
 
 public class VaultsRepository
@@ -61,6 +62,7 @@ public class VaultsRepository
         JOIN accounts act ON act.id = vau.creatorId
         WHERE vau.isPrivate = 0 OR (vau.isPrivate = 1 AND vau.creatorId = @userId)
         ;";
+        // REVIEW ⬆️
         return _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
         {
             vault.Creator = account;
@@ -68,10 +70,52 @@ public class VaultsRepository
         }, new { userId }).ToList();
     }
 
-
-
+    // STUB Get A SINGLUAR PROFILE'S VAULT LIST
+    //STUB Get another users vaults using their profile/account ID :D
+    // ✉️ THIS COMES FROM GetVaultsByProfileId IN SERVICE
     // STUB Get Vault by Id
-    internal Vault GetVaultById(int vaultId, string userId)
+    internal List<Vault> GetVaultsByProfileId(string profileId)
+    {
+        string sql = @"
+    SELECT
+    vau.*,
+    act.*
+    FROM vaults vau
+    JOIN accounts act ON vau.creatorId = act.id
+    WHERE act.id = @profileId
+    ;";
+        List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
+      {
+          vault.Creator = account;
+          return vault;
+      }, new { profileId }).ToList();
+        return vaults;
+    }
+
+    // ACCOUNTS!!!! GET ALL VAULTS FOR ACCOUNTS    -MY VAULTS
+    internal List<Vault> GetVaultsByAccountId(string accountId)
+    {
+        string sql = @"
+        SELECT
+        vau.*,
+        act.*
+        FROM vaults vau
+        JOIN accounts act ON vau.creatorId = act.id
+        WHERE act.id = @accountId
+        ;";
+
+
+        List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vaults, account) =>
+         {
+             vaults.Creator = account;
+             return vaults;
+         }, new { accountId }).ToList();
+        return vaults;
+    }
+
+
+    //   THIS IS FOR A SINGLUAR VAULT FOR A PARTICULAR USER
+    internal Vault GetVaultById(int vaultId)
     {
         string sql = @"
         SELECT
@@ -85,9 +129,10 @@ public class VaultsRepository
         {
             vault.Creator = creator;
             return vault;
-        }, new { vaultId, userId }).FirstOrDefault();
+        }, new { vaultId }).FirstOrDefault();
         return foundVault;
     }
+
 
 
     // STUB EDIT Vault

@@ -34,7 +34,8 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB Get Vault by Id - Only Showing open to public and hiding privates.
+    // STUB Get a single Vault the Vault's Id - Only Showing open to public and hiding privates.
+    // FIXME need something in Sevice for this
     [HttpGet("{vaultId}")]
     public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
     {
@@ -56,21 +57,21 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // STUB Get All Vaults
-    [HttpGet]
-    public async Task<ActionResult<List<Vault>>> GetAllVaults()
-    {
-        try
-        {
-            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            List<Vault> vaults = _vaultsService.GetAllVaults(userInfo?.Id);
-            return Ok(vaults);
-        }
-        catch (Exception error)
-        {
-            return BadRequest(error.Message);
-        }
-    }
+    // // STUB Get All Vaults
+    // [HttpGet]
+    // public async Task<ActionResult<List<Vault>>> GetAllVaults()
+    // {
+    //     try
+    //     {
+    //         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+    //         List<Vault> vaults = _vaultsService.GetAllVaults(userInfo?.Id);
+    //         return Ok(vaults);
+    //     }
+    //     catch (Exception error)
+    //     {
+    //         return BadRequest(error.Message);
+    //     }
+    // }
 
     // [HttpGet]
     // public ActionResult<List<Vault>> GetAllVaults()
@@ -130,10 +131,15 @@ public class VaultsController : ControllerBase
     {
         try
         {
-            // I'm getting the userInfo but I'm not using it. look in to that.
+
             Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
-            string userId = userInfo?.Id;
+
+
+
+            // string userId = userInfo?.Id;
+
             List<VaultKeepsViewModel> myKeeps = _vkeService.GetVaultKeepsByVaultId(vaultId, userInfo?.Id);
+
             return myKeeps;
         }
         catch (Exception error)

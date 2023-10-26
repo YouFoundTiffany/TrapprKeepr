@@ -76,8 +76,8 @@ public class KeepsRepository
             SET
                 name = @Name,
                 description = @Description,
-                img = @Img
-                visits = @Visits
+                img = @Img,
+                views = @Views
             WHERE id = @Id
             ;";
         _kdb.Execute(sql, updateData);
@@ -108,4 +108,23 @@ public class KeepsRepository
         _kdb.Execute(sql, new { keepId });
 
     }
+
+       // // STUB GetById Get the Account info by the Logged in Account Holder Id
+    // // FIXME But right now I am joining the Keeps table!?
+    //  internal Account GetById(int keepId, string userId)
+    // {
+    //     string sql = @"
+    //     SELECT *
+    //     kee.*,
+    //     act.*
+    //     FROM accounts act ON kee.creatorId = act.id
+    //     WHERE kee.id = @keepId
+    //      ;";
+    //      Keep foundKeep = _db.Query<Keep, Account, Keep>(sql, (keep, creator)=>
+    //      {
+    //         keep.Creator = creator;
+    //         return keep;
+    //      }, new {keepId, userId}).FirstOrDefault();
+    //    return foundKeep;
+    // }
 }

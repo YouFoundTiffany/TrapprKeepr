@@ -19,7 +19,7 @@ public class KeepsService
         return keeps;
     }
 
-    // STUB Get Keep by Id - and show all the Vaults that Keep is in?
+    // STUB Get Keep by Id - and show all?
     internal Keep GetKeepById(int keepId, string userId, bool increaseViews = false)
     {
         // Safety Check
