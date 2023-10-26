@@ -4,8 +4,9 @@
         <img :src="keep.img" class="card-image rounded-top" keep.img>
         <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
         <!-- FIXME add browser button attribute -->
+        <!-- FIXME make profile pic bigger -->
 
-        <img @click="setActiveKeep(keepId)" :src="keep.creator.picture" :title="keep.creator.name"
+        <img @click="setActiveKeep(keep.id)" :src="keep.creator.picture" :title="keep.creator.name"
             :alt="keep.creator.picture" class="profile-pic" data-bs-toggle="modal" data-bs-target="#keep-details">
     </div>
 
@@ -19,29 +20,15 @@
 <script>
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
-// import { Account, Profile } from '../models/Account.js';
-// import { logger } from '../utils/Logger';
-// import ModalWrapper from './ModalWrapper.vue';
 import KeepDetailsCard from '../components/KeepDetailsCard.vue';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService.js';
 export default {
     props: {
-        keep: { type: Object, required: true }, profile: { type: Object, required: false }
+        keep: { type: Object, required: true }, profile: { type: Object, required: true }
     },
-    setup() {
-
-
-        async function setActiveKeep(keepId) {
-            try {
-                logger.log('did it click?')
-                await keepsService.setActiveKeep(keepId)
-            } catch (error) {
-                Pop.error(error)
-            }
-        }
-
+    setup(props) {
 
 
         return {
@@ -54,7 +41,8 @@ export default {
             async setActiveKeep(keepId) {
                 try {
                     logger.log('did it click?', keepId)
-                    await keepsService.setActiveKeep(keepId)
+                    // const keepId = props.keep.id
+                    await keepsService.getKeepById(keepId)
                 } catch (error) {
                     Pop.error(error)
                 }

@@ -22,7 +22,7 @@ export default {
     props: {
         vault: { type: Object, required: true }
     },
-    setup() {
+    setup(props) {
 
 
 

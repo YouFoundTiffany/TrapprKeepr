@@ -1,13 +1,15 @@
+
+<!-- KEEP DETAILS CARD COMPONENT -->
 <template>
-    <div class='container text-dark'>
+    <div v-if="activeKeep" class='container text-dark'>
         <div>
-            Its a Modal!!! Yay!
-            {{ activeProfile }}
-            {{ activeKeep }}
-            <!-- <img :src="keep.img" class="card-image rounded-top" keep.img> -->
-            <!-- <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5> -->
+            <!-- {{ activeProfile }}
+            {{ activeKeep }} -->
+            <img :src="activeKeep.creator.picture" class="card-image rounded-top modprofile-pic"
+                alt="activeKeep.creator.picture">
+            <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
             <!-- FIXME POINTER ON PROF PIC -->
-            <!-- <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic"> -->
+            <!-- <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="keep.creator.picture" class="profile-pic"> -->
 
             <!-- v-if="user.isAuthenticated && !isMember"-->
             <!-- v-if="user.isAuthenticated" -->
@@ -61,12 +63,17 @@ import Pop from '../utils/Pop';
 export default {
 
     setup() {
+
+
+        // onMounted(() => {
+        //         getProfileById();
+        //     })
         const route = useRoute()
+
         const activeProfile = computed(() => route.params.profileId)
 
-        onMounted(() => {
-            getProfileById();
-        })
+
+
 
 
 
@@ -93,4 +100,12 @@ export default {
 </script>
 
 
-<style></style>
+<style>
+.modprofile-pic {
+    max-height: 15em;
+    width: 15em;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50em;
+}
+</style>
