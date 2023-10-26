@@ -1,5 +1,6 @@
 <!-- KEEP ACCOUNT CARD COMPONENT -->
 <template>
+    <!-- add @click -->
     <div class="card acc-kcard text-bg-dark ard text-bg-dark ">
         <img :src="keep.img" class="acc-kcard-img" :alt="keep.name">
         <div class="card-img-overlay">
@@ -9,6 +10,11 @@
 
         <button @click="deleteKeep(keep.id)">Delete?</button>
     </div>
+    <!-- <ModalWrapper :id="'keep-details'">
+        <template #body>
+            <KeepDetailsCard />
+        </template>
+    </ModalWrapper> -->
 </template>
 <script>
 import { computed } from 'vue';

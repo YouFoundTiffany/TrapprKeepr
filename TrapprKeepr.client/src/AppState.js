@@ -31,6 +31,8 @@ export const AppState = reactive({
   /** @type {import('./models/Vault.js').Vault[]} */
   vaults: [],
 
+  /** @type {import('./models/Vault.js').Vault[]} */
+  userVaults: [],
 
   // STUB VAULTS
   /** @type {import('./models/Vault.js').Vault[]} */

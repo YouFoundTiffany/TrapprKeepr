@@ -1,111 +1,102 @@
-
 <!-- KEEP DETAILS CARD COMPONENT -->
 <template>
-    <div v-if="activeKeep" class='container text-dark'>
-        <div>
-            <!-- {{ activeProfile }}
-            {{ activeKeep }} -->
-            <img :src="activeKeep.creator.picture" class="card-image rounded-top modprofile-pic"
-                alt="activeKeep.creator.picture">
-            <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
-            <!-- FIXME POINTER ON PROF PIC -->
-            <!-- <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="keep.creator.picture" class="profile-pic"> -->
-
-            <!-- v-if="user.isAuthenticated && !isMember"-->
-            <!-- v-if="user.isAuthenticated" -->
-            <!-- Shows MY Vaults -->
-
-            <!-- Final dropdown here.  -->
-            <!-- <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                </button>
-                <div v-for="vault in vaults" :key="vault.id" class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
-            <!-- {{ vault.name }} -->
-            <!-- Final dropdown here.  -->
-
-
-
-
-
-            <!-- <div v-for="vault in vaults" :key="vault.id"> -->
-            <!-- <VaultDropDown :vault="vault" > -->
-            <!-- STUB DropDown Users Vaults  -->
-            <!-- </div> -->
-
-
-            <!-- DropDownTEmplage moved to VaultDropDown -->
-            <!-- <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+    <div v-if="activeKeep" class='container-fluid text-dark'>
+        <div class="row no-gutters">
+            <div class="col-6">
+                <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img" class="keep-image w-100">
+            </div>
+            <!-- RIGHT SIDE -->
+            <div class="col-6 d-flex flex-column justify-content-between">
+                <!-- KEEP NAME AND KEEP DESCRIPTION - CENTERED HORIZONTALLY AND VERTICALLY -->
+                <div class="d-flex flex-column justify-content-center align-items-center h-50">
+                    <h4>{{ activeKeep.name }}</h4>
+                    <p>{{ activeKeep.description }}</p>
+                </div>
+                <!-- PROFILE PIC AND CREATOR NAME -->
+                <div class="d-flex flex-column align-items-center">
+                    <img :src="activeKeep.creator.picture" class="modprofile-pic" alt="activeKeep.creator.picture">
+                    <h5 class="h5-over text-light bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
+                </div>
+                <!-- CHECK IF USER IS AUTHENTICATED & SAVE KEEP TO YOUR VAULT FORM -->
+                <div v-if="user.isAuthenticated">
+                    <form @submit.prevent="saveKeepToVault">
+                        <!-- LOGGED IN USER'S VAULTS  -->
+                        <div class="dropdown">
+                            <select v-model="selectedVault" class="form-select">
+                                <option v-for="vault in userVaults" :key="vault.id" :value="vault.id">
+                                    {{ vault.name }}
+                                </option>
+                            </select>
                         </div>
-                    </div> -->
-            <!-- </div> -->
-            <!-- </div> -->
+                        <button type="submit" class="btn btn-primary mt-2">Save to Vault</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </template>
-<script>
-import { computed, onMounted } from 'vue';
-import { AppState } from '../AppState.js';
-import { logger } from '../utils/Logger.js';
-import { useRoute } from 'vue-router';
-import Pop from '../utils/Pop';
 
+<script>
+import { computed, ref } from 'vue';
+import { AppState } from '../AppState.js';
+import { ref } from 'vue';
+import { AppState } from '../AppState.js';
 
 export default {
-
     setup() {
+        // const userVaults = computed(() => {
+        //     return AppState.vaults.filter(vault => vault.userId === user.id);
+        // });
 
+        const selectedVault = ref(null);
 
-        // onMounted(() => {
-        //         getProfileById();
-        //     })
-        const route = useRoute()
-
-        const activeProfile = computed(() => route.params.profileId)
-
-
-
-
-
-
-        // NOTE may not need this.
-        async function getProfileById(profileId) {
-            try {
-                profileId = (route.params)
-                // await profilesService.getProfileById(route.params.profileId)
-            } catch (error) {
-                Pop.error(error)
-            }
+        function saveKeepToVault() {
+            // Logic to save the keep to the selected vault goes here.
+            // You'll likely make an API call or Vuex action here to save the relationship
+            console.log(`Saving keep to vault with ID ${selectedVault.value}`);
         }
-        return {
-            // AppState: computed(() => AppState),
-            activeProfile: computed(() => AppState.activeProfile),
-            acccount: computed(() => AppState.account),
-            keeps: computed(() => AppState.keeps),
-            activeKeep: computed(() => AppState.activeKeep)
 
+        return {
+            user,
+            userVaults,
+            selectedVault,
+            saveKeepToVault,
+            activeKeep: computed(() => AppState.activeKeep)
         };
-    },
+    }
 }
 
 </script>
 
-
 <style>
+.h5-over {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.927) !Important;
+}
+
 .modprofile-pic {
-    max-height: 15em;
-    width: 15em;
+    max-height: 35px;
+    width: 35px;
     object-fit: cover;
     object-position: center;
     border-radius: 50em;
+    position: absolute;
+    bottom: 30vh;
+    right: 4vw;
+}
+
+.keep-image {
+    max-height: 350px;
+    object-fit: cover;
+    object-position: center center;
+
+}
+
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
 }
 </style>
