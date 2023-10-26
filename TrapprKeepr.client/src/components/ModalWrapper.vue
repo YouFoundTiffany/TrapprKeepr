@@ -8,23 +8,13 @@
         <div :class="`modal-dialog modal-dialog-scrollable mod-hea modal-dialog-centered modal-xl`" role="document">
             <div class="modal-content mod-hea">
 
-                <div class="modal-header">
-                    <!-- NOTE slots here create spaces that can later be filled in depending on the use case -->
-                    <!-- NOTE any content in between a the slot will be used as a default if one is not provided in when the wrapper is used -->
-                    <slot name="header">
-                        <!-- <div class="d-flex justify-content-end w-100"><i class="mdi mdi-close fs-3 selectable text-dark"
-                                data-bs-dismiss="modal"></i></div> -->
-                    </slot>
-                </div>
+
                 <div class="modal-body">
                     <!-- NOTE the name on the slots allow the creation of multiple slots to be created for one component -->
                     <slot name="body">
                     </slot>
                 </div>
-                <div class="modal-footer">
-                    <slot name="footer">
-                    </slot>
-                </div>
+
             </div>
         </div>
     </div>

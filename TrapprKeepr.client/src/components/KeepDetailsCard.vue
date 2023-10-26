@@ -2,33 +2,39 @@
 <template>
     <div v-if="activeKeep" class='container-fluid text-dark'>
         <div class="row no-gutters">
-            <div class="col-6">
-                <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img" class="keep-image w-100">
+            <div class="col-md-6">
+                <RouterLink :to="{ name: 'Profile', params: { profileId: activeKeep.creatorId } }">
+                    <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img"
+                        class="keep-image w-100">
+                </RouterLink>
             </div>
             <!-- RIGHT SIDE -->
             <div class="col-6 d-flex flex-column justify-content-between">
+                <h5 class="text-dark bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
+                <img :src="activeKeep.creator.picture" class="modprofile-pic" alt="activeKeep.creator.picture">
                 <!-- KEEP NAME AND KEEP DESCRIPTION - CENTERED HORIZONTALLY AND VERTICALLY -->
                 <div class="d-flex flex-column justify-content-center align-items-center h-50">
                     <h4>{{ activeKeep.name }}</h4>
                     <p>{{ activeKeep.description }}</p>
                 </div>
                 <!-- PROFILE PIC AND CREATOR NAME -->
-                <div class="d-flex flex-column align-items-center">
-                    <img :src="activeKeep.creator.picture" class="modprofile-pic" alt="activeKeep.creator.picture">
-                    <h5 class="h5-over text-light bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
-                </div>
+                <!-- <div class="d-flex flex-column align-items-center">
+
+                </div> -->
                 <!-- CHECK IF USER IS AUTHENTICATED & SAVE KEEP TO YOUR VAULT FORM -->
-                <div v-if="user.isAuthenticated">
-                    <form @submit.prevent="saveKeepToVault">
-                        <!-- LOGGED IN USER'S VAULTS  -->
-                        <div class="dropdown">
-                            <select v-model="selectedVault" class="form-select">
+                <div>
+                    <form @submit.prevent="saveKeepToVault" class="row">
+                        <!-- LOGGED IN USER'S VAULTS -->
+                        <div class="dropdown col-7">
+                            <select v-model="selectedVault" class="form-select fs-6">
                                 <option v-for="vault in userVaults" :key="vault.id" :value="vault.id">
                                     {{ vault.name }}
                                 </option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Save to Vault</button>
+                        <div class="col-5 pl-2">
+                            <button type="submit" class="btn btn-primary btn-sm btn-block fs-6">Save</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -38,8 +44,6 @@
 
 <script>
 import { computed, ref } from 'vue';
-import { AppState } from '../AppState.js';
-import { ref } from 'vue';
 import { AppState } from '../AppState.js';
 
 export default {
@@ -57,8 +61,8 @@ export default {
         }
 
         return {
-            user,
-            userVaults,
+            // user,
+            // userVaults,
             selectedVault,
             saveKeepToVault,
             activeKeep: computed(() => AppState.activeKeep)
@@ -81,11 +85,13 @@ export default {
     max-height: 35px;
     width: 35px;
     object-fit: cover;
-    object-position: center;
+    /* object-position: center; */
     border-radius: 50em;
-    position: absolute;
-    bottom: 30vh;
-    right: 4vw;
+    /* position: absolute; */
+    /* align-items: baseline; */
+    justify-content: end;
+    /* bottom: 30vh;
+    right: 4vw; */
 }
 
 .keep-image {

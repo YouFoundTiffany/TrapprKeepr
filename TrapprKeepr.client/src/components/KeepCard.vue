@@ -11,7 +11,7 @@
     </div>
 
 
-    <ModalWrapper :id="'keep-details'">
+    <ModalWrapper class="container-flex" :id="'keep-details'">
         <template #body>
             <KeepDetailsCard />
         </template>
