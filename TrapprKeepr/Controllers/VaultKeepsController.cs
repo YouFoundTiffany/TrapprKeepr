@@ -80,19 +80,3 @@ public class VaultKeepsController : ControllerBase
         }
     }
 }
-// STUB EDIT Keep
-// [Authorize]
-// [HttpPut("{vaultKeepId}")]
-// public async Task<ActionResult<Keep>> EditKeep([FromBody] Keep vaultKeepData, int vaultKeepId)
-// {
-//     try
-//     {
-//         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-//         Keep edited = _vkeService.EditKeep(keepData, vaultKeepId, userInfo.Id);
-//         return Ok(edited);
-//     }
-//     catch (Exception error)
-//     {
-//         return BadRequest(error.Message);
-//     }
-// }
