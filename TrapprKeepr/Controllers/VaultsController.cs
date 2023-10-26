@@ -35,7 +35,7 @@ public class VaultsController : ControllerBase
         }
     }
     // STUB Get a single Vault the Vault's Id - Only Showing open to public and hiding privates.
-    // FIXME need something in Sevice for this
+
     [HttpGet("{vaultId}")]
     public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
     {

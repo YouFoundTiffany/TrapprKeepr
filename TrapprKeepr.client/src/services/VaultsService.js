@@ -15,13 +15,13 @@ class VaultsService {
 
     // STUB getVaults
     async getVaults() {
-
         const res = await api.get('api/vaults')
+
         // logger.log('[GOT ALL VAULTS]', res.data)
         // const vaults = AppState.vaults = res.data.map(vault => new Vault(vaults))
         // AppState.vaults = vaults
-        const vaults = res.data.map(vault => new Vault(vault))
-        AppState.vaults = vaults;
+        // const vaults = res.data.map(vault => new Vault(vault))
+        // AppState.vaults = vaults;
 
     }
 

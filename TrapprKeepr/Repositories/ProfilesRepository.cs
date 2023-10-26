@@ -62,9 +62,6 @@ public class ProfilesRepository
         return _db.Query<Keep>(sql, new { id }).ToList();
     }
 
- // FIXME
-
-
     // STUB Get User Vaults
     internal List<Vault> GetUserVaults(int vaultId, string userId)
     {
@@ -76,29 +73,4 @@ public class ProfilesRepository
         return _db.Query<Vault>(sql, new { userId }).ToList();
     }
 
-
-
-
-
-
-
-
-    // // STUB GetById Get the Account info by the Logged in Account Holder Id
-    // // FIXME But right now I am joining the Keeps table!?
-    //  internal Account GetById(int keepId, string userId)
-    // {
-    //     string sql = @"
-    //     SELECT *
-    //     kee.*,
-    //     act.*
-    //     FROM accounts act ON kee.creatorId = act.id
-    //     WHERE kee.id = @keepId
-    //      ;";
-    //      Keep foundKeep = _db.Query<Keep, Account, Keep>(sql, (keep, creator)=>
-    //      {
-    //         keep.Creator = creator;
-    //         return keep;
-    //      }, new {keepId, userId}).FirstOrDefault();
-    //    return foundKeep;
-    // }
 }

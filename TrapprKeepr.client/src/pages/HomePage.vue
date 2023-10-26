@@ -16,7 +16,7 @@ import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 // import { Modal } from 'bootstrap';
 import { vaultsService } from '../services/VaultsService.js';
-import { logger } from '../utils/Logger.js';
+// import { logger } from '../utils/Logger.js';
 import { useRoute } from 'vue-router';
 // import { router } from '../router';
 
@@ -37,7 +37,7 @@ export default {
       }
     }
 
-    // STUB Get all Keeps with this Profile Id
+    // STUB Get all Keeps
     async function getKeeps() {
       try {
         await keepsService.getKeeps();

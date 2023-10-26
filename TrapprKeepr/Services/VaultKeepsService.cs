@@ -25,7 +25,7 @@ public class VaultKeepsService
         List<VaultKeep> vaultKeeps = _vkRepo.GetAllVaultKeeps();
         return vaultKeeps;
     }
-    // FIXME WHAT HAPPENED TO VAUTKEEPS?
+
     // STUB Get VaultKeep by Vault Id - See in Vault Controller - View Model Continued
     internal List<VaultKeepsViewModel> GetVaultKeepsByVaultId(int vaultId, string userId)
     {

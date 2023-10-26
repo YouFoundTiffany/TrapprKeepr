@@ -62,7 +62,7 @@ public class VaultsRepository
         JOIN accounts act ON act.id = vau.creatorId
         WHERE vau.isPrivate = 0 OR (vau.isPrivate = 1 AND vau.creatorId = @userId)
         ;";
-        // REVIEW ⬆️
+
         return _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
         {
             vault.Creator = account;

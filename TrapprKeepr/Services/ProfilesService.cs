@@ -55,28 +55,5 @@ public class ProfilesService
         return _prepo.GetUserKeeps(id);
     }
 
-    // STUB Get User Vaults GetVaultsByProfileId
-    // MAYBE REMOVE? THIS DOESN'T FLOW THROUGH THE PROFILES SERVICE ANYMORE, IT IS IN VAULTS SERV AND REPO
-    // public List<Vault> GetVaultsByProfileId(string userId, string requesterId = null)
-    // {
-    //     List<Vault> vaults = _prepo.GetVaultsByProfileId(userId);
 
-    //     if (requesterId != null && requesterId != userId)
-    //     {
-    //         vaults = vaults.FindAll(vault => vault.IsPrivate == false);
-    //     }
-    //     return vaults;
-    // }
-
-
-     // FIXME
-    // STUB Get User Vaults
-    // tifftag filter out private vaults
-    // public List<Vault> GetUserVaults(string userId)
-    // {
-    //     // go get the list of all the vaults that have the same creator id as the profile that is logged in right now
-    //     List<Vault> vaults = _prepo.GetUserVaults(userId);
-    //     vaults = vaults.FindAll(vault => vault.IsPrivate == false);
-    //     return vaults;
-    // }
 }

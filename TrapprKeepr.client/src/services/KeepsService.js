@@ -15,7 +15,7 @@ class KeepsService {
         return newKeep
     }
 
-    // STUB GetKeep
+    // STUB getKeep
     async getKeeps() {
         const res = await api.get('api/keeps')
         // logger.log('[GOT ALL KEEPS]', res.data)

@@ -25,6 +25,7 @@
 
                 </div> -->
                 <!-- CHECK IF USER IS AUTHENTICATED & SAVE KEEP TO YOUR VAULT FORM -->
+                <!-- CREATING VAULT-KEEPS!!!! -->
                 <div>
                     <form @submit.prevent="saveKeepToVault" class="row">
                         <!-- LOGGED IN USER'S VAULTS -->
@@ -47,13 +48,13 @@
     <!-- tifftag -->
               <!-- TODO disable or HIDE button if not album creator OR collaborator -->
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { Modal } from 'bootstrap';
-import { logger } from '../utils/Logger';
-import { profilesService } from '../services/ProfilesService';
+// import { logger } from '../utils/Logger';
+// import { profilesService } from '../services/ProfilesService';
 import { useRoute } from 'vue-router';
-import Pop from '../utils/Pop.js';
+// import Pop from '../utils/Pop.js';
 
 
 
