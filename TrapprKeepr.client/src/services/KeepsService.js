@@ -16,6 +16,10 @@ class KeepsService {
         // AppState.keeps = keeps;
     }
 
+    // STUB SET ACTIVE KEEP
+    setActiveKeep(keep) {
+        AppState.activeKeep = keep
+    }
 
     // STUB createKeep
     async createKeep(keepData) {
