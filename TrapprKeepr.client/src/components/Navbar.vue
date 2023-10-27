@@ -5,7 +5,7 @@
     <!-- LEFT -->
     <div class="col-12 col-md-4">
       <!-- DROPDOWN -->
-      <div class="dropdown">
+      <div v-if="user.isAuthenticated" class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
           aria-expanded="false">
           Create
@@ -24,7 +24,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="create-keepLabel">Create Keep</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="create-keep" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <!-- Create Keep Form -->
           <div class="modal-body">
@@ -149,7 +149,7 @@ export default {
           Pop.toast('Keep Created', 'success')
 
           // router.push({ name: 'Keep Details', params: { keepId: newKeep.id } })
-          Modal.getOrCreateInstance('#create-keep').hide()
+          Modal.getOrCreateInstance('#KeepDetailsModal').hide()
         } catch (error) {
           Pop.error(error)
         }
@@ -162,7 +162,7 @@ export default {
       //     await vaultsService.createVault(vaultData.value)
       //     Pop.toast('Added Vault', 'success', 'center-end')
       //     vaultData.value = {}
-      //     // Modal.getOrCreateInstance('#create-vault').hide()
+      //     // Modal.getOrCreateInstance('#KeepDetailsModal').hide()
       //   } catch (error) {
       //     Pop.error(error)
       //   }
@@ -174,7 +174,7 @@ export default {
           vaultData.value = {}
           Pop.toast('Vault Created', 'success')
           // router.push({ name: 'Vault Details', params: { vaultId: newVault.id } })
-          Modal.getOrCreateInstance('#create-vault').hide()
+          Modal.getOrCreateInstance('#KeepDetailsModal').hide()
         } catch (error) {
           Pop.error(error)
         }

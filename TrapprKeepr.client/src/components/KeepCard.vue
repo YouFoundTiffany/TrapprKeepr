@@ -1,6 +1,6 @@
 <!-- KEEP CARD COMPONENT -->
 <template>
-    <section @click="setActiveKeep()" data-bs-toggle="modal" data-bs-target="#projectModal">
+    <section @click="setActiveKeep()" data-bs-toggle="modal" data-bs-target="#projectModal" class="indicate">
         <!-- DON'T TOUCH, ITS WORKING -->
         <div v-if="keep" class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
             <img :src="keep.img" :title="keep.name" alt="keep.img" class="card-image rounded-top">
@@ -15,7 +15,7 @@
         <div class="p-2">
         </div>
 
-        <!-- <KeepDetailsCard v-if="activeKeep" :activeKeep="activeKeep" :userVaults="userVaults" /> -->
+        <KeepDetailsCard v-if="activeKeep" :activeKeep="activeKeep" :userVaults="userVaults" />
     </section>
 </template>
 <script>

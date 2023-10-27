@@ -58,34 +58,96 @@ CREATE TABLE
         FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
--- INSERT INTO
+INSERT INTO 
 
---     vaults (
+vaults ( name, description, 
 
---         name,
+img, 
 
---         description,
+creatorId 
 
---         img,
+) 
 
---         creatorId
+VALUES ( 
 
---     )
+'TIFFtest', 
 
--- VALUES (
+'lets see what happens', 
 
---         'TIFFtest',
+'https://thumbs.dreamstime.com/b/colorful-rainbow-unicorn-horse-ancient-mythical-creature-187650428.jpg',
 
---         'lets see what happens',
+'6532bb3d577b39d02c12a556' 
 
---         'https://thumbs.dreamstime.com/b/colorful-rainbow-unicorn-horse-ancient-mythical-creature-187650428.jpg',
-
---         '6532bb3d577b39d02c12a556'
-
---     )
+) 
 
 SELECT vake.*, vau.*
 FROM vaultKeeps vake
     JOIN vaults vau ON vau.id = vake.vaultId
 WHERE
     vake.creatorId = @creatorId;
+
+-- INSERT INTO
+
+--     vaultKeeps (vaultId, keepId, creatorId)
+
+-- VALUES (
+
+--         2,
+
+--         2,
+
+--         '653a0296be4201188c706794', (
+
+--             2,
+
+--             3,
+
+--             '653a0296be4201188c706794', (
+
+--                 3,
+
+--                 4,
+
+--                 '653a0296be4201188c706794', (
+
+--                     3,
+
+--                     5,
+
+--                     '653a0296be4201188c706794', (
+
+--                         4,
+
+--                         6,
+
+--                         '653a0296be4201188c706794', (
+
+--                             4,
+
+--                             8,
+
+--                             '653a0296be4201188c706794', (
+
+--                                 5,
+
+--                                 9,
+
+--                                 '653a0296be4201188c706794', (
+
+--                                     5,
+
+--                                     11,
+
+--                                     '653a0296be4201188c706794', (
+
+--                                         7,
+
+--                                         12,
+
+--                                         '653a0296be4201188c706794', (
+
+--                                             8,
+
+--                                             2,
+
+--                                             '653a0296be4201188c706794',

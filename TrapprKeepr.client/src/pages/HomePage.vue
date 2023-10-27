@@ -1,6 +1,6 @@
 <!-- HOME PAGE  -->
 <template>
-  <div class="hmasonry-container">
+  <div class="hmasonry-container container">
     <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" style="min-height: 5em;" />
 
   </div>

@@ -10,7 +10,7 @@
             <!-- RIGHT SIDE -->
             <div class="col-6 d-flex flex-column justify-content-between">
                 <h5 class="text-dark bg-transparent m-0 p-0">{{ keep.creator.name }}</h5>
-                <RouterLink @click="closeModal" :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
+                <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
                     <img :src="keep.creator.picture" class="modprofile-pic" alt="keep.creator.picture"
                         :title="keep.creator.name">
@@ -50,7 +50,7 @@
 <script>
 import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
-import { Modal } from 'bootstrap';
+// import { Modal } from 'bootstrap';
 // import { logger } from '../utils/Logger';
 
 import { useRoute } from 'vue-router';
@@ -87,9 +87,10 @@ export default {
             profileVaults: computed(() => AppState.profileVaults),
             account: computed(() => AppState.account),
 
-            closeModal() {
-                Modal.getOrCreateInstance('#keep-details').hide();
-            },
+
+            // closeModal() {
+            //     Modal.getOrCreateInstance('#KeepDetailsModal').hide();
+            // },
 
 
 

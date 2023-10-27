@@ -1,4 +1,4 @@
-// CLIENT KEEPS SERVICE
+// KEEPS SERVICE
 import { AppState } from "../AppState.js"
 import { Keep } from "../models/Keep.js"
 import { VaultKeep } from "../models/VaultKeep.js"

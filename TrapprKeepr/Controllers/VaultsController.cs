@@ -34,6 +34,15 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
+
+
+
+
+
+
+
+
+    // ❤️‍🔥❤️‍🔥 SACRED! OG CODE! ❤️‍🔥❤️‍🔥
     // STUB Get a single Vault the Vault's Id - Only Showing open to public and hiding privates.
 
     [HttpGet("{vaultId}")]
@@ -57,35 +66,7 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-    // // STUB Get All Vaults
-    // [HttpGet]
-    // public async Task<ActionResult<List<Vault>>> GetAllVaults()
-    // {
-    //     try
-    //     {
-    //         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-    //         List<Vault> vaults = _vaultsService.GetAllVaults(userInfo?.Id);
-    //         return Ok(vaults);
-    //     }
-    //     catch (Exception error)
-    //     {
-    //         return BadRequest(error.Message);
-    //     }
-    // }
 
-    // [HttpGet]
-    // public ActionResult<List<Vault>> GetAllVaults()
-    // {
-    //     try
-    //     {
-    //         List<Vault> vaults = _vaultsService.GetAllVaults();
-    //         return Ok(vaults);
-    //     }
-    //     catch (Exception error)
-    //     {
-    //         return BadRequest(error.Message);
-    //     }
-    // }
 
 
     // STUB EDIT Vault
@@ -122,6 +103,7 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
+
 
     // STUB Get VaultKeeps by Vault Id VIEW Model, many to many join continued
     // this should only works if the vault is not private

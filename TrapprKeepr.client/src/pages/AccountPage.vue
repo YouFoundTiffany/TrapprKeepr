@@ -15,87 +15,45 @@
         <h1>{{ account.name }}</h1>
 
       </div>
-      <!-- TODO -->
-      <button>Your Profile Page</button>
 
-      <!-- TODO router link to profile page -->
+      <button col-3>Your Profile Page</button>
+
+
       <!-- ... -->
       <router-link :to="{ name: 'Edit Profile', params: { profileId: account.id } }">
         <button v-if="!profileId || profileId == accountId">Edit Profile</button>
       </router-link>
-      <!-- MODAL -->
-      <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- MODAL BODY HERE -->
-              <p>Modal body text goes here.</p>
-              <!-- MODAL -->
-              <!-- {{ myVaults }} -->
-              <h2 class="">Vaults</h2>
-              <section class="container-fluid m-0 p-0">
-                <div class="row m-0 p-0">
-                  <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                    v-for="vault in profileVaults" :key="vault.id">
-                    <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
-                  </div>
-                </div>
-              </section>
-              <!-- MODAL -->
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+
+
+      <h2 class="">Vaults</h2>
+      <section class="container-fluid m-0 p-0">
+        <div class="row m-0 p-0">
+          <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+            v-for="vault in profileVaults" :key="vault.id">
+            {{ myVaults }}
+            <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
           </div>
         </div>
-      </div>
-      <!-- MODAL -->
+      </section>
 
 
 
 
 
-      <!-- MODAL -->
-      <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title"></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- MODAL BODY HERE -->
-              <!-- MODAL -->
-              <!-- {{ myKeeps }} -->
-              <h2 class="">Keeps</h2>
-              <section class="container-fluid m-0 p-0">
-                <div class="row m-0 p-0">
-                  <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                    v-for="keep in profileKeeps" :key="keep.id">
-                    <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
-                  </div>
-                </div>
-              </section>
-              <!-- MODAL -->
-              <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+
+
+      <h2 class="">Keeps</h2>
+      <section class="container-fluid m-0 p-0">
+        <div class="row m-0 p-0">
+          <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+            v-for="keep in profileKeeps" :key="keep.id">
+            <!-- {{ myKeeps }} -->
+            <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
           </div>
         </div>
-      </div>
-      <!-- MODAL -->
+      </section>
+
+
 
     </div>
   </section>
@@ -108,40 +66,62 @@
 // const isOwner = computed(() => AppState.account.id == AppState.activeVault?.creatorId)
 // let userIdToShow = profileId ? profileId : accountId; -->
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 import { AppState } from '../AppState.js';
 import KeepAccCard from '../components/KeepAccCard.vue';
 import VaultAccCard from '../components/VaultAccCard.vue';
 import { keepsService } from '../services/KeepsService.js';
+import { vaultsService } from '../services/VaultsService';
+import Pop from '../utils/Pop';
+import { accountService } from '../services/AccountService';
+import { vaultsKeepsService } from '../services/VaultKeepsService';
+
+
 
 export default {
 
   setup() {
-    // NOTE The Order of the variables below Matters!
-    const accountId = computed(() => AppState.account.id)
 
-    onMounted(async () => {
-      await keepsService.getKeeps()
-    })
 
-    const myKeeps = computed(() => {
-      return AppState.keeps.filter(k => k.creatorId === accountId.value)
-    })
-    const myVaults = computed(() => {
-      return AppState.vaults.filter(v => v.creatorId === accountId.value)
-    })
+    // STUB Get My Vaults
+    async function getMyVaults() {
+      try {
 
-    // const isOwner = computed(() => {
-    // return !route.params.profileId || route.params.profileId === AppState.account.id;
-    // });
+        await accountService.myVaults();
+      } catch (error) {
+        Pop.error(error);
+      }
+    }
+
+    // STUB Get My Keeps
+    async function getMyKeeps() {
+      try {
+        await keepsService.getKeepsByProfile();
+      } catch (error) {
+        Pop.error(error);
+      }
+    }
+    async function getMyVaultKeeps() {
+      try {
+        await vaultKeepsService.getVaultKeeps();
+      } catch (error) {
+        Pop.error(error);
+      }
+    }
+
+    watchEffect(() => {
+      getMyVaults();
+      getMyKeeps();
+      getMyVaultKeeps()
+    });
 
     return {
-      myKeeps,
-      myVaults,
       account: computed(() => AppState.account),
-      // activeProfile: computed(() => AppState.account),
-      keeps: computed(() => AppState.keeps),
-      vaults: computed(() => AppState.vaults),
+      myVaults: computed(() => AppState.myVaults),
+      myKeeps: computed(() => AppState.myKeeps),
+
+
+
 
 
     };

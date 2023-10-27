@@ -1,3 +1,4 @@
+<!-- APP.VUE -->
 <template>
   <header>
     <Navbar />
@@ -10,6 +11,7 @@
 
 
 
+  <!-- TIFFTAG MODAL PIECE -->
 
   <!--1️⃣ KEEP CARD MODAL-->
   <div class="modal fade" id="KeepDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
