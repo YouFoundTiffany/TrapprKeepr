@@ -1,51 +1,12 @@
 <template>
-    <!-- <section class="container-fluid"> -->
-
-
-
-
-    <!-- MODAL -->
-    <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- MODAL BODY HERE -->
-                    <p>Modal body text goes here.</p>
-                    <!-- MODAL -->
-                    <!-- {{ myVaults }} -->
-
-
-                    <div class="card acc-vcard text-bg-dark m-0 p-0 justify-content-center">
-                        <img :src="vault.img" class="acc-vcard-img" :alt="vault.img" title="vault.img">
-                        <div class="card-img-overlay">
-                            <h5 class="card-title">{{ vault.name }}</h5>
-                            <i class="mdi mdi-lock text-light iconshaddisplay"></i>
-                        </div>
-                        <!-- TODO PUT THIS IN MODAL WITH DETAILS -->
-                        <button @click="deleteVault(vault.id)">Delete?</button>
-                    </div>
-
-
-                    <!-- MODAL -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+    <div class="card acc-vcard text-bg-dark m-0 p-0 justify-content-center">
+        <img :src="vault.img" class="acc-vcard-img" :alt="vault.img" title="vault.img">
+        <div class="card-img-overlay">
+            <h5 class="card-title">{{ vault.name }}</h5>
+            <i class="mdi mdi-lock text-light iconshaddisplay"></i>
         </div>
+        <button @click="deleteVault(vault.id)">Delete?</button>
     </div>
-    <!-- MODAL -->
-
-
-
-    <!-- </section> -->
 </template>
 <script>
 import { computed } from 'vue';

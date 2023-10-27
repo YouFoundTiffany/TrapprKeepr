@@ -33,23 +33,16 @@ public class VaultsRepository
         }, vaultData).FirstOrDefault();
         return newVault;
     }
-
-
-
-    // ⭐⭐AUTO-INCREMENTING VIEWS and KEPTS COUNTS⭐⭐
-    // public List<Vault> Get()
+    // STUB Get All Vaults
+    // internal List<Vault> GetAllVaults()
     // {
     //     string sql = @"
-    //    SELECT
-    //         vaults.*,
-    //         COUNT(vaultkeeps.id) AS keepCount,
-    //         accounts.*
-    //     FROM vaults
-    //     LEFT JOIN vaultkeeps ON vaultkeeps.vaultId = vaults.id
-    //     JOIN accounts ON accounts.id = vaults.creatorId
-    //     GROUP BY (vaults.id)
-    //     ORDER BY (vaults.visits) DESC
-    //     ;";
+    //         SELECT
+    //         vau.*,
+    //         act.*
+    //         FROM vaults vau
+    //         JOIN accounts act ON act.id = vau.creatorId
+    //         ;";
 
     //     List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
     //     {
@@ -57,39 +50,11 @@ public class VaultsRepository
     //         return vault;
     //     }).ToList();
     //     return vaults;
-}
-// ⭐⭐AUTO-INCREMENTING VIEWS and KEPTS COUNTS⭐⭐
-// public Vault GetVaultsByProfileId(int id)
-// {
-//     string sql = @"
-//     SELECT
-//         vaults.*,
-//         COUNT(vaultkeeps.id) AS keepCount,
-//         accounts.*
-//     FROM vaults
-//     JOIN accounts ON accounts.id = vaults.creatorId
-//     LEFT JOIN vaultkeeps ON vaultkeeps.vaultId = vaults.id
-//     WHERE vaults.id = @id
-//     GROUP BY (vaults.id)
-//     ;";
-//     Vault vault = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
-//     {
-//         vault.Creator = account;
-//         return vault;
-//     }, new { id }).FirstOrDefault();
-//     return vault;
-// }
+    // }
 
-
-
-
-
-
-// ❤️‍🔥❤️‍🔥 SACRED! OG CODE! ❤️‍🔥❤️‍🔥
-// // STUB Get All Vaults - Keep this copy of Original Code So I can rever back if needed
-internal List<Vault> GetAllVaults(string userId)
-{
-    string sql = @"
+    internal List<Vault> GetAllVaults(string userId)
+    {
+        string sql = @"
         SELECT
         vau.*,
         act.*
@@ -98,20 +63,20 @@ internal List<Vault> GetAllVaults(string userId)
         WHERE vau.isPrivate = 0 OR (vau.isPrivate = 1 AND vau.creatorId = @userId)
         ;";
 
-    return _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        return _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        {
+            vault.Creator = account;
+            return vault;
+        }, new { userId }).ToList();
+    }
+
+    // STUB Get A SINGLUAR PROFILE'S VAULT LIST
+    //STUB Get another users vaults using their profile/account ID :D
+    // ✉️ THIS COMES FROM GetVaultsByProfileId IN SERVICE
+    // STUB Get Vault by Id
+    internal List<Vault> GetVaultsByProfileId(string profileId)
     {
-        vault.Creator = account;
-        return vault;
-    }, new { userId }).ToList();
-}
-
-// STUB Get All Keeps - Keep this copy of Original Code So I can rever back if needed
-
-// ❤️‍🔥❤️‍🔥 SACRED! OG CODE! ❤️‍🔥❤️‍🔥
-// STUB Get Vault by Id -- Keep this copy of Original Code So I can rever back if needed
-internal List<Vault> GetVaultsByProfileId(string profileId)
-{
-    string sql = @"
+        string sql = @"
     SELECT
     vau.*,
     act.*
@@ -119,23 +84,18 @@ internal List<Vault> GetVaultsByProfileId(string profileId)
     JOIN accounts act ON vau.creatorId = act.id
     WHERE act.id = @profileId
     ;";
-    List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
-  {
-      vault.Creator = account;
-      return vault;
-  }, new { profileId }).ToList();
-    return vaults;
-}
+        List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vault, account) =>
+      {
+          vault.Creator = account;
+          return vault;
+      }, new { profileId }).ToList();
+        return vaults;
+    }
 
-
-
-
-
-
-// ACCOUNTS!!!! GET ALL VAULTS FOR ACCOUNTS    -MY VAULTS
-internal List<Vault> GetVaultsByAccountId(string accountId)
-{
-    string sql = @"
+    // ACCOUNTS!!!! GET ALL VAULTS FOR ACCOUNTS    -MY VAULTS
+    internal List<Vault> GetVaultsByAccountId(string accountId)
+    {
+        string sql = @"
         SELECT
         vau.*,
         act.*
@@ -145,19 +105,19 @@ internal List<Vault> GetVaultsByAccountId(string accountId)
         ;";
 
 
-    List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vaults, account) =>
-     {
-         vaults.Creator = account;
-         return vaults;
-     }, new { accountId }).ToList();
-    return vaults;
-}
+        List<Vault> vaults = _vdb.Query<Vault, Account, Vault>(sql, (vaults, account) =>
+         {
+             vaults.Creator = account;
+             return vaults;
+         }, new { accountId }).ToList();
+        return vaults;
+    }
 
 
-//   THIS IS FOR A SINGLUAR VAULT FOR A PARTICULAR USER
-internal Vault GetVaultById(int vaultId)
-{
-    string sql = @"
+    //   THIS IS FOR A SINGLUAR VAULT FOR A PARTICULAR USER
+    internal Vault GetVaultById(int vaultId)
+    {
+        string sql = @"
         SELECT
         vau.*,
         act.*
@@ -165,20 +125,20 @@ internal Vault GetVaultById(int vaultId)
         JOIN accounts act ON vau.creatorId = act.id
         WHERE vau.id = @vaultId
         ;";
-    Vault foundVault = _vdb.Query<Vault, Account, Vault>(sql, (vault, creator) =>
+        Vault foundVault = _vdb.Query<Vault, Account, Vault>(sql, (vault, creator) =>
+        {
+            vault.Creator = creator;
+            return vault;
+        }, new { vaultId }).FirstOrDefault();
+        return foundVault;
+    }
+
+
+
+    // STUB EDIT Vault
+    public void EditVault(Vault updateData)
     {
-        vault.Creator = creator;
-        return vault;
-    }, new { vaultId }).FirstOrDefault();
-    return foundVault;
-}
-
-
-
-// STUB EDIT Vault
-public void EditVault(Vault updateData)
-{
-    string sql = @"
+        string sql = @"
             UPDATE vaults
             SET
             name = @Name,
@@ -187,18 +147,18 @@ public void EditVault(Vault updateData)
             isPrivate = @isPrivate
             WHERE id = @Id
             ;";
-    _vdb.Execute(sql, updateData);
-}
+        _vdb.Execute(sql, updateData);
+    }
 
-// STUB DELETE VAULT
-internal void DeleteVault(int vaultId)
-{
-    string sql = @"
+    // STUB DELETE VAULT
+    internal void DeleteVault(int vaultId)
+    {
+        string sql = @"
         DELETE
         FROM vaults
         WHERE id = @vaultId
         LIMIT 1
         ;";
-    _vdb.Execute(sql, new { vaultId });
-}
+        _vdb.Execute(sql, new { vaultId });
+    }
 }

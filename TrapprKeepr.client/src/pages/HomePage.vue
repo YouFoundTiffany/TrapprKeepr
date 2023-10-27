@@ -21,12 +21,9 @@ import { useRoute } from 'vue-router';
 
 
 export default {
-  // const: router = useRouter(),
   setup() {
     onMounted(() => { getKeeps(); });
-    // const route = useRoute();
 
-    // const selectedKeep = ref(null);
 
     // STUB Get all Keeps
     async function getKeeps() {
@@ -39,37 +36,12 @@ export default {
 
 
 
-    // async function getTheAccount() {
-    //   try {
-    //     await accountService.getTheAccount();
-    //   } catch (error) {
-    //     Pop.error(error);
-    //   }
-    // }
 
-
-
-    // // STUB Get all Vaults with this Profile Id
-    // async function getVaults() {
-    //   try {
-    //     await vaultsService.getVaults();
-    //   } catch (error) {
-    //     Pop.error(error);
-    //   }
-    // }
-
-    // // STUB Get all Vaults with this Profile Id
-    // async function getProfilesVaults() {
-    //   try {
-    //     await accountService.getProfilesVaults(route.params.profileId);
-    //   } catch (error) {
-    //     Pop.error(error);
-    //   }
-    // }
 
     return {
       // account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
+      activeKeep: computed(() => AppState.activeKeep),
       // profile: computed(() => AppState.profiles),
       // profileKeeps: computed(() => AppState.profileKeeps),
       // profileVaults: computed(() => AppState.profileVaults),

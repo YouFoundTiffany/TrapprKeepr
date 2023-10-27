@@ -17,8 +17,9 @@ class KeepsService {
     }
 
     // STUB SET ACTIVE KEEP
-    setActiveKeep(keep) {
-        AppState.activeKeep = keep
+    setActiveKeep(activeKeep) {
+
+        AppState.activeKeep = activeKeep
     }
 
     // STUB createKeep

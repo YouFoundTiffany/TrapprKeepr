@@ -4,7 +4,11 @@
 <template>
     <section v-if="profile" class="container">
         <div class="row">
-            PROFILE PAGE {{ profile.name }}
+            PROFILE PAGE {{ profile.name
+
+
+
+            }}
 
             <div class="about text-center">
                 <div class="justify-content-center row d-flex">
@@ -16,8 +20,7 @@
                 </div>
                 <!-- <h1>{{ activeProfile.name }}</h1> -->
 
-                <!-- counts are not needed here. Only put on Home Page modal -->
-                <!-- <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p> -->
+
             </div>
 
             <!-- PROFILE VAULTS CARDS -->
@@ -69,7 +72,7 @@ export default {
     setup() {
 
         // NOTE The Order of the variables below Matters!
-        onMounted(() => {
+        onMounted(async () => {
             getProfilesKeeps();
             getProfilesVaults();
             getProfileById();

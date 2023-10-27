@@ -1,82 +1,80 @@
 <!-- KEEP CARD COMPONENT -->
 <template>
-    <section @click="setActiveKeep()" data-bs-toggle="modal" data-bs-target="#projectModal" class="indicate">
-        <!-- DON'T TOUCH, ITS WORKING -->
-        <div v-if="keep" class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
-            <img :src="keep.img" :title="keep.name" alt="keep.img" class="card-image rounded-top">
-            <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
+    <div v-if="keep" @click="openKeepModal" :keep="keep" :id="'details-' + keep.id"
+        class="container-flex card mb-3 elevation-3 card-flow m-0 d-flex gb-1">
+        <img :src="keep.img" class="card-image rounded-top" keep.img>
+        <h5 class="h5-over text-light d-flex ps-2 bg-transparent m-0 p-0">{{ keep.name }}</h5>
+        <!-- FIXME -->
+        <!-- TODO move this into the modal -->
+        <router-link :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
+            <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture" class="profile-pic">
+        </router-link>
 
-
-
-            <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture"
-                class="profile-pic m-3 elevation-3" data-bs-toggle="modal" data-bs-target="#KeepDetailsModal">
-        </div>
-
-        <div class="p-2">
-        </div>
-
-        <KeepDetailsCard v-if="activeKeep" :activeKeep="activeKeep" :userVaults="userVaults" />
-    </section>
+    </div>
 </template>
 <script>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
-import KeepDetailsCard from '../components/KeepDetailsCard.vue';
+import { Account, Profile } from '../models/Account.js';
 import { logger } from '../utils/Logger';
-import Pop from '../utils/Pop';
-import { keepsService } from '../services/KeepsService.js';
-import { router } from '../router';
-
-import { useRouter } from 'vue-router';
-import { Account, Profile } from '../models/Account';
-
 
 export default {
     props: {
         keep: { type: Object, required: true },
-
     },
-    setup(props) {
+    openKeepModal() {
+        this.$emit('open-modal', this.keep)
+    },
+    setup() {
+        onMounted(() => {
+            getProfileById();
+        })
 
-
+        async function getProfileById(profileId) {
+            try {
+                logger.log('profileId', route.params.profileId)
+                // await profilesService.getProfileById(route.params.profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
 
         return {
+            activeProfile: computed(() => AppState.activeProfile),
             keeps: computed(() => AppState.keeps),
             account: computed(() => AppState.account),
-            profileVaults: computed(() => AppState.profileVaults),
-            userVaults: computed(() => AppState.userVaults),
-
-            setActiveKeep() {
-                keepsService.setActiveKeep(props.keep)
+            resetModal() {
+                this.showModal = false
+            },
+            showModal() {
+                this.$emit('open-modal', this.keep)
+                this.showModal = true
             }
-        };
+        }
     },
-    components: {}
 };
 </script>
 <style>
 .profile-pic {
-    height: 50px;
-    width: 50px;
-    object-fit: contain;
-    /* object-position: none; */
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 50em;
     position: absolute;
-    /* bottom: 10vh;
-    right: 4vw; */
-    align-items: baseline;
-    align-items: end;
+    bottom: 8px;
+    right: 10px;
 
 }
 
 .h5-over {
     position: absolute;
-    align-items: baseline;
-    align-items: start;
-    /* top: 70%;
-    left: 0; */
+    top: 70%;
+    left: 0;
     width: 100%;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.927) !Important;
+
+
 }
 
 .card-image {
@@ -84,13 +82,14 @@ export default {
     /* object-fit: cover; */
     /* overflow: hidden; */
     /* height: auto; */
-    width: 100%;
-    z-index: 1.5;
+    align-items: baseline;
+    align-items: end;
     position: relative;
 }
 
 .keep-name {
-    z-index: 10;
+    align-items: baseline;
+    align-items: end;
     position: relative;
 }
 

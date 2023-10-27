@@ -25,11 +25,15 @@ class AccountService {
     }
   }
 
+  // /account/vaults
   // STUB Get Account Vaults - MyVaults
   async myVaults() {
-    const res = await api.get(res.data)
+    const res = await api.get('api/account/vaults')
     logger.log('[GETTING MY-VAULTS]', res.data)
+    const myVaults = res.data
     AppState.myVaults = res.data.map(v => new Vault(v))
+
+    return myVaults
 
   }
 
