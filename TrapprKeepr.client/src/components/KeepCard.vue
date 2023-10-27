@@ -16,7 +16,7 @@
 
         <ModalWrapper class="container-flex" :id="'keep-details'">
             <template #body>
-                <KeepDetailsCard v-if="activeKeep" :activeKeep="activeKeep" :userVaults="userVaults" />
+                <KeepDetailsCard v-if="activeKeep" :activeKeep="activeKeep" :profileVaults="profileVaults" />
             </template>
         </ModalWrapper>
     </section>
@@ -56,8 +56,10 @@ export default {
             account: computed(() => AppState.account),
             profileVaults: computed(() => AppState.profileVaults),
             activeKeep: computed(() => AppState.activeKeep),
-            userVaults: computed(() => AppState.userVaults),
-            handleKeepClick
+            // userVaults: computed(() => AppState.userVaults),
+            // handleKeepClick
+
+            // FIXME REMOVE userVaults AS A DATATYPE AND REPLACE WITH profileVaults
         };
     },
     components: { KeepDetailsCard }

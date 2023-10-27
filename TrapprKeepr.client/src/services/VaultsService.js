@@ -13,19 +13,11 @@ class VaultsService {
         return newVault
     }
 
-    // STUB getVaults
-    async getVaults() {
-        const res = await api.get('api/vaults')
+    // STUB NOT NEEDED -  get All Vaults for all people - In our app this endpoint is disallowed- no Use Case for this function
 
-        // logger.log('[GOT ALL VAULTS]', res.data)
-        // const vaults = AppState.vaults = res.data.map(vault => new Vault(vaults))
-        // AppState.vaults = vaults
-        // const vaults = res.data.map(vault => new Vault(vault))
-        // AppState.vaults = vaults;
 
-    }
 
-    // STUB getVaultsByProfile
+    // STUB getVaultsByProfiles
     async getVaultsByProfile(profileId) {
         const response = await api.get(`api/profiles/${profileId}/vaults`)
         logger.log('[MY VAULTS]', response.data)

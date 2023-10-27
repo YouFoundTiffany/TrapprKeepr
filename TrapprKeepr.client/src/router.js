@@ -25,11 +25,11 @@ const routes = [
     // beforeEnter: authSettled
 
   },
-  {
-    path: '/profile/:userId',
-    name: 'UserProfile',
-    component: ('UserProfilePage'),
-  },
+  // {
+  //   path: '/profile/:userId',
+  //   name: 'UserProfile',
+  //   component: ('UserProfilePage'),
+  // },
   {
 
     path: '/edit-profile/:profileId',

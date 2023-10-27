@@ -120,6 +120,7 @@ export default {
         onMounted(() => {
             getProfilesKeeps();
             getProfilesVaults();
+            getProfileById();
         })
         const route = useRoute();
         // STUB Get all Keeps with this Profile Id

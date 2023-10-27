@@ -32,7 +32,7 @@ export default {
         return {
             keeps: computed(() => AppState.keeps),
             acccount: computed(() => AppState.account.id),
-            userVaults: computed(() => AppState.userVaults),
+
         }
     }
 };

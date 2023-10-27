@@ -1,10 +1,65 @@
-// APPSTATE
-import { reactive } from 'vue'
 
-// NOTE AppState is a reactive object to contain app level data
-export const AppState = reactive({
+KEEPS
+Create Keep
+POST {{endpoint}}/api/keeps
 
-  //  SECTION AUTH ZERO
+✅Get All Keeps
+GET {{endpoint}}/api/keeps
+
+Get Keep by Id
+GET {{endpoint}}/api/keeps/{{keepId}}
+
+Edit Keep
+PUT {{endpoint}}/api/keeps/{{keepId}}
+
+Delete Keep
+DELETE{{endpoint}}/api/keeps/{{keepId}}
+
+
+	 VAULTS
+Create Vault
+POST {{endpoint}}/api/vaults
+
+Get Vault by Id
+GET {{endpoint}}/api/vaults/{{vaultId}}
+
+Edit Vault
+PUT {{endpoint}}/api/vaults/{{vaultId}}
+
+Delete Vault
+DELETE {{endpoint}}/api/vaults/{{vaultId}}
+
+
+	 VAULT KEEPS
+
+Create VaultKeep
+POST {{endpoint}}/api/vaultkeeps
+
+Get Keeps in Vault
+GET {{endpoint}}/api/vaults/{{vaultId}}/keeps
+
+Delete VaultKeep
+DELETE {{endpoint}}/api/vaultkeeps/{{vaultKeepId}}
+
+
+	 PROFILE
+✅Get a User's Profile
+GET {{endpoint}}/api/profiles/{{profileId}}
+
+✅Get a User's Keeps
+GET {{endpoint}}/api/profiles/{{profileId}}/keeps
+
+✅Get a User's Vaults
+GET {{endpoint}}/api/profiles/{{profileId}}/vaults
+
+
+	 ACCOUNT
+
+✅Get My Vaults
+GET {{endpoint}}/account/vaults
+
+
+//  SECTION AUTH ZERO
   // STUB AUTH ZERO
   user: {},
 
@@ -79,4 +134,3 @@ export const AppState = reactive({
   // STUB ACCOUNT OR PROFILE Get Keeps in a Vault - Keeps in a Singluar Vault
   // {{ endpoint }}/api/keeps
   vaultKeeps: [],
-})

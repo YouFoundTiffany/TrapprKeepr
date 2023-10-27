@@ -24,14 +24,17 @@ import { useRoute } from 'vue-router';
 export default {
   // const: router = useRouter(),
   setup() {
-    onMounted(async () => { getTheAccount(); getKeeps(); getVaults(); getProfilesVaults() });
+    onMounted(async () => { getAccount(); getKeeps(); getVaults(); getProfilesVaults() });
     const route = useRoute();
 
     const selectedKeep = ref(null);
 
-    async function getTheAccount() {
+
+    // STUB - Getting logged in Account Holder if they exist
+    // REVIEW, MAY NOT REALLY NEED THIS ON HOME PAGE LOAD
+    async function getAccount() {
       try {
-        await accountService.getTheAccount();
+        await accountService.getAccount();
       } catch (error) {
         Pop.error(error);
       }
@@ -46,14 +49,7 @@ export default {
       }
     }
 
-    // STUB Get all Vaults with this Profile Id
-    async function getVaults() {
-      try {
-        await vaultsService.getVaults();
-      } catch (error) {
-        Pop.error(error);
-      }
-    }
+    // we need to get logged in Account holder vaults ONLY, this is MyVaults, not Profile Vaults
 
     // STUB Get all Vaults with this Profile Id
     async function getProfilesVaults() {
@@ -72,7 +68,7 @@ export default {
       profileKeeps: computed(() => AppState.profileKeeps),
       profileVaults: computed(() => AppState.profileVaults),
       activeProfile: computed(() => AppState.activeProfile),
-      userVaults: computed(() => AppState.userVaults),
+
     };
   },
   components: { KeepCard },

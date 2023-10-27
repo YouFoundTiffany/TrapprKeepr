@@ -31,7 +31,7 @@
                         <!-- LOGGED IN USER'S VAULTS -->
                         <div class="dropdown col-7">
                             <select v-model="selectedVault" class="form-select fs-6">
-                                <option v-for="vault in userVaults" :key="vault.id" :value="vault.id">
+                                <option v-for="vault in profileVaults" :key="vault.id" :value="vault.id">
                                     {{ vault.name }}
                                 </option>
                             </select>
@@ -81,7 +81,7 @@ export default {
         // }
         return {
             // saveKeepToVault,
-            userVaults: [],
+
             selectedVault,
             // activeKeep: computed(() => AppState.activeKeep),
             profileVaults: computed(() => AppState.profileVaults),
