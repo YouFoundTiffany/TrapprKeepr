@@ -15,82 +15,34 @@
                     <!-- <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture"  title="activeProfile.picture"  /> -->
                 </div>
                 <!-- <h1>{{ activeProfile.name }}</h1> -->
-                <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
+
+                <!-- counts are not needed here. Only put on Home Page modal -->
+                <!-- <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p> -->
             </div>
 
-            <!-- MODAL -->
-            <div class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- MODAL BODY HERE -->
-                            <p>Modal body text goes here.</p>
-                            <!-- MODAL -->
-                            <!-- {{ myVaults }} -->
-                            <h2 class="">Vaults</h2>
-                            <section class="container-fluid m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                                        v-for="vault in profileVaults" :key="vault.id">
-                                        <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
-                                    </div>
-                                </div>
-                            </section>
-                            <!-- MODAL -->
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+            <!-- PROFILE VAULTS CARDS -->
+            <h2 class="">Vaults</h2>
+            <section class="container-fluid m-0 p-0">
+                <div class="row m-0 p-0">
+                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                        v-for="vault in profileVaults" :key="vault.id">
+                        <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
                     </div>
                 </div>
-            </div>
-            <!-- MODAL -->
+            </section>
 
 
-
-
-
-            <!-- MODAL -->
-            <div class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- MODAL BODY HERE -->
-                            <!-- MODAL -->
-                            <!-- {{ myKeeps }} -->
-                            <h2 class="">Keeps</h2>
-                            <section class="container-fluid m-0 p-0">
-                                <div class="row m-0 p-0">
-                                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                                        v-for="keep in profileKeeps" :key="keep.id">
-                                        <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
-                                    </div>
-                                </div>
-                            </section>
-                            <!-- MODAL -->
-                            <p>Modal body text goes here.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+            <!-- PROFILE KEEPS CARDS -->
+            <h2 class="">Keeps</h2>
+            <section class="container-fluid m-0 p-0">
+                <div class="row m-0 p-0">
+                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                        v-for="keep in profileKeeps" :key="keep.id">
+                        <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
                     </div>
                 </div>
-            </div>
-            <!-- MODAL -->
+            </section>
+
 
         </div>
     </section>
@@ -107,11 +59,11 @@ import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import KeepAccCard from '../components/KeepAccCard.vue';
 import VaultAccCard from '../components/VaultAccCard.vue';
-import { profilesService } from '../services/ProfilesService.js';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop.js';
-
+import { accountService } from '../services/AccountService';
+accountService
 
 export default {
     setup() {
@@ -127,7 +79,7 @@ export default {
         async function getProfilesKeeps() {
             try {
                 // logger.log('profileId', route.params.profileId)
-                await profilesService.getProfilesKeeps(route.params.profileId)
+                await accountService.getProfilesKeeps(route.params.profileId)
                 // logger.log(AppState.keeps, 'helloooo')
             } catch (error) {
                 Pop.error(error)
@@ -137,7 +89,7 @@ export default {
         async function getProfilesVaults() {
             try {
                 // logger.log('profileId', route.params.profileId)
-                await profilesService.getProfilesVaults(route.params.profileId)
+                await accountService.getProfilesVaults(route.params.profileId)
             } catch (error) {
                 Pop.error(error)
             }
@@ -145,7 +97,7 @@ export default {
 
         async function getProfileById() {
             try {
-                await profilesService.getProfileById(route.params.profileId)
+                await accountService.getProfileById(route.params.profileId)
             } catch (error) {
                 Pop.error(error)
             }

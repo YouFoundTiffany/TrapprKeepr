@@ -121,7 +121,6 @@ import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import KeepAccCard from '../components/KeepAccCard.vue';
 import VaultAccCard from '../components/VaultAccCard.vue';
-import { profilesService } from '../services/ProfilesService.js';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop.js';

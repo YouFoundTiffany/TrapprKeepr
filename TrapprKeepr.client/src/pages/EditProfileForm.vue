@@ -43,7 +43,7 @@ import { keepsService } from '../services/KeepsService';
 import { vaultsKeepsService } from '../services/VaultKeepsService';
 import { vaultsService } from '../services/VaultsService';
 import { logger } from '../utils/Logger';
-import { profilesService } from '../services/ProfilesService';
+
 
 // <!-- tifftag get profile  -->
 
@@ -97,7 +97,7 @@ export default {
                 try {
                     const profileId = AppState.account.id
                     logger.log('[EDITING PROFILE]', editable.value)
-                    await profilesService.editProfile(editable.value)
+                    await accountService.editProfile(editable.value)
                     Pop.toast('Profile Updated')
                 } catch (error) {
                     Pop.error(error)

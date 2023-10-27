@@ -33,11 +33,6 @@ class AccountService {
   }
 
 
-
-
-
-
-
   // SECTION PROFILES SECTION
 
   //STUB  Get a User's Profile

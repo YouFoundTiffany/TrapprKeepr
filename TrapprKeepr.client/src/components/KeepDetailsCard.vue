@@ -1,24 +1,24 @@
 <!-- KEEP DETAILS CARD COMPONENT -->
 <template>
-    <div v-if="activeKeep" class='container-fluid text-dark'>
+    <div v-if="keep" class='container-fluid text-dark'>
         <div class="row no-gutters">
             <div class="col-md-6">
 
-                <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img" class="keep-image w-100">
+                <img :src="keep.img" :title="keep.creator.name" :alt="keep.img" class="keep-image w-100">
 
             </div>
             <!-- RIGHT SIDE -->
             <div class="col-6 d-flex flex-column justify-content-between">
-                <h5 class="text-dark bg-transparent m-0 p-0">{{ activeKeep.creator.name }}</h5>
-                <RouterLink @click="closeModal" :to="{ name: 'Profile', params: { profileId: activeKeep.creatorId } }">
+                <h5 class="text-dark bg-transparent m-0 p-0">{{ keep.creator.name }}</h5>
+                <RouterLink @click="closeModal" :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
-                    <img :src="activeKeep.creator.picture" class="modprofile-pic" alt="activeKeep.creator.picture"
-                        :title="activeKeep.creator.name">
+                    <img :src="keep.creator.picture" class="modprofile-pic" alt="keep.creator.picture"
+                        :title="keep.creator.name">
                 </RouterLink>
                 <!-- KEEP NAME AND KEEP DESCRIPTION - CENTERED HORIZONTALLY AND VERTICALLY -->
                 <div class="d-flex flex-column justify-content-center align-items-center h-50">
-                    <h4>{{ activeKeep.name }}</h4>
-                    <p>{{ activeKeep.description }}</p>
+                    <h4>{{ keep.name }}</h4>
+                    <p>{{ keep.description }}</p>
                 </div>
                 <!-- PROFILE PIC AND CREATOR NAME -->
                 <!-- <div class="d-flex flex-column align-items-center">
@@ -52,14 +52,14 @@ import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { Modal } from 'bootstrap';
 // import { logger } from '../utils/Logger';
-// import { profilesService } from '../services/ProfilesService';
+
 import { useRoute } from 'vue-router';
 // import Pop from '../utils/Pop.js';
 
 
 
 export default {
-    props: { activeKeep: { type: Object, required: true } },
+    props: { keep: { type: Object, required: true } },
 
     setup(props) {
         const route = useRoute();
@@ -74,7 +74,7 @@ export default {
         // async function getProfilesVaults() {
         //     try {
         //         logger.log('profileId', route.params.profileId)
-        //         // await profilesService.getProfilesVaults(route.params.profileId)
+        //         // await accountService.getProfilesVaults(route.params.profileId)
         //     } catch (error) {
         //         Pop.error(error)
         //     }
@@ -83,7 +83,7 @@ export default {
             // saveKeepToVault,
 
             selectedVault,
-            // activeKeep: computed(() => AppState.activeKeep),
+            // keep: computed(() => AppState.keep),
             profileVaults: computed(() => AppState.profileVaults),
             account: computed(() => AppState.account),
 

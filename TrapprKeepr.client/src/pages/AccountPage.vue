@@ -13,8 +13,10 @@
           <img class="rounded elevation-2 avatar" :src="account.picture" :alt="account.picture" :title="account.name" />
         </div>
         <h1>{{ account.name }}</h1>
-        <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
+
       </div>
+      <!-- TODO -->
+      <button>Your Profile Page</button>
 
       <!-- TODO router link to profile page -->
       <!-- ... -->

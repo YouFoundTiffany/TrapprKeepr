@@ -6,6 +6,17 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class KeepsService {
+    // STUB get ALL Keeps - HOME PAGE
+    async getKeeps() {
+        const res = await api.get('api/keeps')
+        logger.log('[GOT ALL KEEPS]', res.data)
+        const keeps = AppState.keeps = res.data.map(keep => new Keep(keep))
+        AppState.keeps = keeps
+        // const keeps = res.data.map(keep => new Keep(keep))
+        // AppState.keeps = keeps;
+    }
+
+
     // STUB createKeep
     async createKeep(keepData) {
         const res = await api.post('api/keeps', keepData)
@@ -15,18 +26,11 @@ class KeepsService {
         return newKeep
     }
 
-    // STUB getKeep
-    async getKeeps() {
-        const res = await api.get('api/keeps')
-        // logger.log('[GOT ALL KEEPS]', res.data)
-        // const keeps = AppState.keeps = res.data.map(keep => new Keep(keep))
-        // AppState.keeps = keeps
-        const keeps = res.data.map(keep => new Keep(keep))
-        AppState.keeps = keeps;
-    }
 
-    // STUB getKeepById
+    // STUB getKeepById - KEEPCARD / MODAL
     async getKeepById(keepId) {
+        // nulling out the active keep in case it was set to another keep
+        AppState.activeKeep = null
         const res = await api.get(`api/keeps/${keepId}`)
         logger.log('[GOT KEEP BY ID]', res.data)
         const activeKeep = AppState.activeKeep = new Keep(res.data)
