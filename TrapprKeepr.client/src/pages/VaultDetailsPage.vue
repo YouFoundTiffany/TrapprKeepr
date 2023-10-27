@@ -52,6 +52,7 @@ import Pop from '../utils/Pop.js';
 export default {
 
     setup() {
+        // what I want to do is pass in the Vault Id in the props.
         // NOTE The Order of the variables below Matters!
 
 
@@ -75,7 +76,7 @@ export default {
 
         };
     },
-    components: { KeepAccCard, VaultAccCard }
+    // components: { KeepAccCard, VaultAccCard }
 }
 </script>
 

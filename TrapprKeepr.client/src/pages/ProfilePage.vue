@@ -2,34 +2,29 @@
 <!-- PROFILE PAGE -->
 <!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
-    <section v-if="profile" class="container">
+    <section v-if="activeProfile" class="container">
         <div class="row">
-            PROFILE PAGE {{ profile.name
-
-
-
-            }}
 
             <div class="about text-center">
                 <div class="justify-content-center row d-flex">
                     <img class="m-0 banner-image rounded" :src="profile.coverImg" :alt="profile.coverImg"
                         title="profile.coverImg" />
+                    <h1 class="text-center">{{ profile.name }} Profile Page
+                    </h1>
                 </div>
                 <div class="justify-content-center d-flex">
-                    <!-- <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture"  title="activeProfile.picture"  /> -->
+                    <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture"
+                        title="activeProfile.picture" />
                 </div>
-                <!-- <h1>{{ activeProfile.name }}</h1> -->
-
-
             </div>
 
             <!-- PROFILE VAULTS CARDS -->
             <h2 class="">Vaults</h2>
-            <section class="container-fluid m-0 p-0">
+            <section class="moblView container-fluid m-0 p-0">
                 <div class="row m-0 p-0">
                     <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
                         v-for="vault in profileVaults" :key="vault.id">
-                        <VaultAccCard :vault="vault" class="my-2" style="width: 20vw;" />
+                        <VaultProfCard :vault="vault" class="my-2" style="width: 15vw;" />
                     </div>
                 </div>
             </section>
@@ -37,16 +32,14 @@
 
             <!-- PROFILE KEEPS CARDS -->
             <h2 class="">Keeps</h2>
-            <section class="container-fluid m-0 p-0">
+            <section class="moblView container-fluid m-0 p-0">
                 <div class="row m-0 p-0">
                     <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
                         v-for="keep in profileKeeps" :key="keep.id">
-                        <KeepAccCard :keep="keep" class="my-2" style="width: 20vw;" />
+                        <KeepProfCard :keep="keep" class="my-2" style="width: 15vw;" />
                     </div>
                 </div>
             </section>
-
-
         </div>
     </section>
 </template>
@@ -60,8 +53,8 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
-import KeepAccCard from '../components/KeepAccCard.vue';
-import VaultAccCard from '../components/VaultAccCard.vue';
+import KeepProfCard from '../components/KeepProfCard.vue';
+import VaultProfCard from '../components/VaultProfCard.vue';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop.js';
@@ -69,7 +62,7 @@ import { accountService } from '../services/AccountService';
 accountService
 
 export default {
-    setup() {
+    setup(props) {
 
         // NOTE The Order of the variables below Matters!
         onMounted(async () => {
@@ -118,10 +111,11 @@ export default {
             account: computed(() => AppState.account),
             keeps: computed(() => AppState.keeps),
             vaults: computed(() => AppState.vaults),
+            activeProfile: computed(() => AppState.activeProfile)
 
         };
     },
-    components: { KeepAccCard, VaultAccCard }
+    components: { KeepProfCard, VaultProfCard }
 }
 </script>
 
@@ -139,7 +133,8 @@ export default {
     height: 50px;
     width: 50px;
     object-fit: scale-down;
-    object-position: center;
+    align-items: baseline;
+    align-items: start;
     border-radius: 50em;
 }
 
@@ -152,6 +147,12 @@ export default {
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !Important;
+}
 
+/* Media query for mobile view */
+@media (max-width: 767px) {
+    .moblView {
+        columns: 2;
+    }
 }
 </style>

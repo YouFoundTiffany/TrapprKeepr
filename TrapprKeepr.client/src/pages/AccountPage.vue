@@ -1,5 +1,4 @@
 <!-- ACCOUNT PAGE -->
-<!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
   <div v-if="keeps || vaults" class="about text-center">
     <div class="justify-content-center row d-flex">
@@ -8,29 +7,39 @@
     <div class="justify-content-center d-flex">
       <img class="rounded elevation-2 avatar" :src="account.picture" alt="Avatar" />
     </div>
-    <h1>{{ account.name }}</h1>
+    <h1>{{ account.name }} Account Page</h1>
     <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
   </div>
-  <!-- TODO router link to profile page -->
+
   <!-- <router-link :to="{ name: 'Profile', params: profile.id }"> -->
   <button class="m-2">Edit Profile</button>
   <!-- </router-link> -->
-  <!-- <router-link :to="{ name: 'Profile', params: { profileId } }">
-    <div class="list-group-item dropdown-item list-group-item-action">
-      View Profile
-    </div>
-  </router-link> -->
-  <!--
-  <h2 v-if="vault" class="card-title masonry-container">Vaults</h2>
-  <section class="" v-for="vault in vaults" :key="vault.id">
-    <VaultAccCard :vault="vault" />
-  </section> -->
-  <div>
-    <div v-if="myKeeps && myKeeps.length" class="card-title masonry-container">Keeps</div>
-    <div v-for="keep in myKeeps" :key="keep.id">
-      <KeepAccCard :myKeeps="keep" />
-    </div>
+  <!-- <router-link :to="{ name: 'Profile', params: { profileId } }"> -->
+  <div class="list-group-item dropdown-item list-group-item-action">
+    View Profile
   </div>
+  <!-- </router-link> -->
+
+  <!-- ACCOUNT VAULTS CARDS -->
+  <h2 class="">Vaults</h2>
+  <section class="container-fluid m-0 p-0">
+    <div class="row m-0 p-0">
+      <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1" v-for="vault in profileVaults"
+        :key="vault.id">
+        <VaultAccCard :vault="vault" class="my-2" style="width: 10vw;" />
+      </div>
+    </div>
+  </section>
+  <!-- ACCOUNT KEEPS CARDS -->
+  <h2 class="">Keeps</h2>
+  <section class="container-fluid m-0 p-0">
+    <div class="row m-0 p-0">
+      <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1" v-for="keep in profileKeeps"
+        :key="keep.id">
+        <KeepAccCard :keep="keep" class="my-2" style="width: 20vW;" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -89,6 +98,12 @@ export default {
 </script>
 
 <style scoped>
+.acard {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 .avatar {
   margin-top: -2%;
   object-fit: cover;
@@ -96,7 +111,8 @@ export default {
   height: 50px;
   width: 50px;
   object-fit: scale-down;
-  object-position: center;
+  align-items: baseline;
+  align-items: start;
   border-radius: 50em;
 }
 

@@ -5,7 +5,6 @@
             <h5 class="card-title text-dark">{{ vault.name }}</h5>
             <i v-if="isPrivate == true" class="text-dark mdi mdi-lock text-light iconshaddisplay"></i>
         </div>
-        <button @click="deleteVault(vault.id)">Delete?</button>
     </div>
 </template>
 <script>
@@ -58,7 +57,7 @@ export default {
 
 <style>
 .iconshaddisplay {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.824) !important; */
     height: 30px;
     width: 30px;
     object-fit: cover;

@@ -9,7 +9,7 @@ class VaultsService {
         const res = await api.post('api/vaults', vaultData)
         logger.log('[CREATED VAULT]', res.data)
         const newVault = new Vault(res.data)
-        AppState.vaults.push(new Vault(res.data))
+        AppState.myVaults.push(new Vault(res.data))
         return newVault
     }
 

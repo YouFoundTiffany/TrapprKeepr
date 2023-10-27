@@ -16,7 +16,11 @@
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import { Account, Profile } from '../models/Account.js';
-import { logger } from '../utils/Logger';
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
+import { router } from '../router';
+import { useRouter } from 'vue-router';
+import { accountService } from '../services/AccountService';
 
 export default {
     props: {
@@ -25,19 +29,21 @@ export default {
     openKeepModal() {
         this.$emit('open-modal', this.keep)
     },
-    setup() {
-        onMounted(() => {
-            getProfileById();
-        })
+    setup(props) {
+        // const route = useRouter();
 
-        async function getProfileById(profileId) {
-            try {
-                logger.log('profileId', route.params.profileId)
-                // await profilesService.getProfileById(route.params.profileId)
-            } catch (error) {
-                Pop.error(error)
-            }
-        }
+        // onMounted(() => {
+        //     getProfileById();
+        // });
+
+        // async function getProfileById(profileId) {
+        //     try {
+        //         // logger.log('profileId', route.params.profileId)
+        //         await accountService.getProfileById(route.params.profileId)
+        //     } catch (error) {
+        //         Pop.error(error)
+        //     }
+        // }
 
         return {
             activeProfile: computed(() => AppState.activeProfile),

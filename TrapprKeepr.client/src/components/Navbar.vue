@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <!-- Modal 1 for Keep-->
+    <!-- Modal 1 for CREATE Keep-->
     <div class="modal fade" id="create-keep" tabindex="-1" aria-labelledby="create-keepLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -51,7 +51,7 @@
     </div>
 
 
-    <!-- Modal 2 for Vault-->
+    <!-- Modal 2 for CREATE Vault-->
     <div class="modal fade" id="create-vault" tabindex="-1" aria-labelledby="create-vaultLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -140,21 +140,34 @@ export default {
       keeps: computed(() => AppState.keeps),
       user: computed(() => AppState.user),
 
-      async createKeep() {
 
+      // STUB CREATE KEEP
+      async createKeep() {
         try {
           logger.log('[Creat Keep]', keepData.value)
           const newKeep = await keepsService.createKeep(keepData.value)
           keepData.value = {}
           Pop.toast('Keep Created', 'success')
-
           // router.push({ name: 'Keep Details', params: { keepId: newKeep.id } })
-          Modal.getOrCreateInstance('#KeepDetailsModal').hide()
+          Modal.getOrCreateInstance('#create-keep').hide()
         } catch (error) {
           Pop.error(error)
         }
       },
-
+      // STUB CREATE VAULT
+      async createVault() {
+        try {
+          debugger
+          logger.log('[Create Vault]', vaultData.value)
+          const newVault = await vaultsService.createVault(vaultData.value)
+          vaultData.value = {}
+          Pop.toast('Vault Created', 'success')
+          // router.push({ name: 'Vault Details', params: { vaultId: newVault.id } })
+          Modal.getOrCreateInstance('#create-vault').hide()
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
       // async createVault() {
       //   try {
       //     logger.log(vaultData.value, AppState.activeVault.id, route.params.vaultId)
@@ -167,18 +180,7 @@ export default {
       //     Pop.error(error)
       //   }
       // }
-      async createVault() {
-        try {
-          logger.log('[Create Vault]', vaultData.value)
-          const newVault = await vaultsService.createVault(vaultData.value)
-          vaultData.value = {}
-          Pop.toast('Vault Created', 'success')
-          // router.push({ name: 'Vault Details', params: { vaultId: newVault.id } })
-          Modal.getOrCreateInstance('#KeepDetailsModal').hide()
-        } catch (error) {
-          Pop.error(error)
-        }
-      }
+
 
     }
   },
