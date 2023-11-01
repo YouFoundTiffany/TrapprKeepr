@@ -11,72 +11,24 @@
 
 
 
-  <!-- TIFFTAG MODAL PIECE -->
-  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-  </button> -->
-
-  <!-- Modal -->
-  <div class="modal fade" id="KeepCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <!--2️⃣ OTHER CARD MODAL-->
-
-
-
-
-
   <footer class="bg-secondary lighten-10 text-dark">
   </footer>
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
-import { Modal } from 'bootstrap'
 
 
 export default {
   setup() {
-    let keeps = ref([])
     return {
       appState: computed(() => AppState),
       activeKeep: computed(() => AppState.activeKeep),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      activeProfile: computed(() => AppState.activeProfile),
+      account: computed(() => AppState.account),
     }
   },
   components: { Navbar }

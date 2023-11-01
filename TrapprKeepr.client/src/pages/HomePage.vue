@@ -10,7 +10,7 @@
 import { accountService } from '../services/AccountService.js'
 import { keepsService } from '../services/KeepsService.js'
 import KeepCard from '../components/KeepCard.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 // import { Modal } from 'bootstrap';
@@ -21,8 +21,10 @@ import { useRoute } from 'vue-router';
 
 
 export default {
+
   setup() {
-    onMounted(() => { getKeeps(); });
+    onMounted(() => { getKeeps(); getVaultsbyAccountId(); });
+
 
 
     // STUB Get all Keeps
@@ -35,21 +37,30 @@ export default {
     }
 
 
-
+    // STUB Get all Vaults for the logged in user.
+    async function getVaultsbyAccountId() {
+      try {
+        // debugger
+        // const accountId = AppState.account.id
+        // await vaultsService.getVaultsByProfile(accountId);
+      } catch (error) {
+        Pop.error(error);
+      }
+    }
 
 
     return {
-      // account: computed(() => AppState.account),
+      account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
       activeKeep: computed(() => AppState.activeKeep),
-      // profile: computed(() => AppState.profiles),
-      // profileKeeps: computed(() => AppState.profileKeeps),
-      // profileVaults: computed(() => AppState.profileVaults),
-      // activeProfile: computed(() => AppState.activeProfile),
-      // userVaults: computed(() => AppState.userVaults),
+      profile: computed(() => AppState.profiles),
+      profileKeeps: computed(() => AppState.profileKeeps),
+      profileVaults: computed(() => AppState.profileVaults),
+      activeProfile: computed(() => AppState.activeProfile),
+      myVaults: computed(() => AppState.myVaults),
     };
   },
-  components: { KeepCard },
+  components: { KeepCard }
 };
 
 </script>

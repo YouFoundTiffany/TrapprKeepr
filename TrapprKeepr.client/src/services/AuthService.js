@@ -1,11 +1,11 @@
 import { initialize } from '@bcwdev/auth0provider-client'
-import { AppState } from '../AppState'
+import { AppState } from '../AppState.js'
 import { audience, clientId, domain } from '../env'
-import { router } from '../router'
-import { accountService } from './AccountService'
+import { router } from '../router.js'
+import { accountService } from './AccountService.js'
+import { vaultsService } from './VaultsService.js'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
-import { useRoute } from 'vue-router';
 
 
 export const AuthService = initialize({
@@ -37,6 +37,8 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   // const route = useRoute();
   // await accountService.getMyVaults(route.params.profileId);
 
+  const accountId = AppState.account.id
+  await vaultsService.getVaultsByProfile(accountId);
 
 
 })

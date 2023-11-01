@@ -79,8 +79,5 @@ export const AppState = reactive({
   // {{ endpoint }}/api/keeps
   vaultKeeps: [],
 
-  // {{endpoint}}/account/vaults
-  /** @type {import('./models/Vault.js').Vault} */
-  activeVault: [],
 
 })
