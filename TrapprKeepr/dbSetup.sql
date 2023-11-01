@@ -151,3 +151,27 @@ WHERE
 --                                             2,
 
 --                                             '653a0296be4201188c706794',
+
+SELECT
+    kee.*,
+    act.*,
+    COUNT(vk.id) AS kept
+FROM keeps kee
+    JOIN accounts act ON kee.creatorId = act.id
+    JOIN `vaultKeeps` vk ON vk.`keepId` = kee.id
+WHERE kee.id = 5
+GROUP BY (kee.id);
+
+INSERT INTO
+    `vaultKeeps` (
+        `keepId`,
+        `vaultId`,
+        `creatorId`
+    )
+VALUES (
+        5,
+        2,
+        '653a0296be4201188c706794'
+    );
+
+SELECT * from `vaultKeeps` WHERE `keepId` = 5;

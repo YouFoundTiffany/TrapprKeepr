@@ -69,14 +69,18 @@ export const AppState = reactive({
   /** @type {import('./models/Keep.js').Keep[]} */
   keeps: [],
 
-  // NOTE NEVER GOING HAVE A USE CASE FOR GETTING ALL VAULTS
-  // NOTE NO vaults DATATYPE IN APPSTATE
 
 
 
-  // SECTION VAULT KEEPS ENDPOINTS_DATATYPS
+
+  // SECTION VAULT KEEPS ENDPOINTS_DATATYPES
 
   // STUB ACCOUNT OR PROFILE Get Keeps in a Vault - Keeps in a Singluar Vault
   // {{ endpoint }}/api/keeps
   vaultKeeps: [],
+
+  // {{endpoint}}/account/vaults
+  /** @type {import('./models/Vault.js').Vault} */
+  activeVault: [],
+
 })

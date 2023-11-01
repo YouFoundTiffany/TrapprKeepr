@@ -15,6 +15,10 @@ public class VaultKeepsService
 
         Vault vault = _vService.GetVaultById(vaultKeepData.VaultId, userId);
 
+        // NOTE a what could happen to increase kepts
+        // Keep keep = _kService.GetKeepById(vaultKeepData.KeepId, userid);
+        // _kService.increaseKepts(keep);
+
         if (vaultKeepData.CreatorId != vault.CreatorId) throw new Exception("Access Denied: You don't own ${vaultId}");
         VaultKeep newVaultKeep = _vkRepo.Create(vaultKeepData);
         return newVaultKeep;

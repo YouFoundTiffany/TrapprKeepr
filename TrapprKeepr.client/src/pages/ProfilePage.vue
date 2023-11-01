@@ -1,16 +1,14 @@
-<!-- eslint-disable space-before-function-paren -->
 <!-- PROFILE PAGE -->
-<!-- TODO MEDIA QUERY TO CENTER AND AJUST ON SMALL SCREENS -->
 <template>
     <section v-if="activeProfile" class="container">
         <div class="row">
-
+            <h1 class="text-center">{{ profile.name }} Profile Page
+            </h1>
             <div class="about text-center">
                 <div class="justify-content-center row d-flex">
                     <img class="m-0 banner-image rounded" :src="profile.coverImg" :alt="profile.coverImg"
                         title="profile.coverImg" />
-                    <h1 class="text-center">{{ profile.name }} Profile Page
-                    </h1>
+
                 </div>
                 <div class="justify-content-center d-flex">
                     <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture"
@@ -20,7 +18,7 @@
 
             <!-- PROFILE VAULTS CARDS -->
             <h2 class="">Vaults</h2>
-            <section class="moblView container-fluid m-0 p-0">
+            <section class="moblView container-fluid m-0 p-0 indicate">
                 <div class="row m-0 p-0">
                     <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
                         v-for="vault in profileVaults" :key="vault.id">
@@ -32,7 +30,7 @@
 
             <!-- PROFILE KEEPS CARDS -->
             <h2 class="">Keeps</h2>
-            <section class="moblView container-fluid m-0 p-0">
+            <section class="moblView container-fluid m-0 p-0 indicate">
                 <div class="row m-0 p-0">
                     <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
                         v-for="keep in profileKeeps" :key="keep.id">
@@ -62,6 +60,9 @@ import { accountService } from '../services/AccountService';
 accountService
 
 export default {
+    props: { activeVault: { type: Object, required: true } },
+
+
     setup(props) {
 
         // NOTE The Order of the variables below Matters!

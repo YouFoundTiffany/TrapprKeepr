@@ -16,11 +16,13 @@ class VaultKeepsService {
     }
 
     // Get Keeps in Vault
-    async getVaultKeeps() {
-        const res = await api.get('api/vaultkeeps');
-        logger.log('[GOT ALL VAULTKEEPS]', res.data);
-        AppState.vaultKeeps = res.data.map(vaultKeep => new VaultKeep(vaultKeep));
-        return AppState.vaultKeeps;  // Corrected return value
+    // vaults/{{vaultId}}/keeps
+    async getVaultKeeps(vaultId) {
+
+        const res = await api.get(`api/vaults/${vaultId}/keeps`);
+        logger.log('[❤️‍🔥GOT ALL VAULTKEEPS]', res.data);
+        // AppState.vaultKeeps = res.data.map(vaultKeep => new VaultKeep(vaultKeep));
+        // return AppState.vaultKeeps;
     }
 
     // Delete VaultKeep by ID

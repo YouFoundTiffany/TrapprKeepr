@@ -54,12 +54,12 @@ public class KeepsRepository
     internal Keep GetKeepById(int keepId, string userId)
     {
         string sql = @"
-            SELECT
-            kee.*,
-            act.*
+            SELECT kee.*,COUNT(vk.id) AS kept, act.*
             FROM keeps kee
-            JOIN accounts act ON kee.creatorId = act.id
+                JOIN accounts act ON kee.creatorId = act.id
+                JOIN `vaultKeeps` vk ON vk.`keepId` = kee.id
             WHERE kee.id = @keepId
+            GROUP BY (kee.id)
             ;";
         Keep foundKeep = _kdb.Query<Keep, Account, Keep>(sql, (keep, creator) =>
         {

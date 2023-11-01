@@ -1,46 +1,55 @@
 <!-- ACCOUNT PAGE -->
 <template>
-  <div v-if="keeps || vaults" class="about text-center">
+  <section v-if="account" class="container">
+    <div class="row">
+      <h1 class="text-center">{{ account.name }} Account Page
+      </h1>
+    </div>
+
     <div class="justify-content-center row d-flex">
-      <img class="m-0 banner-image rounded" :src="account.coverImg" alt="Cover Image" />
-    </div>
-    <div class="justify-content-center d-flex">
-      <img class="rounded elevation-2 avatar" :src="account.picture" alt="Avatar" />
-    </div>
-    <h1>{{ account.name }} Account Page</h1>
-    <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
-  </div>
+      <img class="m-0 banner-image rounded" :src="account.coverImg" :alt="account.coverImg" title="account.coverImg" />
 
-  <!-- <router-link :to="{ name: 'Profile', params: profile.id }"> -->
-  <button class="m-2">Edit Profile</button>
-  <!-- </router-link> -->
-  <!-- <router-link :to="{ name: 'Profile', params: { profileId } }"> -->
-  <div class="list-group-item dropdown-item list-group-item-action">
-    View Profile
-  </div>
-  <!-- </router-link> -->
 
-  <!-- ACCOUNT VAULTS CARDS -->
-  <h2 class="">Vaults</h2>
-  <section class="container-fluid m-0 p-0">
-    <div class="row m-0 p-0">
-      <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1" v-for="vault in profileVaults"
-        :key="vault.id">
-        <VaultAccCard :vault="vault" class="my-2" style="width: 10vw;" />
+      <div class="justify-content-center d-flex">
+        <img class="rounded elevation-2 avatar" :src="account.picture" :alt="account.picture" title="account.picture" />
       </div>
     </div>
-  </section>
-  <!-- ACCOUNT KEEPS CARDS -->
-  <h2 class="">Keeps</h2>
-  <section class="container-fluid m-0 p-0">
-    <div class="row m-0 p-0">
-      <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1" v-for="keep in profileKeeps"
-        :key="keep.id">
-        <KeepAccCard :keep="keep" class="my-2" style="width: 20vW;" />
+
+
+    <button class="m-2">Edit Profile</button>
+    <button class="m-2">View Profile</button>
+
+    <!-- PROFILE VAULTS CARDS -->
+    <h2 class="">Vaults</h2>
+    <section class="moblView container-fluid m-0 p-0">
+      <div class="row m-0 p-0">
+        <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+          v-for="vault in profileVaults" :key="vault.id">
+          <VaultAccCard :vault="vault" class="my-2" style="width: 15vw;" />
+        </div>
       </div>
-    </div>
+    </section>
+    <!-- PROFILE KEEPS CARDS -->
+    <!-- <h2 class="">Keeps</h2>
+    <section class="moblView container-fluid m-0 p-0">
+      <div class="row m-0 p-0">
+        <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1" v-for="keep in profileKeeps"
+          :key="keep.id">
+          <KeepAccCard :keep="keep" class="my-2" style="width: 15vw;" />
+        </div>
+      </div>
+    </section>
+  </section> -->
+
+
   </section>
 </template>
+
+
+
+
+
+
 
 <script>
 // onMounted
@@ -53,31 +62,34 @@ import { accountService } from '../services/AccountService.js';
 import { vaultsService } from '../services/VaultsService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import { useRoute } from 'vue-router';
 
 
 
 export default {
   setup() {
+    const route = useRoute()
     const accountId = computed(() => AppState.account.id)
+    const vaultId = route.params.id
+    onMounted(() => { getMyVaults(); getVaultsByProfile(); })
 
-    // onMounted(() => { getMyVaults() })
+    async function getMyVaults() {
 
-    // async function getMyVaults() {
+      try {
+        await vaultsService.getVaultsByProfile()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
 
-    //   try {
-    //     await vaultsService.getVaultsByProfile()
-    //   } catch (error) {
-    //     Pop.error(error)
-    //   }
-    // // }
-
-    // async function getVaultsByProfile() {
-    //   try {
-    //     await vaultsService.getVaultsByProfile(route.params.profileId)
-    //   } catch (error) {
-    //     Pop.error(error)
-    //   }
-    // }
+    // Get all of this person's vaults
+    async function getVaultsByProfile() {
+      try {
+        await vaultsService.getVaultsByProfile(vaultId)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
 
 
     return {
@@ -89,11 +101,9 @@ export default {
       keeps: computed(() => AppState.keeps),
       myKeeps: computed(() => AppState.keeps.filter(keep => keep.creatorId === AppState.account.id)),
 
-      // mVaults: computed(() => AppState.vaults),
-
-    };
-  },
-  components: { KeepAccCard, VaultAccCard }
+      myVaults: computed(() => AppState.myVaults),
+    }
+  }
 }
 </script>
 

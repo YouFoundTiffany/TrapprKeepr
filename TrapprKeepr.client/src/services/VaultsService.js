@@ -17,7 +17,7 @@ class VaultsService {
 
 
 
-    // STUB getVaultsByProfiles
+    // STUB getVaultsByProfile - single profiles many vaults
     async getVaultsByProfile(profileId) {
         const response = await api.get(`api/profiles/${profileId}/vaults`)
         logger.log('[MY VAULTS]', response.data)
@@ -26,12 +26,12 @@ class VaultsService {
         return myVaults
     }
 
-    // STUB Get Vault Details
+    // STUB Get Vault Details - get info on a single vault with its ID
     async getVaultDetails(vaultId) {
         const res = await api.get(`api/vaults/${vaultId}`)
         logger.log('[GOT VAULT BY ID ]', res.data)
-
-        AppState.activeVault = new Vault(res.data)
+        const activeVault = AppState.activeVault = new Vault(res.data)
+        return activeVault;
     }
 
 }

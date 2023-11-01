@@ -91,7 +91,7 @@ public class KeepsController : ControllerBase
             Profile userInfo = await _auth0.GetUserInfoAsync<Profile>(HttpContext);
 
             string userId = userInfo?.Id;
-            Keep keep = _keeService.GetKeepById(keepId, userId);
+            Keep keep = _keeService.GetKeepById(keepId, userId, true);
             return Ok(keep);
         }
         catch (Exception error)

@@ -1,35 +1,28 @@
-<!-- eslint-disable space-before-function-paren -->
 <!-- VAULT DETAILS PAGE -->
 <template>
-    <section v-if="vault" class="container">
-        <div class="row">
-            VAULT DETAILS PAGE
+    <section v-if="activeVault" class="container">
 
+        <!-- <div class="row"> -->
+        <h1 class="text-center">{{ activeVault.name }} Vault Details Page
+        </h1>
 
-            <!-- v-if="keeps || vaults" -->
-            <div class="about text-center">
-                <div class="justify-content-center row d-flex">
-                    <!-- STUB VAULT COVER IMAGE -->
-                    <!-- <img class="m-0 banner-image rounded" :src="activeProfile.coverImg" :alt="activeProfile.coverImg" title="activeProfile.coverImg"/> -->
-                </div>
-
-                <div class="justify-content-center d-flex">
-                    <!-- TODO -->
-                    <p>total number of keeps in this vault</p>
-                </div>
-                <!-- <h1>{{ activeProfile.name }}</h1> -->
-                <p>TODO <span> 0</span> Vaults | 0 Keeps<span></span></p>
-
-
-
-
-
-
-
-
+        <div class="about text-center">
+            <div class="justify-content-center row d-flex">
+                <img :src="activeVault.picture" alt="activeVault.picture" title-="activeVault.picture">
 
             </div>
+            <!-- <img :src="activeVault.creator.img" alt=""> -->
         </div>
+
+
+
+
+
+
+
+
+
+
     </section>
 </template>
 
@@ -45,26 +38,50 @@ import { AppState } from '../AppState.js';
 import KeepAccCard from '../components/KeepAccCard.vue';
 import VaultAccCard from '../components/VaultAccCard.vue';
 import { useRoute } from 'vue-router';
-import { logger } from '../utils/Logger';
+import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
-
+import { vaultsService } from '../services/VaultsService';
+import { Vault } from '../models/Vault';
+import { keepsService } from '../services/KeepsService';
 
 export default {
+    props: { activeVault: { type: Vault, required: true } },
+    setup(props) {
+        const route = useRoute()
+        const accountId = computed(() => AppState.account.id)
+        const vaultId = route.params.id
+        onMounted(() => {
+            setActiveVault(); getVaultKeeps();
+        });
 
-    setup() {
-        // what I want to do is pass in the Vault Id in the props.
-        // NOTE The Order of the variables below Matters!
+        async function setActiveVault() {
+            try {
+                // logger.log('Getting Vault data', route.params.profileId)
+
+                await vaultsService.getVaultDetails(route.params.vaultId);
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+
+        // STUB GETTING THOSE MANY TO MANYs!!!!
+        // vaults/{{vaultId}}/keeps
+        async function getVaultKeeps() {
+            try {
+                // debugger
+                logger.log('[GETTING VKs!]')
+                await keepsService.getKeepsbyVaultId(route.params.vaultId)
+                // await vaultsService.getVaultKeeps(route.params.id)
+            } catch (error) {
+
+                Pop.error(error)
+            }
+        }
 
 
 
 
 
-
-
-
-        // const isOwner = computed(() => {
-        // return !route.params.profileId || route.params.profileId === AppState.account.id;
-        // });
 
         return {
             profileKeeps: computed(() => AppState.profileKeeps),
@@ -72,8 +89,10 @@ export default {
             profile: computed(() => AppState.activeProfile),
             account: computed(() => AppState.account),
             keeps: computed(() => AppState.keeps),
-            vaults: computed(() => AppState.vaults),
-
+            // don't think I need this data but not going to delete it now.
+            // 🤷‍♀️vaults: computed(() => AppState.vaults),
+            activeVault: computed(() => AppState.activeVault),
+            vaultKeeps: computed(() => AppState.vaultKeeps)
         };
     },
     // components: { KeepAccCard, VaultAccCard }
@@ -110,16 +129,3 @@ export default {
 
 }
 </style>
-<script>
-import KeepCard from '../components/KeepCard.vue';
-
-export default {
-    setup() {
-        return {};
-    },
-    components: { KeepCard }
-};
-</script>
-
-
-<style></style>

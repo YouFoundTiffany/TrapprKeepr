@@ -1,23 +1,28 @@
+<!-- VAULT PROFILE CARD -->
 <template>
-    <div class="card acc-vcard text-bg-dark m-0 p-0 justify-content-center">
-        <img :src="vault.img" class="acc-vcard-img" :alt="vault.img" title="vault.img">
-        <div class="card-img-overlay">
-            <h5 class="card-title text-dark">{{ vault.name }}</h5>
-            <i v-if="isPrivate == true" class="text-dark mdi mdi-lock text-light iconshaddisplay"></i>
+    <router-link :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
+        <div class="card text-dark m-4 p-1 justify-content-center" style="max-height: 15vh;">
+            <img :src="vault.img" class="acc-vcard-img" :alt="vault.img" title="vault.img">
+            <div class="card-img-overlay">
+                <h5 class="card-title text-dark bg-light">{{ vault.name }}</h5>
+                <i v-if="isPrivate == true" class="text-dark mdi mdi-lock text-light iconshaddisplay"></i>
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 <script>
 import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop';
 import { vaultsService } from '../services/VaultsService';
+import { router } from '../router';
+import { RouterLink } from 'vue-router';
 
 export default {
     props: {
         vault: { type: Object, required: true }
     },
-    setup(props) {
+    setup() {
 
 
 
