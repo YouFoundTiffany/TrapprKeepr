@@ -48,11 +48,11 @@ form:invalid button[type="submit"] {
 
 // TRAPPR KEEPR COLORS //
 :root {
-  --sunset-coral: rgb(231, 129, 111);
-  --midnight-plum: rgb(107, 66, 145);
-  --minty-meadow: rgb(75, 183, 134);
+  --sunset-coral: #e7816f;
+  --midnight-plum: #6b4291;
+  --minty-meadow: #4bb786;
   --raspberry-royale: rgb(157, 61, 123);
-  --bright-raspberry-royale: rgb(230, 90, 181);
+  --bright-raspberry-royale: #e65ab5;
   --faded-raspberry-royale: rgba(171, 127, 155, 0.254);
   --periwinkle-dream: rgb(110, 111, 218);
   --bright-periwinkle-dream: rgb(146, 148, 249);
@@ -65,12 +65,16 @@ form:invalid button[type="submit"] {
 }
 
 .text-sunset-coral {
-  color: var(--sunset-coral);
+  color: var(--sunset-coral) !important;
 }
 
 /* Midnight Plum */
 .bg-midnight-plum {
   background-color: var(--midnight-plum);
+}
+
+.bd-midnight-plum {
+  border-color: var(--midnight-plum);
 }
 
 .text-midnight-plum {

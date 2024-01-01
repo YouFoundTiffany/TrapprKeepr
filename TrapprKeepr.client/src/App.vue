@@ -1,19 +1,22 @@
 <!-- APP.VUE -->
 <template>
-  <header>
+  <header class="shadow">
     <Navbar />
 
   </header>
   <main>
-    <div class="border border-bottom border-secondary mb-4 light-shadow" style="height: 1px;"></div>
+    <div class="nav-bd-bottom mb-4 light-shadow" style="height: 1px;"></div>
     <router-view />
   </main>
 
 
 
-  <footer class="bg-secondary lighten-10 text-dark">
-  </footer>
+  <footer class="bg-midnight-plum lighten-10 text-dark"><span class=" text-sunset-coral fw-bold">🦄💫Designed
+      and Developed by
+      Tiffany Hays👑✨</span></footer>
 </template>
+<!-- 🦄🪄🧜‍♀️👑🔮💫Designed -->
+      <!-- and Developed by✨ -->
 
 <script>
 import { computed } from 'vue'
@@ -51,7 +54,11 @@ footer {
   height: 32px;
 }
 
-
+.nav-bd-bottom {
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--bright-raspberry-royale);
+}
 
 .h5-over {
   position: absolute;

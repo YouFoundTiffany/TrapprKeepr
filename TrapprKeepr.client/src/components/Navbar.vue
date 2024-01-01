@@ -1,8 +1,9 @@
 <!-- NAVBAR COMPONENT -->
 <template>
   <nav v-if="keepData || vaultData"
-    class="container-flex navbar navbar-expand-lg mt-5 px-3  navbar-text justify-content-around">
+    class="container-flex navbar navbar-expand-lg my-5 px-3  navbar-text justify-content-around" style="max-height: 155;">
     <!-- LEFT -->
+
     <div class="col-12 col-md-4">
       <!-- DROPDOWN -->
       <div v-if="user.isAuthenticated" class="dropdown">
@@ -91,10 +92,11 @@
     </div>
 
     <!-- CENTER -->
-    <div class="col-12 col-md-4 text-center">
+    <div class="col-12 col-md-4 text-center mt-4">
       <router-link class="navbar-brand " :to="{ name: 'Home' }">
-        <div class="flex-column align-items-center">TrapprKeepr
-          <img alt="logo" title="logo" src="src/assets/img/trapprkeeprcolor.png" height="85" />
+        <div class="flex-column align-items-center text-midnight-plum fw-bold fs-1">
+          <img src="src/assets/img/Trapper.png" alt="" height="135">
+          <img alt=" logo" title="logo" src="src/assets/img/trapprkeeprcolor.png" height="85" />
         </div>
       </router-link>
     </div>
@@ -157,7 +159,6 @@ export default {
       // STUB CREATE VAULT
       async createVault() {
         try {
-          debugger
           logger.log('[Create Vault]', vaultData.value)
           const newVault = await vaultsService.createVault(vaultData.value)
           vaultData.value = {}
