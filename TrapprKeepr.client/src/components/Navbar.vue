@@ -6,7 +6,7 @@
     <div class="col-12 col-md-4">
       <!-- DROPDOWN -->
       <div v-if="user.isAuthenticated" class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+        <button class="btn dropdown-toggle create-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
           aria-expanded="false">
           Create
         </button>
@@ -190,6 +190,23 @@ export default {
 
 
 <style scoped>
+/* CREATE BUTTON */
+.create-btn {
+  background-color: #fca311 !important;
+  color: #14213d !important;
+  border: none !important;
+  border-radius: 5px !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+.create-btn:hover {
+  background-color: #e3cd29 !important;
+  color: #14213d !important;
+  border: none !important;
+  border-radius: 5px !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
 .shadow {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !Important;
 }

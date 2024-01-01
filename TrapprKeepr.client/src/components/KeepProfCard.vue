@@ -1,15 +1,13 @@
 <!-- KEEP PROFILE CARD COMPONENT -->
 <template>
-    <div class="card acc-kcard text-bg-dark ard text-bg-dark ">
+    <div class="card acc-kcard text-bg-dark text-bg-dark">
         <img :src="keep.img" class="acc-kcard-img" :alt="keep.name">
+
         <div class="card-img-overlay" :title="keep.name">
-            <h5 class="card-title">{{ keep.name }}</h5>
+            <div class="blurred-background">
+                <h5 class="keep-title">{{ keep.name }}</h5>
+            </div>
         </div>
-
-
-
-
-
     </div>
 </template>
 <script>
@@ -54,7 +52,24 @@ export default {
 
 
 
+
 <style scoped>
+.blurred-background {
+    background: white !important;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px !important;
+    /* For shadow effect */
+    /* filter: blur(2px) !important; */
+    /* For blurred edges */
+}
+
+.keep-title {
+    color: var(--bright-raspberry-royale);
+    font-weight: bold;
+    font-size: auto;
+    text-align: center;
+}
+
 .acc-kcard {
     width: calc(100% / 6);
     height: auto;

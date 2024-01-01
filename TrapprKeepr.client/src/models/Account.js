@@ -3,7 +3,7 @@ export class Profile {
     this.id = data.id;
     this.name = data.name;
     this.picture = data.picture;
-    this.coverImg = data.coverImg || 'https://cdn1.jigidi.com/thumbs/3SESVH0N/l';
+    this.coverImg = data.coverImg || 'https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fit,w_730,h_272/at%2Farchive%2F5c29d757cc84f8722674c2e6476ffbb2f477d03b';
   }
 }
 

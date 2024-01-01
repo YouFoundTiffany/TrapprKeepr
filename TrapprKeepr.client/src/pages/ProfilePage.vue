@@ -2,14 +2,14 @@
 <template>
     <section v-if="activeProfile" class="container">
         <div class="row">
-            <h1 class="text-center">{{ profile.name }} Profile Page
+            <h1 class="text-center text-minty-meadow fst-italic">{{ profile.name }} Profile Page
             </h1>
             <div class="about text-center">
                 <div class="justify-content-center row d-flex">
-                    <img class="m-0 banner-image rounded" :src="profile.coverImg" :alt="profile.coverImg"
+                    <img class="m-0 p-0 banner-image rounded" :src="profile.coverImg" :alt="profile.coverImg"
                         title="profile.coverImg" />
-
                 </div>
+
                 <div class="justify-content-center d-flex">
                     <img class="rounded elevation-2 avatar" :src="activeProfile.picture" :alt="activeProfile.picture"
                         title="activeProfile.picture" />
@@ -17,27 +17,33 @@
             </div>
 
             <!-- PROFILE VAULTS CARDS -->
-            <h2 class="">Vaults</h2>
-            <section class="moblView container-fluid m-0 p-0 indicate">
-                <div class="row m-0 p-0">
-                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                        v-for="vault in profileVaults" :key="vault.id">
-                        <VaultProfCard :vault="vault" class="my-2" style="width: 15vw;" />
+            <div class="bg-faded-periwinkle-dream rounded py-4 my-4">
+                <h1 class="text-bright-periwinkle-dream fw-bold fs-exl text-center">Vaults</h1>
+                <section class="moblView container-fluid m-0 p-0 indicate">
+                    <div class="row m-0 p-0">
+                        <div class="col-12 col-md-3 m-0 p-0 justify-content-center shadow" style="aspect-ratio: 1/1"
+                            v-for="vault in profileVaults" :key="vault.id">
+                            <VaultProfCard :vault="vault" class="my-2" style="width: 15vw;" />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
+            <!-- 🚀 spacer div -->
+            <div style="height:15vh;"></div>
 
             <!-- PROFILE KEEPS CARDS -->
-            <h2 class="">Keeps</h2>
-            <section class="moblView container-fluid m-0 p-0 indicate">
-                <div class="row m-0 p-0">
-                    <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
-                        v-for="keep in profileKeeps" :key="keep.id">
-                        <KeepProfCard :keep="keep" class="my-2" style="width: 15vw;" />
+            <div class="bg-faded-raspberry-royale rounded py-4 my-4">
+                <h1 class="text-bright-raspberry-royale fw-bold fs-exl text-center">Keeps</h1>
+                <section class="moblView container-fluid m-0 p-0 indicate">
+                    <div class="row m-0 p-0">
+                        <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
+                            v-for="keep in profileKeeps" :key="keep.id">
+                            <KeepProfCard :keep="keep" class="my-2 shadow" style="width: 15vw;" />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </section>
 </template>
@@ -121,6 +127,21 @@ export default {
 </script>
 
 <style scoped>
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !Important;
+}
+
+.vault-title {
+    position: relative !important;
+    /* Or 'absolute', 'fixed', or 'sticky', depending on your layout */
+    z-index: 1000 !important;
+    /* A high value to ensure it's on top */
+    clear: both !important;
+    /* If there are floating elements around */
+    /* Other styling properties */
+    margin-top: 10rem;
+}
+
 .acard {
     max-width: 100%;
     height: auto;
@@ -140,7 +161,7 @@ export default {
 }
 
 .banner-image {
-    overflow: hidden;
+    /* overflow: hidden; */
     justify-content: center;
     max-width: 100vh;
     max-height: 30vh;

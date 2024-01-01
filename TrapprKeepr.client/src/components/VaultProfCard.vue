@@ -1,11 +1,14 @@
 <!-- VAULT PROFILE CARD -->
 <template>
     <router-link :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
-        <div class="card text-dark m-4 p-1 justify-content-center" style="max-height: 15vh;">
+
+        <div class="card text-bg-dark text-bg-dark justify-content-center">
             <img :src="vault.img" class="acc-vcard-img" :alt="vault.img" title="vault.img">
+
             <div class="card-img-overlay">
-                <h5 class="card-title text-dark bg-light">{{ vault.name }}</h5>
-                <i v-if="isPrivate == true" class="text-dark mdi mdi-lock text-light iconshaddisplay"></i>
+                <div class="blurred-background">
+                    <h5 class="vault-title">{{ vault.name }}</h5>
+                </div>
             </div>
         </div>
     </router-link>
@@ -60,7 +63,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .iconshaddisplay {
     /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.824) !important; */
     height: 30px;
@@ -73,17 +76,19 @@ export default {
     right: 10px;
 }
 
-.acc-vcard {
-    width: calc(100% / 6);
-    height: auto;
-    aspect-ratio: 1;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin: 0.5%;
+.blurred-background {
+    background: white !important;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px !important;
+    /* For shadow effect */
+    /* filter: blur(2px) !important; */
+    /* For blurred edges */
 }
 
-.acc-vcard-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.vault-title {
+    color: var(--bright-periwinkle-dream);
+    font-weight: bold;
+    font-size: auto;
+    text-align: center;
 }
 </style>

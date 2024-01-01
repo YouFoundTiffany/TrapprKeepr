@@ -45,3 +45,77 @@ form:invalid button[type="submit"] {
   filter: grayscale(1);
   pointer-events: none;
 }
+
+// TRAPPR KEEPR COLORS //
+:root {
+  --sunset-coral: rgb(231, 129, 111);
+  --midnight-plum: rgb(107, 66, 145);
+  --minty-meadow: rgb(75, 183, 134);
+  --raspberry-royale: rgb(157, 61, 123);
+  --bright-raspberry-royale: rgb(230, 90, 181);
+  --faded-raspberry-royale: rgba(171, 127, 155, 0.254);
+  --periwinkle-dream: rgb(110, 111, 218);
+  --bright-periwinkle-dream: rgb(146, 148, 249);
+  --faded-periwinkle-dream: rgba(158, 159, 230, 0.157);
+}
+
+/* Sunset Coral */
+.bg-sunset-coral {
+  background-color: var(--sunset-coral);
+}
+
+.text-sunset-coral {
+  color: var(--sunset-coral);
+}
+
+/* Midnight Plum */
+.bg-midnight-plum {
+  background-color: var(--midnight-plum);
+}
+
+.text-midnight-plum {
+  color: var(--midnight-plum);
+}
+
+/* Minty Meadow */
+.bg-minty-meadow {
+  background-color: var(--minty-meadow);
+}
+
+.text-minty-meadow {
+  color: var(--minty-meadow);
+}
+
+/* Raspberry Royale */
+.bg-raspberry-royale {
+  background-color: var(--raspberry-royale);
+}
+
+.bg-faded-raspberry-royale {
+  background-color: var(--faded-raspberry-royale);
+}
+
+.text-raspberry-royale {
+  color: var(--raspberry-royale);
+}
+
+.text-bright-raspberry-royale {
+  color: var(--bright-raspberry-royale);
+}
+
+/* Periwinkle Dream */
+.bg-periwinkle-dream {
+  background-color: var(--periwinkle-dream);
+}
+
+.bg-faded-periwinkle-dream {
+  background-color: var(--faded-periwinkle-dream);
+}
+
+.text-periwinkle-dream {
+  color: var(--periwinkle-dream);
+}
+
+.text-bright-periwinkle-dream {
+  color: var(--bright-periwinkle-dream);
+}
