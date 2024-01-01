@@ -2,16 +2,18 @@
 <template>
     <section v-if="activeVault" class="container">
 
-        <!-- <div class="row"> -->
-        <h1 class="text-center">{{ activeVault.name }} Vault Details Page
-        </h1>
+        <div class="row">
+            <h1 class="text-center">{{ activeVault.name }} Vault Details Page
+            </h1>
 
-        <div class="about text-center">
-            <div class="justify-content-center row d-flex">
-                <img :src="activeVault.picture" alt="activeVault.picture" title-="activeVault.picture">
-
+            <div class="about text-center">
+                <div class="justify-content-center row d-flex">
+                    <img :src="activeVault.img" alt="activeVault.picture" title-="activeVault.picture">
+                </div>
+                <img :src="profile.coverImg" alt="">
+                <h2>{{ profile.name }}</h2>
+                <!-- TODO LIST KEEPS IN THIS VAULT -->
             </div>
-            <!-- <img :src="activeVault.creator.img" alt=""> -->
         </div>
 
 
@@ -84,6 +86,7 @@ export default {
 
 
         return {
+            AppState,
             profileKeeps: computed(() => AppState.profileKeeps),
             profileVaults: computed(() => AppState.profileVaults),
             profile: computed(() => AppState.activeProfile),
