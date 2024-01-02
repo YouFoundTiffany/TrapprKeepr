@@ -34,7 +34,8 @@ const routes = [
 
     path: '/edit-profile/:profileId',
     name: 'Edit Profile',
-    component: loadPage('EditProfileForm'),
+    component: loadPage('EditProfilePageForm'),
+    beforeEnter: authGuard
     // FIXME Do I need an AuthGuard or Settled?
   },
   {

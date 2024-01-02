@@ -58,8 +58,9 @@ class AccountService {
 
 
 
-  // FIXME
+  // STUB Create a Profile
   async editProfile(data) {
+    logger.log('editProfile', data)
     const res = await api.put(`api/profiles/${profileId}`, data)
     const profileId = AppState.account.id
     logger.log('profileId')

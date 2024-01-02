@@ -59,6 +59,10 @@ form:invalid button[type="submit"] {
   --faded-periwinkle-dream: rgba(158, 159, 230, 0.157);
 }
 
+.happymonkey {
+  font-family: "Happy Monkey", cursive;
+}
+
 /* Sunset Coral */
 .bg-sunset-coral {
   background-color: var(--sunset-coral);
@@ -104,7 +108,7 @@ form:invalid button[type="submit"] {
 }
 
 .text-bright-raspberry-royale {
-  color: var(--bright-raspberry-royale);
+  color: var(--bright-raspberry-royale) !important;
 }
 
 /* Periwinkle Dream */

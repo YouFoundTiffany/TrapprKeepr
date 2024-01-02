@@ -7,8 +7,8 @@
     <div class="col-12 col-md-4">
       <!-- DROPDOWN -->
       <div v-if="user.isAuthenticated" class="dropdown">
-        <button class="btn dropdown-toggle create-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-          aria-expanded="false">
+        <button class="btn dropdown-toggle create-btn fw-bold" type="button" id="dropdownMenuButton"
+          data-bs-toggle="dropdown" aria-expanded="false">
           Create
         </button>
         <!-- v-if="account.id == profile.id && detailspage" -->
@@ -193,16 +193,16 @@ export default {
 <style scoped>
 /* CREATE BUTTON */
 .create-btn {
-  background-color: #fca311 !important;
-  color: #14213d !important;
+  background-color: #e7816f7d !important;
+  color: var(--midnight-plum) !important;
   border: none !important;
   border-radius: 5px !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 .create-btn:hover {
-  background-color: #e3cd29 !important;
-  color: #14213d !important;
+  background-color: var(--sunset-coral) !important;
+  color: var(--midnight-plum) !important;
   border: none !important;
   border-radius: 5px !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2) !important;
