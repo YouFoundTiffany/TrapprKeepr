@@ -129,7 +129,7 @@ GET {{endpoint}}/account/vaults
 
 
 
-  // SECTION VAULT KEEPS ENDPOINTS_DATATYPS
+  // SECTION VAULT KEEPS ENDPOINTS_DATATYPES
 
   // STUB ACCOUNT OR PROFILE Get Keeps in a Vault - Keeps in a Singluar Vault
   // {{ endpoint }}/api/keeps

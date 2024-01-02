@@ -5,18 +5,15 @@ import { VaultKeep } from "../models/VaultKeep.js"
 import { api } from "./AxiosService.js"
 
 class VaultKeepsService {
-
-    // Create VaultKeep
-    async createVaultKeep(vaultId, vaultKeepData) {
-        const res = await api.post(`api/vaults/${vaultId}/keeps`, vaultKeepData);
+    async createVaultKeep(vaultKeepData) {
+        const res = await api.post('api/vaultkeeps', vaultKeepData);
         logger.log('[CREATED VAULTKEEP]', res.data);
+        // Assuming you have a similar AppState structure for vaultkeeps
         const newVaultKeep = new VaultKeep(res.data);
-        AppState.vaultKeeps.push(newVaultKeep);
+        AppState.vaultKeeps.push(new VaultKeep(res.data));
         return newVaultKeep;
     }
 
-    // Get Keeps in Vault
-    // vaults/{{vaultId}}/keeps
     async getVaultKeeps(vaultId) {
 
         const res = await api.get(`api/vaults/${vaultId}/keeps`);

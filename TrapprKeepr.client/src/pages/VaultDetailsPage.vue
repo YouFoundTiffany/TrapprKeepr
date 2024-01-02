@@ -6,22 +6,32 @@
             <h1 class="text-center">{{ activeVault.name }} Vault Details Page
             </h1>
 
-            <div class="about text-center">
-                <div class="justify-content-center row d-flex">
+            <div class="about text-center bg-faded-periwinkle-dream rounded py-4 my-4">
+                <div class=" justify-content-center row d-flex ">
                     <img :src="activeVault.img" alt="activeVault.picture" title-="activeVault.picture">
                 </div>
-                <img :src="profile.coverImg" alt="">
-                <h2>{{ profile.name }}</h2>
+                <!-- 🚀 spacer div -->
+                <div style="height:15vh;"></div>
+                <!-- 🚀 spacer div -->
+                <div class="justify-content-center row d-flex">
+                    <img class="m-0 p-0 banner-image rounded" :src="profile.coverImg" :alt="profile.coverImg"
+                        title="profile.coverImg" />
+                </div>
+                <h2 class="text-minty-meadow">This Vault was created by {{ account.name }}</h2>
                 <!-- TODO LIST KEEPS IN THIS VAULT -->
             </div>
+            <!-- 🚀 spacer div -->
+            <div style="height:15vh;"></div>
+            <!-- 🚀 spacer div -->
+            <div class="bg-faded-raspberry-royale rounded py-4 my-4">
+
+                <h3 class="text-center text-minty-meadow fst-italic">All Keeps in this Vault</h3>
+                <div class="hmasonry-container container">
+                    <KeepCard v-for="keep in keeps" :key="keep.id" :keep="keep" style="min-height: 5em;" />
+
+                </div>
+            </div>
         </div>
-
-
-
-
-
-
-
 
 
 
@@ -47,8 +57,8 @@ import { Vault } from '../models/Vault';
 import { keepsService } from '../services/KeepsService';
 
 export default {
-    props: { activeVault: { type: Vault, required: true } },
-    setup(props) {
+
+    setup() {
         const route = useRoute()
         const accountId = computed(() => AppState.account.id)
         const vaultId = route.params.id

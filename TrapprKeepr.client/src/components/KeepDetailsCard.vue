@@ -19,26 +19,25 @@
                     <div v-if="keep" class='container-fluid text-dark'>
                         <div class="row no-gutters">
                             <div class="col-md-6">
-                                <img :src="activeKeep.img" :title="activeKeep.creator.name" :alt="activeKeep.img"
-                                    class="keep-image w-100">
+                                <img :src="keep.img" :title="keep.creator.name" :alt="keep.img" class="keep-image w-100">
                             </div>
                             <!-- RIGHT SIDE OF CARD-->
                             <div class="col-6 d-flex flex-column justify-content-between">
-                                <h6 class="text-dark bg-transparent m-0 p-0">Kept by: {{ activeKeep.creator.name }}</h6>
-                                <router-link @click="closeModal"
+                                <h6 class="text-dark bg-transparent m-0 p-0">Kept by: {{ keep.creator.name }}</h6>
+                                <router-link @click="navigateToProfile"
                                     :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
-                                    <img :src="activeKeep.creator.picture" :title="activeKeep.creator.name"
-                                        :alt="activeKeep.creator.picture" class="modprofile-pic">
+                                    <img :src="keep.creator.picture" :title="keep.creator.name" :alt="keep.creator.picture"
+                                        class="modprofile-pic">
                                 </router-link>
                                 <!-- KEEP NAME AND KEEP DESCRIPTION - CENTERED HORIZONTALLY AND VERTICALLY -->
                                 <div class="d-flex flex-column justify-content-center align-items-center h-50">
-                                    <h4>Title: {{ activeKeep.name }}</h4>
-                                    <p>{{ activeKeep.description }}</p>
+                                    <h4>Title: {{ keep.name }}</h4>
+                                    <p>{{ keep.description }}</p>
                                 </div>
                                 <!-- CREATING VAULT-KEEPS!!!! -->
                                 <div>
                                     <!-- SAVE TO VAULT FORM -->
-                                    <form @submit.prevent="createVaultKeep()" class="row">
+                                    <form @submit.prevent="onSubmit()" class="row">
                                         <!-- LOGGED IN USER'S VAULTS -->
                                         <div class="dropdown col-7">
                                             <select v-model="selectedVault" class="form-select fs-6">
@@ -74,54 +73,89 @@
     </div>
 </template>
 <script>
-import { computed, popScopeId, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { Modal } from 'bootstrap';
 // import { logger } from '../utils/Logger';
 import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger';
+import { vaultKeepsService } from '../services/VaultKeepsService.js';
+import { keepsService } from '../services/KeepsService.js';
+import { router } from '../router.js';
+
 
 
 
 export default {
-    props: { keep: { type: Object, required: true } },
+    props: { keep: { type: Object, required: true } }, vault: { type: Object },
 
     setup(props) {
-        const route = useRoute();
+        // eslint-disable-next-line no-unused-vars
+        const route = useRoute()
         const activeKeep = ref(props.keep)
+        const selectedVault = ref('')
+        const isModalVisible = ref(false);
+        const navigateToProfile = () => {
+            router.push({ name: 'Profile', params: { profileId: props.keep.creatorId } });
+            closeModal();
+        };
 
+        // eslint-disable-next-line space-before-function-paren
+        const createVaultKeep = async (vaultKeepData) => {
+            try {
+                await vaultKeepsService.createVaultKeep(vaultKeepData)
+                Pop.toast('Keep added to Vault', 'success')
+                // Modal.getOrCreateInstance('#KeepCardModal').hide()
+                isModalVisible.value = false;
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+        const onSubmit = () => {
+            const vaultKeepData = {
+                vaultId: selectedVault.value,
+                keepId: activeKeep.value.id,
+            };
+            logger.log('Sending request with:', vaultKeepData);
+            createVaultKeep(vaultKeepData);
+        };
+        // const closeModal = () => {
+        //     isModalVisible.value = false;
+        // };
+        const closeModal = () => {
+            isModalVisible.value = false;
 
+            document.body.classList.remove('modal-open');
+            const backdrops = document.getElementsByClassName('modal-backdrop');
+            while (backdrops.length) {
+                backdrops[0].parentNode.removeChild(backdrops[0]);
+            }
+            document.body.style.overflow = '';
 
+        };
         return {
-            // saveKeepToVault,
-
-            // selectedVault,
-
+            AppState,
+            closeModal,
+            isModalVisible,
+            navigateToProfile,
+            selectedVault,
+            activeKeep,
+            onSubmit,
+            createVaultKeep,
             profileVaults: computed(() => AppState.profileVaults),
             account: computed(() => AppState.account),
             activeProfile: computed(() => AppState.activeProfile),
             keeps: computed(() => AppState.keeps),
             myVaults: computed(() => AppState.myVaults),
-            activeKeep,
-
-
-
-
-
-
-
-            // STUB SAVING TO VAULT
-            async createVaultKeep() {
-                try {
-                    logger.log("does it click?")
-                } catch (error) {
-                    Pop.error(error)
-                }
-            },
-        }
+        };
+    },
+    beforeRouteLeave(to, from, next) {
+        closeModal();
+        next();
     }
 }
+
 
 </script>
 

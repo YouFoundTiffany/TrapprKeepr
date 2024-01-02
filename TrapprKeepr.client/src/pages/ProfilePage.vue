@@ -18,7 +18,7 @@
 
             <!-- PROFILE VAULTS CARDS -->
             <div class="bg-faded-periwinkle-dream rounded py-4 my-4">
-                <h1 class="text-bright-periwinkle-dream fw-bold fs-exl text-center">Vaults</h1>
+                <h1 class="text-bright-periwinkle-dream fw-bold fs-exl text-center">All {{ account.name }}'s Vaults</h1>
                 <section class="moblView container-fluid m-0 p-0 indicate">
                     <div class="row m-0 p-0">
                         <div class="col-12 col-md-3 m-0 p-0 justify-content-center shadow" style="aspect-ratio: 1/1"
@@ -31,10 +31,11 @@
 
             <!-- 🚀 spacer div -->
             <div style="height:15vh;"></div>
+            <!-- 🚀 spacer div -->
 
             <!-- PROFILE KEEPS CARDS -->
             <div class="bg-faded-raspberry-royale rounded py-4 my-4">
-                <h1 class="text-bright-raspberry-royale fw-bold fs-exl text-center">Keeps</h1>
+                <h1 class="text-bright-raspberry-royale fw-bold fs-exl text-center">All {{ account.name }}'s Keeps</h1>
                 <section class="moblView container-fluid m-0 p-0 indicate">
                     <div class="row m-0 p-0">
                         <div class="col-12 col-md-3 m-0 p-0 justify-content-center" style="aspect-ratio: 1/1"
@@ -70,7 +71,7 @@ export default {
 
 
     setup(props) {
-
+        const isModalVisible = ref(false);
         // NOTE The Order of the variables below Matters!
         onMounted(async () => {
             getProfilesKeeps();
@@ -78,6 +79,7 @@ export default {
             getProfileById();
         })
         const route = useRoute();
+
         // STUB Get all Keeps with this Profile Id
         async function getProfilesKeeps() {
             try {
@@ -107,9 +109,7 @@ export default {
         }
 
 
-        // const isOwner = computed(() => {
-        // return !route.params.profileId || route.params.profileId === AppState.account.id;
-        // });
+
 
         return {
             profileKeeps: computed(() => AppState.profileKeeps),
@@ -118,7 +118,7 @@ export default {
             account: computed(() => AppState.account),
             keeps: computed(() => AppState.keeps),
             vaults: computed(() => AppState.vaults),
-            activeProfile: computed(() => AppState.activeProfile)
+            activeProfile: computed(() => AppState.activeProfile),
 
         };
     },

@@ -18,7 +18,6 @@
 
     <button class="m-2">Edit Profile</button>
     <button class="m-2">View Profile</button>
-
     <!-- PROFILE VAULTS CARDS -->
     <h2 class="">Vaults</h2>
     <section class="moblView container-fluid m-0 p-0">
@@ -95,7 +94,7 @@ export default {
     return {
       // profileKeeps,
       // profileVaults,
-      // AppState: computed(() => AppState),
+      AppState,
       profile: computed(() => AppState.profile),
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
